@@ -1,0 +1,41 @@
+site_name: "RDC@FRI"
+#site_url: https://docs.rdc.si
+docs_dir: docs
+theme:
+  name: material
+  palette:
+    primary: blue
+  features:
+    - navigation.expand
+    # - navigation.tabs
+    # - navigation.tabs.sticky
+    #- navigation.sections
+    #- toc.integrate
+    #- navigation.top
+    - search.suggest
+    - search.highlight
+    - content.tabs.link
+    - content.code.annotation
+    - content.code.copy
+nav:
+  - Introduction: index.md
+  - FRIDA:
+    - 1. Introduction: FRIDA/intro.md
+    - 2. Architecture: FRIDA/arch.md
+markdown_extensions:
+  - admonition
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.highlight
+  - pymdownx.superfences
+  - pymdownx.magiclink
+  - pymdownx.saneheaders
+  - pymdownx.snippets
+  - footnotes
+  - pymdownx.mark
+  - attr_list
+  - pymdownx.details
+
+copyright: |
+  &copy; 2023 <a href="https://fri.uni-lj.si"  target="_blank" rel="noopener">UL FRI</a> 
