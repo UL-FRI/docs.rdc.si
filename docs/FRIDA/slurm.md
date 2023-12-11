@@ -2,7 +2,7 @@
 
 Reservation and management of FRIDA compute resources is based on SLURM ([Simple Linux Utility for Resource Management](https://slurm.schedmd.com/)), a software package for submitting, scheduling, and monitoring jobs on large compute clusters. SLURM governs access to the cluster's resources by means of three views; account/user association, partition, and QoS (Quality of Service). Accounts link users into groups (based on resarch lab, project or other shared properties). Partitions link nodes, and QoS allow users to control the priority and limits on a job level. Each of these views thus can impose limits and affect the submitted job's prority.
 
-### Nodes
+## Nodes
 
 FRIDA currently consists of one login node and 3 compute nodes with characterstics as listed in the table below. Although the login node has Pyhton 3.10 and venv pre-installed, these are provided only to aid in quick scripting, and not inteded for any intensive processing. Refrain from installing user space additions like conda and others. All computationally intensive tasks must be submitted as SLURM jobs via the corresponding SLURM commands. User accounts that fail to adhere to these guidelines will be subject to suspension.
 
@@ -22,7 +22,7 @@ FRIDA currently consists of one login node and 3 compute nodes with charactersti
 -->
 
 
-### Partitions
+## Partitions
 
 Within SLURM subsets of compute nodes are organized into partitions. On FRIDA there are two types of partitions, general and private (available to selected research labs or groups based on their cofunding of FRIDA). Interactive jobs can be run only on `dev` partition. Production runs are not permitted in interactive jobs, `dev` partition is thus intened to be used for code development, testing, and debugging only.
 
@@ -55,7 +55,7 @@ As a further tool in affecting job submission SLURM allows users the ability to 
 | psuiis    | private |       any |           4h |           4d |      100 |                 4-07:50 |
 -->
 
-### Shared storage
+## Shared storage
 
 All FRIDA nodes have access to a limited amount of shared data storage. For performance reasons it is served by a raid0 backend. Note that FRIDA does not provide automatic backups, these are entirely in the domain of the end user. Also, as of current settings FRIDA does not enforce shared storage quotas, but this may change in future upgrades. The user folder's access permissions are set to user only. Depending on the groups a user is a member of, they may have access to multiple workspace folders. These folders have the group sticky bit set, so files created within them will automatically have the correct group ownership. All group members will have read and execute rights. Note, however, that group write access is masked, so users that wish to make their files writable by other group members should change permissions by using the `chmod g+w` command. All other security measures dictated by the nature of your data, are the responsibility of the end users.
 
@@ -67,7 +67,7 @@ In addition to access to shared storage, compute nodes provide also an even smal
 | shared    | raid0   | no      | group   | `/shared/workspace/$WORKSPACEID`    | -           |           - |
 | scratch   | varies  | no      | job     | `/local/scratch/$USER/$SLURM_JOBID` | `$SCRATCH` |           - |
 
-### Usage
+## Usage
 
 In SLURM there are two principal ways of submitting jobs. Interactive and non-interactive, or batch submission. What follows is the next subsections is a quick review of most typical use cases.
 
@@ -87,7 +87,7 @@ Some useful SLURM commands with their typical use case, notes and corresponding 
 | `scancel` | cancel a running job | | see SLURM docs on [`scancel`](https://slurm.schedmd.com/scancel.html) |
 | `scontrol show job` | view detailed information of a job | | see SLURM docs on [`scontrol`](https://slurm.schedmd.com/scontrol.html) |
 
-#### Interactive session
+### Interactive session
 
 SLURM in general provides two ways of running interactive jobs; either via the `salloc` or via the `srun --pty` command. The former will first reserve the resources, which you then explicity use via the latter, while the latter can be used to do the reservation and execution in a single step.
 
@@ -145,7 +145,7 @@ exit
 ilb@login-frida:~$
 ```
 
-##### Running jobs in containers
+#### Running jobs in containers
 
 FRIDA was setup by following [deepops](https://github.com/NVIDIA/deepops), an open source infrastructure automation tool by NVIDIA. Our setup is focused on supporting ML/AI training tasks, and based on current trends of containerization even in HPC systems, it is also purely container based (modules are not supported). Here we opted for [Enroot](https://github.com/NVIDIA/enroot) an extremely lightweight 'container runtime' capable of turning traditional container/OS images into unprivilaged sandboxes. An added benefit of Enroot is its tight integration into SLURM commands via the [Pyxis](https://github.com/NVIDIA/pyxis) plugin, thus providing for a very good user experience.
 
@@ -263,7 +263,7 @@ enroot exec {PID} bash
 ```
 -->
 
-##### Requesting GPUs
+#### Requesting GPUs
 
 All FRIDA compute nodes provide GPUs, but they differ in provider, architecture as well as available memory. In SLURM request for allocation of GPU resources can be done using either by specifying the `--gpus=[type:]{count}` or `--gres=gpu[:type][:{count}]` parameter. The available GPU types depend on the selected partition, whose available GPU types in turn depend on the nodes that are included (see section [partitions](#partitions)).
 
@@ -289,15 +289,15 @@ GPU 0: NVIDIA A100 80GB PCIe (UUID: GPU-845e3442-e0ca-a376-a3de-50e4cb7fd421)
     Partial GPU allocation via `shard` reserves the GPUs in a non-exclusive mode and as such allows for sharing GPUs. However, currently SLURM has no viable techniques to enforce these limits, and thus jobs, even if they request only a portion of a GPU, are granted access to the full GPU. Allocation with `shard` then needs to be interpreted as _a promisse_ that the job will not consume more GPU memory than what it requested for. Failure to do so may result in the failure of the user's job as well as failure of jobs of other users that happen to share the same GPU. Ensuring that the job does not consume more GPU memory than what it requested for, is thus mandatory, and entirely under the responsibility of the user who submitted the job. In case your job is based on Tensorflow or Pytorch there exist [approaches to GPU memory management](https://wiki.ncsa.illinois.edu/display/ISL20/Managing+GPU+memory+when+using+Tensorflow+and+Pytorch) that you can use to ensure the job does not consume more than what it requested for. In addition, Pytorch version 1.8 introduced a special function for limiting process GPU memory, see  [`set_per_proces_memory_fraction`](https://github.com/pytorch/pytorch/blob/e44b2b72bd4ccecf9c2f6c18d09c11eff446b5a3/torch/cuda/memory.py#L75-L99)). For further details on sharding consult the [SLURM official documentation](https://slurm.schedmd.com/gres.html#Sharding). User accounts that fail to adhere to these guidelines will be subject to suspension.
 
 
-##### Code tunnel
+#### Code tunnel
 
 When an interactive session is intended for code development, testing, and/or debugging, many a times it is desirable to work with a suitable IDE. The requirement of resource allocation via SLURM and the lack of any toolsets on bare-metal hosts might seem too much added compexity, but in reality there is a very elegant solution by using Visual Studio Code in combination with the Remote Development Extension (via `code_tunnel`). Running `code_tunnel` will allow you to use VSCode to connect directly into the container that is running on the compute node that was assigned to your job. This has the added benefit of a user experience that feels like working with your own VM.
 
-On every run of `code_tunnel` you will need to register the tunnel with your GitHub or Microsoft account; this interaction requires the `srun` command to be run with the parameter `--pty`, and for this reason a suitable alias command named `stunnel` was setup. Once registered you will be able to access the compute node (while `code_tunnel` is running) in a browser by visiting [https://vscode.dev](https://vscode.dev) or with a desktop version of VSCode via Remote Explorer (part of the Remote Development Extension). In both cases the 'Remotes (Tunnels/SSH)' list in the Remote Explorer pane should contain a list of tunnels to FRIDA (named `frida-{jobname}`) that you have registered and also denote which of these are currently online (with your job running). In the browser it is also possible to connect directly to a workspace on the node (on which the `code_tunnel` job is running). Simply visit the URL of the form `https://vscode.dev/tunnel/frida-{jobname}[/{path-to-workspace}]`. If you wish to close the tunnel before the job times out press `Ctrl-C`.
+On every run of `code_tunnel` you will need to register the tunnel with your GitHub or Microsoft account; this interaction requires the `srun` command to be run with the parameter `--pty`, and for this reason a suitable alias command named `stunnel` was setup. Once registered you will be able to access the compute node (while `code_tunnel` is running) in a browser by visiting [https://vscode.dev](https://vscode.dev) or with a desktop version of VSCode via Remote Explorer (part of the [Remote Development Extension pack](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack)). In both cases the 'Remotes (Tunnels/SSH)' list in the Remote Explorer pane should contain a list of tunnels to FRIDA (named `frida-{jobname}`) that you have registered and also denote which of these are currently online (with your job running). In the browser it is also possible to connect directly to a workspace on the node (on which the `code_tunnel` job is running). Simply visit the URL of the form `https://vscode.dev/tunnel/frida-{jobname}[/{path-to-workspace}]`. If you wish to close the tunnel before the job times out press `Ctrl-C`.
 
 ```bash
-ilb@login-frida:~$ stunnel -c32 --mem 48G --gpus=3 --container-image=nvcr.io#nvidia/pytorch:23.10-py3 --job-name torch-debug
-# srun -p dev -c32 --mem 48G --gpus=3 --container-image=nvcr.io#nvidia/pytorch:23.10-py3 --job-name torch-debug --pty code_tunnel
+ilb@login-frida:~$ stunnel -c32 --mem 48G --gres=shard:20 --container-image=nvcr.io#nvidia/pytorch:23.10-py3 --job-name torch-debug
+# srun -p dev -c32 --mem 48G --gres=shard:20 --container-image=nvcr.io#nvidia/pytorch:23.10-py3 --job-name torch-debug --pty code_tunnel
 pyxis: importing docker image ...
 *
 * Visual Studio Code Server
@@ -325,11 +325,11 @@ Open this link in your browser https://vscode.dev/tunnel/frida-torch-debug/works
 ilb@login-frida:~$
 ```
 
-##### Keeping interactive jobs alive
+#### Keeping interactive jobs alive
 
 Interactive sessions are typically run in the foreground, require a terminal, and last for the duration of the SSH session, or until the reservation times out (whichever comes first). On flaky internet connections this can become a problem, where a lost connection might lead to a stopped job. One remedy is to use `tmux` or `screen` which allow for running interactive jobs in detached mode.
 
-#### Batch jobs
+### Batch jobs
 
 Once development, testing, and/or debugging is complete, at least in ML/AI training taks, the datasets typically become such that jobs last much longer than a normal SSH session. They can also be safely run without any interaction, and without a terminal. In SLURM parlance these types of jobs are termed batch jobs. A batch job is a shell script (typically marked by a `.sbatch` extension), whose header provides SLURM parameters, that specify the resources needed to run the job. For details of all available parameters consult the official [SLURM documentation](https://slurm.schedmd.com/sbatch.html). Below is a very brief deep dive introduction into batch jobs.
 
