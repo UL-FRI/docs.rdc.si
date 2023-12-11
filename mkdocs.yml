@@ -4,13 +4,32 @@ docs_dir: docs
 theme:
   name: material
   palette:
-    primary: blue
+    # Palette toggle for automatic mode
+    - media: "(prefers-color-scheme)"
+      toggle:
+        icon: material/brightness-auto
+        name: Switch to light mode
+
+    # Palette toggle for light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+
+    # Palette toggle for dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      toggle:
+        icon: material/brightness-4
+        name: Switch to system preference
+
   features:
     - navigation.expand
-    # - navigation.tabs
-    # - navigation.tabs.sticky
-    #- navigation.sections
-    #- toc.integrate
+    #- navigation.tabs
+    #- navigation.tabs.sticky
+    - navigation.sections
+    - toc.integrate
     #- navigation.top
     - search.suggest
     - search.highlight
@@ -18,10 +37,11 @@ theme:
     - content.code.annotation
     - content.code.copy
 nav:
-  - Introduction: index.md
+  - News: index.md
   - FRIDA:
-    - 1. Introduction: FRIDA/intro.md
-    - 2. Architecture: FRIDA/arch.md
+    - About: FRIDA/about.md
+    - Access: FRIDA/access.md
+    - Usage: FRIDA/slurm.md
 markdown_extensions:
   - admonition
   - pymdownx.emoji:
@@ -38,4 +58,4 @@ markdown_extensions:
   - pymdownx.details
 
 copyright: |
-  &copy; 2023 <a href="https://fri.uni-lj.si"  target="_blank" rel="noopener">UL FRI</a> 
+  &copy; 2023 <a href="https://fri.uni-lj.si"  target="_blank" rel="noopener">UL FRI</a>

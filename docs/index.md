@@ -1,3 +1,5 @@
 # RDC docs
 
-Research Data Center (RDC) documentation landing page
+Welcome to documentation for the UL FRI Research Data Center (RDC).
+
+...
