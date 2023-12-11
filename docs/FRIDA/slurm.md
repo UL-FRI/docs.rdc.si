@@ -69,7 +69,7 @@ In addition to access to shared storage, compute nodes provide also an even smal
 
 ## Usage
 
-In SLURM there are two principal ways of submitting jobs. Interactive and non-interactive, or batch submission. What follows is the next subsections is a quick review of most typical use cases.
+In SLURM there are two principal ways of submitting jobs. Interactive and non-interactive, or batch submission. What follows in the next subsections is a quick review of most typical use cases.
 
 Some useful SLURM commands with their typical use case, notes and corresponding SLURM help are displayed in the table below. In the next sections we will be using these commands to actually submit and view jobs.
 
@@ -90,9 +90,9 @@ Some useful SLURM commands with their typical use case, notes and corresponding 
 
 ### Interactive session
 
-SLURM in general provides two ways of running interactive jobs; either via the `salloc` or via the `srun --pty` command. The former will first reserve the resources, which you then explicity use via the latter, while the latter can be used to do the reservation and execution in a single step.
+SLURM in general provides two ways of running interactive jobs; either via the `salloc` or via the `srun --pty` command. The former will first reserve the resources, which you then explicitly use via the latter, while the latter can be used to do the reservation and execution in a single step.
 
-Allocate resources on `dev` partition with default parameters, then start a bash shell on the allocated resources. Check what was allocated, exit the bash shell and then release the allocated resources.
+For example, the following snippet shows how to allocate resources on `dev` partition with default parameters, then start a bash shell on the allocated resources. Done that it checks what was allocated, exits the bash shell and finally releases the allocated resources.
 ```bash
 ilb@login-frida:~$ salloc -p dev
 salloc: Granted job allocation 498
@@ -115,7 +115,7 @@ salloc: Job allocation 498 has been revoked.
 ilb@login-frida:~$
 ```
 
-Allocate resources on `dev` partition and start a bash shell in one call, this time requesting for 32 vCPU cores and 32 GB of RAM. Check what was allocated, then exit from the bash shell jointly realeasing the allocated resources.
+The following snipped, on the other hand, allocates resources on `dev` partition and start a bash shell in one call, this time requesting for 32 vCPU cores and 32 GB of RAM. It then checks what was allocated, and finally exits from the bash shell jointly realeasing the allocated resources.
 ```bash
 ilb@login-frida:~$ srun -p dev -c32 --mem=32G --pty bash
 
@@ -129,7 +129,6 @@ ilb@login-frida:~$
 ```
 
 Access to the allocated resources (nodes) can be achived also by invoking `ssh`; however, note that then the [SLURM defined environment variables](https://slurm.schedmd.com/srun.html#lbAJ) will not be available to you. The auto inclusion of `env` vars is an added benefit of accessing the allocated resources via `srun --pty`. With multi-node resource allocations use `-w` to specify the node on which you wish to start a shell.
-
 ```bash
 ilb@login-frida:~$ srun -p dev --pty bash
 
@@ -148,11 +147,11 @@ ilb@login-frida:~$
 
 #### Running jobs in containers
 
-FRIDA was setup by following [deepops](https://github.com/NVIDIA/deepops), an open source infrastructure automation tool by NVIDIA. Our setup is focused on supporting ML/AI training tasks, and based on current trends of containerization even in HPC systems, it is also purely container based (modules are not supported). Here we opted for [Enroot](https://github.com/NVIDIA/enroot) an extremely lightweight 'container runtime' capable of turning traditional container/OS images into unprivilaged sandboxes. An added benefit of Enroot is its tight integration into SLURM commands via the [Pyxis](https://github.com/NVIDIA/pyxis) plugin, thus providing for a very good user experience.
+FRIDA was setup by following [deepops](https://github.com/NVIDIA/deepops), an open source infrastructure automation tool by NVIDIA. Our setup is focused on supporting ML/AI training tasks, and based on current trends of containerization even in HPC systems, it is also purely container based (modules are not supported). Here we opted for [Enroot](https://github.com/NVIDIA/enroot) an extremely lightweight container runtime capable of turning traditional container/OS images into unprivilaged sandboxes. An added benefit of Enroot is its tight integration into SLURM commands via the [Pyxis](https://github.com/NVIDIA/pyxis) plugin, thus providing for a very good user experience.
 
 Regardless if the Enroot/Pyxis bundle turns containers/OS images into uprivilaged sandboxes, automatic root remapping allows users to extend and update the imported images with ease. The changes can be retained for the duration of a job or exported to a squashfs file for cross-job retention. Some of the most commonly used Pyxis provided `srun` parameters are listed in the table below. For further details on all available parameters consult the official [Pyxis documentation](https://github.com/NVIDIA/pyxis/wiki/Usage), while information on how to setup credentials that enable importing containers from private container registries can be found in the official [Enroot documentation](https://github.com/NVIDIA/enroot/blob/master/doc/cmd/import.md).
 
-| srun parameter            | format | notes                                                               |
+| <div style="width:190px">srun parameter</div> | <div style="width:290px">format</div> | notes                                                               |
 |---------------------------|--------|---------------------------------------------------------------------|
 | `--container-image`       | `[USER@][REGISTRY#]IMAGE[:TAG]\|PATH` | container image to load, path must point to a squashfs file |
 | `--container-name`        | `NAME` | name the container for easier access to running containters; can be used to change container contents without saving to a squashfs file, but note that non-running named containers are kept only within a `salloc` or `sbatch` allocation |
@@ -160,7 +159,7 @@ Regardless if the Enroot/Pyxis bundle turns containers/OS images into uprivilage
 | `--container-mount-home`  |        | bind mount the user home; not mounted by default to prevent local config collisions |
 | `--container-mounts`      | `SRC:DST[:FLAGS][,SRC:DST...]` | bind points to mount into the container; `$SCRATCH` is auto-mounted     |
 
-Check the OS release on `dev` partition, node `ana`, then start a CentOS container on the same node and recheck.
+For example the following snippet will check the OS release on `dev` partition, node `ana`, then start a CentOS container on the same node and recheck.
 ```bash
 ilb@login-frida:~$ srun -p dev -w ana bash -c 'echo "$HOSTNAME: `grep PRETTY /etc/os-release`"'
 ana: PRETTY_NAME="Ubuntu 22.04.3 LTS"
@@ -171,7 +170,7 @@ pyxis: imported docker image: centos
 ana: PRETTY_NAME="CentOS Linux 8"
 ```
 
-Allocate resources on `dev` partition, then start a `ubuntu:20.04` container and check if `file` utility exists. The command results in an error indicating that the utility is not present. Create a named cointainer that is based on `ubuntu:20.04` and install the utility. Then recheck if the utility exists in the named container. End by releasing the resources which will jointly purge also the named container.
+The following snippet allocates resources on `dev` partition, then starts a `ubuntu:20.04` container and checks if `file` utility exists. The command results in an error indicating that the utility is not present. It then creates a named cointainer that is based on `ubuntu:20.04` and installs the utility. Then rechecks if the utility exists in the named container. It ends by releasing the resources which jointly purge also the named container.
 ```bash
 ilb@login-frida:~$ salloc -p dev
 salloc: Granted job allocation 526
@@ -251,8 +250,15 @@ ilb@login-frida:~$
 ##### Private container registries
 
 https://github.com/NVIDIA/enroot/blob/fb267cbebceced24556e05c7661fbd9a958f5540/doc/cmd/import.md#description
+-->
+<!--
+#### Start another shell in a running container
 
-##### Start another shell in a running container
+To start a second shell in an already running job one can execute the following commands (here `SLURM_JOB_ID` holds the id of the job that we want to start another shell in).
+```
+srun --overlap --jobid $SLURM_JOB_ID --pty bash
+```
+
 ```
 srun --container-name=myubuntu --jobid $JOBID --pty bash
 ```
@@ -272,11 +278,11 @@ All FRIDA compute nodes provide GPUs, but they differ in provider, architecture 
 ilb@login-frida:~$ srun -p dev --gres=gpu nvidia-smi -L
 GPU 0: NVIDIA A100 80GB PCIe (UUID: GPU-845e3442-e0ca-a376-a3de-50e4cb7fd421)
 
-ilb@login-frida:~$ srun -p frida --gpus=H100:4 nvidia-smi -L
-GPU 0: NVIDIA H100 80GB HBM3 (UUID: GPU-875f3ca0-9de4-e78c-9cea-5140b030b627)
-GPU 1: NVIDIA H100 80GB HBM3 (UUID: GPU-1be66b4c-65e2-4a17-80d9-ab9f5bf3bb70)
-GPU 2: NVIDIA H100 80GB HBM3 (UUID: GPU-35cea23a-bdee-e2af-2fda-3b038af47de8)
-GPU 3: NVIDIA H100 80GB HBM3 (UUID: GPU-fe4dde03-0444-6d48-59bc-be28e3fadc52)
+ilb@login-frida:~$ srun -p dev --gpus=A100_80GB:4 nvidia-smi -L
+GPU 0: NVIDIA A100 80GB PCIe (UUID: GPU-845e3442-e0ca-a376-a3de-50e4cb7fd421)
+GPU 1: NVIDIA A100 80GB PCIe (UUID: GPU-7f73bd51-df5b-f0ba-2cf2-5dadbfa297e1)
+GPU 2: NVIDIA A100 80GB PCIe (UUID: GPU-d666e6d2-5265-29ae-9a6f-d8772807d34f)
+GPU 3: NVIDIA A100 80GB PCIe (UUID: GPU-fd552b1f-e767-edd6-5cc0-69514f1748d2)
 ```
 
 When the nature of a job is such that it does not require exclusive access to a full GPU, the `dev` partition on FRIDA allows also partial allocation of GPUs. This can be done by via the `--gres=shard[:{count}]` parameter, where the value `{count}` can be interpreted as the amount of requested GPU memory in GB. For example the following snippet allocates a 15GB slice on an otherwise 80GB GPU.
