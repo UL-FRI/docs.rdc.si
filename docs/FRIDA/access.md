@@ -35,7 +35,7 @@ $ tsh --proxy=rdc.si --user={username} mfa add --type=TOUCHID --name=touchid.cli
 _kako vzpostaviti passwordless, in kako registrirat 2FA via 5C Nano (tudi OTP z Raivo / google auth ...?)_
 -->
 
-## Frist access
+## First access
 
 Use the `tsh` client to authenticate yourself to the FRIDA Teleport gateway
 ```bash
