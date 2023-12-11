@@ -8,7 +8,7 @@ Requests for acccess, as well as technical questions, should be directed to frid
 
 Usage of FRIDA is monitored to ensure fairshare of the available resources. Stale accounts, i.e. accounts that did not submit any jobs in the last 6 months, are automatically disabled, and the account associated data archived. In the event that the account was the last account of a specific research lab, group, or project, the corresponding reasarch lab, group, or project data is archived as well.
 
-The archived data is kept for 3 additional months, to facilitate an eventual reenablement of the account or a download upon request. After this grace period all data is permanently deleted.
+The archived data is kept for 3 additional months to facilitate an eventual reenablement of the account or download of the associated data upon request. After this grace period all data is permanently deleted.
 
 ## Passwordless access
 
@@ -19,6 +19,9 @@ For best user experience we suggest users setup their accounts for passwordless 
 ## Registration
 
 On granted acces to your request you will receive a Teleport signup link. Open the link and follow instructions to register a password and OTP device. You can also register a hardware key (Apple Touch ID, Windows Hello, or Yubikey BIO) for passwordless web access. Note, however, that you will need to register the hardware key for every browser that you intend to use (this is by design, a security requirement of hardware keys).
+
+!!! warning
+    Registration of an OTP device during the registration process is mandatory, otherwise you will later not be able to register a hardware key for CLI access.
 
 Once the registration is finished follow the official Teleport instructions to install the Teleport Comunity Edition of the `tsh` CLI clinet appropriate to your OS ([macOS](https://goteleport.com/docs/installation/#macos), [Windows](https://goteleport.com/docs/installation/#windows-tsh-client-only), or [Linux](https://goteleport.com/docs/installation/#linux)). If you wish to do so, you can, as an addition, install also [Teleport Connect](https://goteleport.com/docs/connect-your-client/teleport-connect/) (a Graphical User Interface (GUI) desktop client), but for most use cases this is not necessary. Ensure that the `tsh` client install location is included in your `PATH` variable.
 
@@ -42,7 +45,7 @@ Use the `tsh` client to authenticate yourself to the FRIDA Teleport gateway
 $ tsh --proxy=rdc.si --user={username} login
 ```
 
-Upon successfull authentication create or edit the SSH config file corresponding to your OS (`~/.ssh/config` on unix-like, `%userprofile%/.ssh/config` on windows systems), and add to the top the snippet that you obtain by running the command `tsh config`. While doing so, add the following lines to the end of the section marked as `# Common flags for all ... hosts`
+Upon successfull authentication create or edit the SSH config file corresponding to your OS (`~/.ssh/config` on unix-like, `%userprofile%/.ssh/config` on windows systems), and add to the top the snippet that you obtain by running the command `tsh config`. While doing so, add the following lines to the end of the section marked as `# Common flags for all ... hosts`.
 ```bash
 ServerAliveInterval 300
 ServerAliveCountMax 2
@@ -56,7 +59,7 @@ Save the SSH config and you are set to go. From now on you can interact with FRI
 
 ## VSCode and Remote SSH access to the login node
 
-Visual Studio Code's Remote SSH extension in the Remote Explorer does not list wildcard based hosts declared in the SSH config file. To have the FRIDA login node available in Remote Explorer you must add to the SSH config file also the following snippet
+Visual Studio Code's Remote SSH extension (part of the [Remote Development Extension pack](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack)) in the Remote Explorer does not list wildcard based hosts declared in the SSH config file. To have the FRIDA login node available in Remote Explorer you must add to the SSH config file also the following snippet.
 ```bash
 # FRIDA login host for VSCode Remote SSH
 Host login-frida

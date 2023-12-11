@@ -57,7 +57,7 @@ As a further tool in affecting job submission SLURM allows users the ability to 
 
 ## Shared storage
 
-All FRIDA nodes have access to a limited amount of shared data storage. For performance reasons it is served by a raid0 backend. Note that FRIDA does not provide automatic backups, these are entirely in the domain of the end user. Also, as of current settings FRIDA does not enforce shared storage quotas, but this may change in future upgrades. The user folder's access permissions are set to user only. Depending on the groups a user is a member of, they may have access to multiple workspace folders. These folders have the group sticky bit set, so files created within them will automatically have the correct group ownership. All group members will have read and execute rights. Note, however, that group write access is masked, so users that wish to make their files writable by other group members should change permissions by using the `chmod g+w` command. All other security measures dictated by the nature of your data, are the responsibility of the end users.
+All FRIDA nodes have access to a limited amount of shared data storage. For performance reasons it is served by a raid0 backend. Note that FRIDA does not provide automatic backups, these are entirely in the domain of the end user. Also, as of current settings FRIDA does not enforce shared storage quotas, but this may change in future upgrades. Access permissions on the user folder are set to user only. Depending on the groups a user is a member of, they may have access to multiple workspace folders. These folders have the group special ([SGID](https://www.redhat.com/sysadmin/suid-sgid-sticky-bit)) bit set, so files created within them will automatically have the correct group ownership. All group members will have read and execute rights. Note, however, that group write access is masked, so users that wish to make their files writable by other group members should change permissions by using the `chmod g+w` command. All other security measures dictated by the nature of your data, are the responsibility of the end users.
 
 In addition to access to shared storage, compute nodes provide also an even smaller amount of local storage. The amount varies per node and may change with FRIDA's future updates. Local storage is intended as scratch space, the corresponding path is created on a per job basis at job start and purged as soon as the job ends.
 
@@ -76,9 +76,7 @@ Some useful SLURM commands with their typical use case, notes and corresponding 
 | CMD  | typical use case | notes | help |
 |------|:-----------------|:------|-----:|
 | `slurm` | view current status of all resources | this is a custom, FRIDA alias built on top of the more general `sinfo` SLURM command | see SLURM docs on [`sinfo`](https://slurm.schedmd.com/sinfo.html) |
-| `slimits` | view limits imposed on current user | this is a custom, FRIDA alias built on top of the more general `sacctmgr` SLURM command | see SLURM docs on [`sacctmgr`](https://slurm.schedmd.com/sacctmgr.html) |
-| `sqos` | view current status of resources | this is a custom, FRIDA alias built on top of the more general `sacctmgr` SLURM command | see SLURM docs on [`sacctmgr`](https://slurm.schedmd.com/sacctmgr.html) |
-| `salloc` | resource reservation and allocation for interactive use | intended for interactive jobs; upon successful allocation `srun` commands can be used to open a shell with the allocated resources | see SLURM docs on [`sbatch`](https://slurm.schedmd.com/sbatch.html) |
+| `salloc` | resource reservation and allocation for interactive use | intended for interactive jobs; upon successful allocation `srun` commands can be used to open a shell with the allocated resources | see SLURM docs on [`salloc`](https://slurm.schedmd.com/salloc.html) |
 | `srun` | resource reservation, allocation and execution of supplied command on these resources | a blocking command; with `--pty` can be used for interactive jobs; by appending `&` followed by a `wait` the command can be turned into non-blocking | see SLURM docs on [`srun`](https://slurm.schedmd.com/srun.html) |
 | `stunnel` | resource reservation, allocation and setup of a vscode tunnel to these resources | this is a custom, FRIDA alias built on top of the more general `srun --pty` SLURM command; requires a GitHub or Microsoft account for tunnel registration; intended for dvelopment, testing and debgugging | see section [code tunnel](#code-tunnel) |
 | `sbatch` | resource reservation, allocation and execution of non-interactive batch job on these resources | asynchronous execution of sbatch script; when combined with `srun` multiple sub-steps become possible | see SLURM docs on [`sbatch`](https://slurm.schedmd.com/sbatch.html) |
@@ -86,6 +84,9 @@ Some useful SLURM commands with their typical use case, notes and corresponding 
 | `sprio`  | view current priority status on queue | this is a custom FRIDA alias built on top of the more general `sprio` SLURM command | see SLURM docs on [`sprio`](https://slurm.schedmd.com/sprio.html) |
 | `scancel` | cancel a running job | | see SLURM docs on [`scancel`](https://slurm.schedmd.com/scancel.html) |
 | `scontrol show job` | view detailed information of a job | | see SLURM docs on [`scontrol`](https://slurm.schedmd.com/scontrol.html) |
+
+<!-- | `slimits` | view limits imposed on current user | this is a custom, FRIDA alias built on top of the more general `sacctmgr` SLURM command | see SLURM docs on [`sacctmgr`](https://slurm.schedmd.com/sacctmgr.html) |
+| `sqos` | view current status of resources | this is a custom, FRIDA alias built on top of the more general `sacctmgr` SLURM command | see SLURM docs on [`sacctmgr`](https://slurm.schedmd.com/sacctmgr.html) | --->
 
 ### Interactive session
 
