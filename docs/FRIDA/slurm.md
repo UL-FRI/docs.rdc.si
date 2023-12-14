@@ -677,7 +677,7 @@ WORK_DIR=${HOME}/mnist
 # experiment name
 EXPERIMENT_NAME=demo
 
-# set dir
+# experiment dir
 EXPERIMENT_DIR=${WORK_DIR}/exp
 mkdir -p ${EXPERIMENT_DIR}/${EXPERIMENT_NAME}/${version}
 
@@ -727,6 +727,7 @@ echo -e \"\"\"
 \"\"\"
 """ >> $SCRIPT
 
+# install lightning into container, ensure it is run only once per node
 srun \
   --ntasks=${SLURM_JOB_NUM_NODES} \
   --ntasks-per-node=1 \
@@ -736,6 +737,7 @@ srun \
   pip install lightning==2.1.2 \
   || exit 1
 
+# run training script, run in background to receive signal notification prior to timout
 srun \
   --container-name ${SLURM_JOB_NAME} \
   --container-mounts ${EXPERIMENT_DIR}/${EXPERIMENT_NAME}/${version}:/exp,${WORK_DIR}:/train \
@@ -747,7 +749,7 @@ PID=$!
 wait $PID;
 ```
 
-This script can then be run as
+This script can then be run and monitored with the standard commands.
 ``` bash
 ilb@login-frida:~/mnist-demo$ sbatch train_2x2.sbatch --version=v1
 Submitted batch job 602
