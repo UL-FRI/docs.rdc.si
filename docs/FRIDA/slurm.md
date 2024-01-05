@@ -553,7 +553,7 @@ trainer = L.Trainer(
 trainer.fit(model,ckpt_path=last_checkpoint)
 ```
 
-To run this training script on a single node with a single GPU of type NVIDIA A100 40GB SXM4 one needs to prepare the following script (`train_1xA100.sbatch`). The script will reserve 16 vCPU, 32GB RAM, 1 NVIDIA A100 40GB SXM4, then start a `pytorch:23.08-py3` container, mount the current path, install `lightning:2.1.2`, and finally run the training. The standard output of the script will be saved into a file named `slurm-{SLURM_JOB_ID}.out`.
+To run this training script on a single node with a single GPU of type NVIDIA A100 40GB SXM4 one needs to prepare the following script (`train_1xA100.sbatch`). The script will reserve 16 vCPU, 32GB RAM, and 1 NVIDIA A100 40GB SXM4 for 20 minutes. It will also give the job a name, for easier finding when listing the partition queue status. As part of the actual job steps, it will start a `pytorch:23.08-py3` container, mount the current path, install `lightning:2.1.2`, and finally run the training, all with one single `srun` command. Without additional parameters, the `srun` command will use all of the allocated resources. The standard output of the script will be saved into a file named `slurm-{SLURM_JOB_ID}.out`.
 ``` bash title="train_1xA100.sbatch"
 #!/bin/bash
 #SBATCH --job-name=mnist-demo
@@ -778,10 +778,10 @@ Show the current status of resources:
 ```bash
 ilb@login-frida:~$ slurm
 PARTITION NODELIST      NODES CPUS(A/I/O/T)     GRES                                                   GRES_USED
-frida     ana           1     0/112/0/112       gpu:A100_80GB:8(S:0-1),shard:A100_80GB:640(S:0-1)      gpu:A100_80GB:0(IDX:N/A),shard:A100_80GB:0(IDX:N/A)
+frida     ana           1     0/112/0/112       gpu:A100_80GB:8(S:0-1),shard:A100_80GB:640(S:0-1)      gpu:A100_80GB:0(IDX:N/A),shard:A100_80GB:0(0/80,0/80,0/80,0/80,0/80,0/80,0/80,0/80)
 frida     axa           1     0/256/0/256       gpu:A100:8(S:0-1)                                      gpu:A100:0(IDX:N/A),shard:0
 frida     ixh           1     0/224/0/224       gpu:H100:8(S:0-1)                                      gpu:H100:0(IDX:N/A),shard:0
-dev*      ana           1     0/112/0/112       gpu:A100_80GB:8(S:0-1),shard:A100_80GB:640(S:0-1)      gpu:A100_80GB:0(IDX:N/A),shard:A100_80GB:0(IDX:N/A)
+dev*      ana           1     0/112/0/112       gpu:A100_80GB:8(S:0-1),shard:A100_80GB:640(S:0-1)      gpu:A100_80GB:0(IDX:N/A),shard:A100_80GB:0(0/80,0/80,0/80,0/80,0/80,0/80,0/80,0/80)
 ```
 
 Show the user/account associated limits:
