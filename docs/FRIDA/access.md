@@ -28,7 +28,7 @@ Once the registration is finished, follow the official Teleport instructions to 
 
 Now you can register your hardware key (Apple Touch ID, Windows Hello, or Yubikey BIO) to enable passwordless infrastructure access also via CLI. To do so, you execute the following command in your terminal. For successful registration, you will need to provide your password and second-factor key (OTP).
 ```bash
-$ tsh --proxy=rdc.si --user={username} mfa add --type=TOUCHID --name=touchid.cli --auth=local --mfa-mode=otp
+$ tsh --proxy=rdc.si --user={username} --mfa-mode=otp --auth=local mfa add --type=TOUCHID --name=touchid.cli
 ```
 
 !!! note
