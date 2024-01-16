@@ -79,4 +79,4 @@ Host login-frida
 ```
 
 !!! note
-    To be compatible with Teleport connections, Visual Studio Code needs to be configured properly, i.e. the `Remote.SSH: Use Local Server` config setting must be disabled. For details see https://goteleport.com/docs/server-access/guides/vscode/#step-23-configure-visual-studio-code.
+    To be compatible with Teleport connections, Visual Studio Code needs to be configured properly, i.e. the `Remote.SSH: Use Local Server` config setting must be disabled. For details see the official [Teleport documentation](https://goteleport.com/docs/server-access/guides/vscode/#step-23-configure-visual-studio-code).
