@@ -24,15 +24,16 @@ Once granted access to your request, you will receive a Teleport signup link. Op
 !!! warning
     Registration of an OTP device during the registration process is mandatory, otherwise you will later not be able to register a hardware key for CLI access.
 
-!!! note
-    In the case of using Apple TouchID you will need to register it on your machine twice (or multiple times): once for CLI access, and once for every browser that you wish to use. This is by design, a security requirement of Apple TouchID.
-
 Once the registration is finished, follow the official Teleport instructions to install the Teleport Community Edition of the `tsh` CLI client appropriate to your OS ([macOS](https://goteleport.com/docs/installation/#macos), [Windows](https://goteleport.com/docs/installation/#windows-tsh-client-only), or [Linux](https://goteleport.com/docs/installation/#linux)). Ensure that the `tsh` client install location is included in your `PATH` variable. If you wish to do so, you can, as an addition, install [Teleport Connect](https://goteleport.com/docs/connect-your-client/teleport-connect/) (a Graphical User Interface (GUI) desktop client), but for most use cases this is not necessary.
 
-Now you can register your hardware key (Apple Touch ID, Windows Hello, or Yubikey) to enable passwordless infrastructure access also via CLI. To do so, you execute the following command in your terminal. For successful registration, you will need to provide your password and second-factor key (OTP).
+Now you can register your hardware key (Apple Touch ID, Windows Hello, or Yubikey BIO) to enable passwordless infrastructure access also via CLI. To do so, you execute the following command in your terminal. For successful registration, you will need to provide your password and second-factor key (OTP).
 ```bash
-$ tsh --proxy=rdc.si --user={username} mfa add --type=TOUCHID --name=touchid.cli --mfa-mode=otp
+$ tsh --proxy=rdc.si --user={username} mfa add --type=TOUCHID --name=touchid.cli --auth=local --mfa-mode=otp
 ```
+
+!!! note
+    In contrast to Windows Hello and Yubikey, you will need to register your Apple TouchID multiple times: once for CLI access, and once for every browser that you wish to use. This is by design, a security requirement of Apple TouchID.
+
 
 <!--
 **Kako je z več browserji?, Kako je z registracijo mfa v CLI?**
