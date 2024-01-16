@@ -14,20 +14,24 @@ The archived data is kept for 3 additional months to facilitate an eventual reen
 
 In line with the UL security policies, access to FRIDA is strictly multi-factor authentication (MFA) based. To achieve the most seamless integration and provide the best possible user experience, FRIDA opted for Teleport (see [How Teleport Works](https://goteleport.com/how-it-works/)) and the corresponding `tsh` Command Line Interface (CLI) client (see [Using the tsh Command Line Tool](https://goteleport.com/docs/connect-your-client/introduction/)).
 
-For **the best user experience**, we suggest users set up their accounts for **passwordless access** via Apple Touch ID, Windows Hello or [Yubikey BIO](https://www.yubico.com/si/product/yubikey-bio-series/yubikey-c-bio/). A less user friendly alternative is 2FA via hardware token (eg. [Youbikey 5C Nano](https://www.yubico.com/si/product/yubikey-5c-nano/)) or OTP (e.g.[Raivo](https://raivo-otp.com) or some other OTP Authenticator App).
+!!! tip
+    For the best user experience, we suggest users set up their accounts for passwordless access via Apple Touch ID, Windows Hello or [Yubikey BIO](https://www.yubico.com/si/product/yubikey-bio-series/yubikey-c-bio/). A less user-friendly alternative is 2FA via hardware token (e.g. [Youbikey 5C Nano](https://www.yubico.com/si/product/yubikey-5c-nano/)) or OTP (e.g. [Raivo](https://raivo-otp.com) or some other OTP Authenticator App).
 
 ## Registration
 
-Once granted access to your request, you will receive a Teleport signup link. Open the link and follow the instructions to register a password and OTP device. You can also register a hardware key (Apple Touch ID, Windows Hello, or Yubikey) for passwordless web access. Note for TouchID: you will need to register TouchID twice on your machine: once for browser and once for CLI access. This is by design, a security requirement of TouchID.
+Once granted access to your request, you will receive a Teleport signup link. Open the link and follow the instructions to register a password and OTP device. You can also register a hardware key (Apple Touch ID, Windows Hello, or Yubikey) for passwordless web access.
 
 !!! warning
     Registration of an OTP device during the registration process is mandatory, otherwise you will later not be able to register a hardware key for CLI access.
 
-Once the registration is finished, follow the official Teleport instructions to install the Teleport Community Edition of the `tsh` CLI client appropriate to your OS ([macOS](https://goteleport.com/docs/installation/#macos), [Windows](https://goteleport.com/docs/installation/#windows-tsh-client-only), or [Linux](https://goteleport.com/docs/installation/#linux)). If you wish to do so, you can, as an addition, install [Teleport Connect](https://goteleport.com/docs/connect-your-client/teleport-connect/) (a Graphical User Interface (GUI) desktop client), but for most use cases this is not necessary. Ensure that the `tsh` client install location is included in your `PATH` variable.
+!!! note
+    In the case of using Apple TouchID you will need to register it on your machine twice (or multiple times): once for CLI access, and once for every browser that you wish to use. This is by design, a security requirement of Apple TouchID.
 
-Now you can register your hardware key (Apple Touch ID, Windows Hello, or Yubikey BIO) to enable passwordless infrastructure access also via CLI. To do so, you execute the following command in your terminal. For successful registration, you will need to provide your password and second-factor key (OTP).
+Once the registration is finished, follow the official Teleport instructions to install the Teleport Community Edition of the `tsh` CLI client appropriate to your OS ([macOS](https://goteleport.com/docs/installation/#macos), [Windows](https://goteleport.com/docs/installation/#windows-tsh-client-only), or [Linux](https://goteleport.com/docs/installation/#linux)). Ensure that the `tsh` client install location is included in your `PATH` variable. If you wish to do so, you can, as an addition, install [Teleport Connect](https://goteleport.com/docs/connect-your-client/teleport-connect/) (a Graphical User Interface (GUI) desktop client), but for most use cases this is not necessary.
+
+Now you can register your hardware key (Apple Touch ID, Windows Hello, or Yubikey) to enable passwordless infrastructure access also via CLI. To do so, you execute the following command in your terminal. For successful registration, you will need to provide your password and second-factor key (OTP).
 ```bash
-$ tsh --proxy=rdc.si --user={username} mfa add --type=TOUCHID --name=touchid.cli
+$ tsh --proxy=rdc.si --user={username} mfa add --type=TOUCHID --name=touchid.cli --mfa-mode=otp
 ```
 
 <!--
@@ -45,7 +49,12 @@ Use the `tsh` client to authenticate yourself to the FRIDA Teleport gateway
 $ tsh --proxy=rdc.si --user={username} login
 ```
 
-Upon successful authentication create or edit the SSH config file corresponding to your OS (`~/.ssh/config` on Unix-like, `%userprofile%/.ssh/config` on Windows systems), and add to the top the snippet that you obtain by running the command `tsh config`. While doing so, add the following lines to the end of the section marked as `# Common flags for all ... hosts`.
+Upon successful authentication create or edit the SSH config file corresponding to your OS (`~/.ssh/config` on Unix-like, `%userprofile%/.ssh/config` on Windows systems), and add to the top the snippet that you obtain by running the following command.
+```bash
+$ tsh config
+```
+
+While doing so, add also the following lines to the end of the section marked as `# Common flags for all ... hosts`. These lines are not mandatory but will reduce the number of times that you need to reauthenticate yourself, as well as, use a forwarding agent to automatically forward your locally stored SSH keys so that you can access other machines with your private SSH keys.
 ```bash
 ServerAliveInterval 300
 ServerAliveCountMax 2
@@ -68,3 +77,6 @@ Host login-frida
     Port 3022
     ProxyCommand "/usr/local/bin/tsh" proxy ssh --cluster=rdc.si --proxy=rdc.si:443 %r@%h:%p
 ```
+
+!!! note
+    To be compatible with Teleport connections, Visual Studio Code needs to be configured properly, i.e. the `Remote.SSH: Use Local Server` config setting must be disabled. For details see https://goteleport.com/docs/server-access/guides/vscode/#step-23-configure-visual-studio-code.
