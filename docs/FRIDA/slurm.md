@@ -61,11 +61,11 @@ All FRIDA nodes have access to a limited amount of shared data storage. For perf
 
 In addition to access to shared storage, compute nodes provide also an even smaller amount of local storage. The amount varies per node and may change with FRIDA's future updates. Local storage is intended as scratch space, the corresponding path is created on a per-job basis at job start and purged as soon as the job ends.
 
-| TYPE      | backend | backups | access  | location                            | env        | quota        |
-|-----------|--------:|--------:|--------:|------------------------------------:|-----------:|-------------:|
-| shared    | raid0   | no      | user    | `/shared/home/$USER`                | `$HOME`    |           - |
-| shared    | raid0   | no      | group   | `/shared/workspace/$WORKSPACEID`    | -           |           - |
-| scratch   | varies  | no      | job     | `/local/scratch/$USER/$SLURM_JOBID` | `$SCRATCH` |           - |
+| TYPE      | backend | backups | access  | location                                  | env        | quota        |
+|-----------|--------:|--------:|--------:|------------------------------------------:|-----------:|-------------:|
+| shared    | raid0   | no      | user    | `/shared/home/$USER`                      | `$HOME`    |            - |
+| shared    | raid0   | no      | group   | `/shared/workspace/$SLURM_JOB_ACCOUNT`    | `$WORK`    |            - |
+| scratch   | varies  | no      | job     | `/local/scratch/$USER/$SLURM_JOB_ID`      | `$SCRATCH` |            - |
 
 ## Usage
 
