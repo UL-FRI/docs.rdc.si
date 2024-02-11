@@ -12,7 +12,7 @@ The archived data is kept for 3 additional months to facilitate an eventual reen
 
 ## Passwordless access
 
-In line with the UL security policies, access to FRIDA is strictly multi-factor authentication (MFA) based. To achieve the most seamless integration and provide the best possible user experience, FRIDA opted for Teleport (see [How Teleport Works](https://goteleport.com/how-it-works/)) and the corresponding `tsh` Command Line Interface (CLI) client (see [Using the tsh Command Line Tool](https://goteleport.com/docs/connect-your-client/introduction/)).
+In line with the UL security policies, access to FRIDA is strictly multi-factor authentication (MFA) based. To achieve the most seamless integration and provide the best possible user experience, FRIDA opted for Teleport (see [How Teleport Works](https://goteleport.com/how-it-works/)) and the corresponding `tsh` Command Line Interface (CLI) client (see [Using the tsh Command Line Tool](https://goteleport.com/docs/connect-your-client/introduction/)). Teleport works via HTTPS tunneling, so you can also use it from any restricted networks that prohibit normal SSH connections (port 22/TCP).
 
 !!! tip
     For the best user experience, we suggest users set up their accounts for passwordless access via Apple Touch ID, Windows Hello or [Yubikey BIO](https://www.yubico.com/si/product/yubikey-bio-series/yubikey-c-bio/). A less user-friendly alternative is 2FA via hardware token (e.g. [Youbikey 5C Nano](https://www.yubico.com/si/product/yubikey-5c-nano/)) or OTP (e.g. [Raivo](https://raivo-otp.com) or some other OTP Authenticator App).
