@@ -19,7 +19,7 @@ In line with the UL security policies, access to FRIDA is strictly multi-factor 
 
 ## Registration
 
-Once granted access to your request, you will receive a Teleport signup link. Open the link, click on _Other sign-in options_ and follow the instructions to register a password and OTP device. You can also register a hardware key (Apple Touch ID, Windows Hello, or Yubikey) for passwordless web access.
+Once granted access to your request, you will receive a Teleport signup link. Open the link, click on _Use password_ and follow the instructions to register a password and OTP device. You can also register a hardware key (Apple Touch ID, Windows Hello, or Yubikey) for passwordless web access.
 
 !!! warning
     Registration of a password and OTP device during the registration process is mandatory, otherwise you will later not be able to register a hardware key for CLI access.
@@ -52,6 +52,9 @@ Use the `tsh` client to authenticate yourself to the FRIDA Teleport gateway
 ```bash
 $ tsh --proxy=rdc.si --user={username} login
 ```
+
+!!! note
+    FRIDA is configured to be passwordless first, meaning, in case you do not enable passwordless CLI access, you must add `--mfa-mode=otp --auth=local` to all `tsh --proxy=rdc.si` commands.
 
 Upon successful authentication create or edit the SSH config file corresponding to your OS (`~/.ssh/config` on Unix-like, `%userprofile%/.ssh/config` on Windows systems), and add to the top the snippet that you obtain by running the following command.
 ```bash
