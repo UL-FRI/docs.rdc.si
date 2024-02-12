@@ -71,12 +71,18 @@ Save the SSH config and you are set to go. From now on you can interact with FRI
 
 ## VSCode and Remote SSH access to the login node
 
-Visual Studio Code's Remote SSH extension (part of the [Remote Development Extension pack](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack)) in the Remote Explorer does not list wildcard-based hosts declared in the SSH config file. To have the FRIDA login node available in Remote Explorer you must add to the SSH config file also the following snippet.
+Visual Studio Code's Remote SSH extension (part of the [Remote Development Extension pack](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack)) in the Remote Explorer does not list wildcard-based hosts declared in the SSH config file. To have the FRIDA login node available in Remote Explorer you must add it to the SSH config file explicitly.
 ```bash
 # FRIDA login host for VSCode Remote SSH
 Host login-frida
     Hostname login-frida.rdc.si
     User {username}
+    # copy from '# Common flags for all rdc.si hosts'
+    UserKnownHostsFile "/Users/{username}/.tsh/known_hosts"
+    IdentityFile "/Users/{username}/.tsh/keys/rdc.si/{username}-admin"
+    CertificateFile "/Users/{username}/.tsh/keys/rdc.si/{username}-admin-ssh/rdc.si-cert.pub"
+    HostKeyAlgorithms rsa-sha2-512-cert-v01@openssh.com,rsa-sha2-256-cert-v01@openssh.com,ssh-rsa-cert-v01@openssh.com
+    # copy from '# Flags for all rdc.si hosts except the proxy'
     Port 3022
     ProxyCommand "/usr/local/bin/tsh" proxy ssh --cluster=rdc.si --proxy=rdc.si:443 %r@%h:%p
 ```
