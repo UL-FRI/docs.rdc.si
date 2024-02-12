@@ -85,6 +85,12 @@ Host login-frida
     # copy from '# Flags for all rdc.si hosts except the proxy'
     Port 3022
     ProxyCommand "/usr/local/bin/tsh" proxy ssh --cluster=rdc.si --proxy=rdc.si:443 %r@%h:%p
+    # copy from '# Flags for all rdc.si hosts except the proxy', optional lines that were appended during First access
+    ServerAliveInterval 300
+    ServerAliveCountMax 2
+    TCPKeepAlive yes
+    ForwardAgent yes
+    AddKeysToAgent yes
 ```
 
 !!! note
