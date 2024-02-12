@@ -19,12 +19,15 @@ In line with the UL security policies, access to FRIDA is strictly multi-factor 
 
 ## Registration
 
-Once granted access to your request, you will receive a Teleport signup link. Open the link and follow the instructions to register a password and OTP device. You can also register a hardware key (Apple Touch ID, Windows Hello, or Yubikey) for passwordless web access.
+Once granted access to your request, you will receive a Teleport signup link. Open the link, click on _Other sign-in options_ and follow the instructions to register a password and OTP device. You can also register a hardware key (Apple Touch ID, Windows Hello, or Yubikey) for passwordless web access.
 
 !!! warning
-    Registration of an OTP device during the registration process is mandatory, otherwise you will later not be able to register a hardware key for CLI access.
+    Registration of a password and OTP device during the registration process is mandatory, otherwise you will later not be able to register a hardware key for CLI access.
 
-Once the registration is finished, follow the official Teleport instructions to install the Teleport Community Edition of the `tsh` CLI client appropriate to your OS ([macOS](https://goteleport.com/docs/installation/#macos) (get .pkg with only `tsh`), [Windows](https://goteleport.com/docs/installation/#windows-tsh-client-only), or [Linux](https://goteleport.com/docs/installation/#linux)). Ensure that the `tsh` client install location is included in your `PATH` variable. If you wish to do so, you can, as an addition, install [Teleport Connect](https://goteleport.com/docs/connect-your-client/teleport-connect/) (a Graphical User Interface (GUI) desktop client), but for most use cases this is not necessary.
+Once the registration is finished, follow the official Teleport instructions to install the Teleport Community Edition of the `tsh` CLI client appropriate to your OS ([macOS](https://goteleport.com/docs/installation/#macos), [Windows](https://goteleport.com/docs/installation/#windows-tsh-client-only), or [Linux](https://goteleport.com/docs/installation/#linux)). Ensure that the `tsh` client install location is included in your `PATH` variable. If you wish to do so, you can, as an addition, install [Teleport Connect](https://goteleport.com/docs/connect-your-client/teleport-connect/) (a Graphical User Interface (GUI) desktop client), but for most use cases this is not necessary.
+
+!!! warning
+    To have TouchID support on macOS make sure to install the package that contains only the `tsh` binary. Support can be checked by running `tsh touchid diag`.
 
 Now you can register your hardware key (Apple Touch ID, Windows Hello, or Yubikey BIO) to enable passwordless infrastructure access also via CLI. To do so, you execute the following command in your terminal. For successful registration, you will need to provide your password and second-factor key (OTP).
 ```bash
@@ -60,7 +63,6 @@ While doing so, add also the following lines to the end of the section marked as
 ServerAliveInterval 300
 ServerAliveCountMax 2
 TCPKeepAlive yes
-UseKeychain yes
 ForwardAgent yes
 AddKeysToAgent yes
 ```
