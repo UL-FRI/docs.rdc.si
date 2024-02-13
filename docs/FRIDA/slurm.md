@@ -414,7 +414,7 @@ Interactive sessions are typically run in the foreground, require a terminal, an
 
 Once development, testing, and/or debugging is complete, at least in ML/AI training tasks, the datasets typically become such that jobs last much longer than a normal SSH session. They can also be safely run without any interaction and also without a terminal. In Slurm parlance these types of jobs are termed batch jobs. A batch job is a shell script (typically marked by a `.sbatch` extension), whose header provides Slurm parameters that specify the resources needed to run the job. For details of all available parameters consult the official [Slurm documentation](https://slurm.schedmd.com/sbatch.html). Below is a very brief deep-dive introduction to Slurm batch jobs.
 
-Assume a toy MNIST training script based on Pytorch and Lightning, named `tarin.py`.
+Assume a toy MNIST training script based on Pytorch and Lightning, named `train.py`.
 ``` py title="train.py"
 import os
 import torch
