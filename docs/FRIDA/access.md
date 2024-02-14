@@ -29,9 +29,27 @@ Once the registration is finished, follow the official Teleport instructions to 
 !!! warning
     To have TouchID support on macOS make sure to install the package that contains only the `tsh` binary. Support can be checked by running `tsh touchid diag`.
 
-Now you can register your hardware key (Apple Touch ID, Windows Hello, or Yubikey BIO) to enable passwordless infrastructure access also via CLI. To do so, you execute the following command in your terminal. For successful registration, you will need to provide your password and second-factor key (OTP).
+Now you can register your hardware key (Apple Touch ID, Windows Hello, or Yubikey BIO) to enable passwordless infrastructure access also via CLI. To do so, you execute the following commands in your terminal. For successful registration, you will need to provide your password and second-factor key (OTP).
 ```bash
+$ tsh --proxy=rdc.si --user={username} --mfa-mode=otp --auth=local login
+Enter password for Teleport user {username}:
+Enter an OTP code from a device:
+> Profile URL:        https://rdc.si:443
+  Logged in as:       {username}
+  Cluster:            rdc.si
+  Roles:              access_app_grafana_frida, access_frida
+  Logins:             {username}
+  Kubernetes:         enabled
+  Valid until:        2024-02-14 19:35:00 +0100 CET [valid for 8h0m0s]
+  Extensions:         login-ip, permit-agent-forwarding, permit-port-forwarding, permit-pty, private-key-policy
+
+Did you know? Teleport Connect offers the power of tsh in a desktop app.
+Learn more at https://goteleport.com/docs/connect-your-client/teleport-connect/
+
 $ tsh --proxy=rdc.si --user={username} --mfa-mode=otp --auth=local mfa add --type=TOUCHID --name=touchid.cli
+Enter an OTP code from a *registered* device:
+Using platform authenticator, follow the OS prompt
+MFA device "touchid.cli" added.
 ```
 
 !!! note
