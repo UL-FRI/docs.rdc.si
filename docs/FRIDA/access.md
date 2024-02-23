@@ -100,8 +100,8 @@ Host login-frida
     User {username}
     # copy from '# Common flags for all rdc.si hosts'
     UserKnownHostsFile "/Users/{username}/.tsh/known_hosts"
-    IdentityFile "/Users/{username}/.tsh/keys/rdc.si/{username}-admin"
-    CertificateFile "/Users/{username}/.tsh/keys/rdc.si/{username}-admin-ssh/rdc.si-cert.pub"
+    IdentityFile "/Users/{username}/.tsh/keys/rdc.si/{username}"
+    CertificateFile "/Users/{username}/.tsh/keys/rdc.si/{username}-ssh/rdc.si-cert.pub"
     HostKeyAlgorithms rsa-sha2-512-cert-v01@openssh.com,rsa-sha2-256-cert-v01@openssh.com,ssh-rsa-cert-v01@openssh.com
     # copy from '# Flags for all rdc.si hosts except the proxy'
     Port 3022
