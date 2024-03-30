@@ -93,26 +93,77 @@ Save the SSH config and you are set to go. From now on you can interact with FRI
 ## VSCode and Remote SSH access to the login node
 
 Visual Studio Code's Remote SSH extension (part of the [Remote Development Extension pack](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack)) in the Remote Explorer does not list wildcard-based hosts declared in the SSH config file. To have the FRIDA login node available in Remote Explorer you must add it to the SSH config file explicitly.
-```bash
-# FRIDA login host for VSCode Remote SSH
-Host login-frida
-    Hostname login-frida.rdc.si
-    User {username}
-    # copy from '# Common flags for all rdc.si hosts'
-    UserKnownHostsFile "/Users/{username}/.tsh/known_hosts"
-    IdentityFile "/Users/{username}/.tsh/keys/rdc.si/{username}-admin"
-    CertificateFile "/Users/{username}/.tsh/keys/rdc.si/{username}-admin-ssh/rdc.si-cert.pub"
-    HostKeyAlgorithms rsa-sha2-512-cert-v01@openssh.com,rsa-sha2-256-cert-v01@openssh.com,ssh-rsa-cert-v01@openssh.com
-    # copy from '# Flags for all rdc.si hosts except the proxy'
-    Port 3022
-    ProxyCommand "/usr/local/bin/tsh" proxy ssh --cluster=rdc.si --proxy=rdc.si:443 %r@%h:%p
-    # copy from '# Flags for all rdc.si hosts except the proxy', optional lines that were appended during First access
-    ServerAliveInterval 300
-    ServerAliveCountMax 2
-    TCPKeepAlive yes
-    ForwardAgent yes
-    AddKeysToAgent yes
-```
+
+=== "macOS"
+
+    ```bash
+    # FRIDA login host for VSCode Remote SSH
+    Host login-frida
+        Hostname login-frida.rdc.si
+        User {username}
+        # copy from '# Common flags for all rdc.si hosts'
+        UserKnownHostsFile "/Users/{username}/.tsh/known_hosts"
+        IdentityFile "/Users/{username}/.tsh/keys/rdc.si/{username}"
+        CertificateFile "/Users/{username}/.tsh/keys/rdc.si/{username}-ssh/rdc.si-cert.pub"
+        HostKeyAlgorithms rsa-sha2-512-cert-v01@openssh.com,rsa-sha2-256-cert-v01@openssh.com,ssh-rsa-cert-v01@openssh.com
+        # copy from '# Flags for all rdc.si hosts except the proxy'
+        Port 3022
+        ProxyCommand "/usr/local/bin/tsh" proxy ssh --cluster=rdc.si --proxy=rdc.si:443 %r@%h:%p
+        # copy from '# Flags for all rdc.si hosts except the proxy', optional lines that were appended during First access
+        ServerAliveInterval 300
+        ServerAliveCountMax 2
+        TCPKeepAlive yes
+        ForwardAgent yes
+        AddKeysToAgent yes
+    ```
+
+=== "Linux"
+
+    ```bash
+    # FRIDA login host for VSCode Remote SSH
+    Host login-frida
+        Hostname login-frida.rdc.si
+        User {username}
+        # copy from '# Common flags for all rdc.si hosts'
+        UserKnownHostsFile "/home/{username}/.tsh/known_hosts"
+        IdentityFile "/home/{username}/.tsh/keys/rdc.si/{username}"
+        CertificateFile "/home/{username}/.tsh/keys/rdc.si/{username}-ssh/rdc.si-cert.pub"
+        HostKeyAlgorithms rsa-sha2-512-cert-v01@openssh.com,rsa-sha2-256-cert-v01@openssh.com,ssh-rsa-cert-v01@openssh.com
+        # copy from '# Flags for all rdc.si hosts except the proxy'
+        Port 3022
+        ProxyCommand "/usr/local/bin/tsh" proxy ssh --cluster=rdc.si --proxy=rdc.si:443 %r@%h:%p
+        # copy from '# Flags for all rdc.si hosts except the proxy', optional lines that were appended during First access
+        ServerAliveInterval 300
+        ServerAliveCountMax 2
+        TCPKeepAlive yes
+        ForwardAgent yes
+        AddKeysToAgent yes
+    ```
+
+=== "Win"
+
+    Make sure that `tsh.exe` is on your PATH.
+    
+    ```bash
+    # FRIDA login host for VSCode Remote SSH
+    Host login-frida
+        Hostname login-frida.rdc.si
+        User {username}
+        # copy from '# Common flags for all rdc.si hosts'
+        UserKnownHostsFile "C:\Users\{username}\.tsh\known_hosts"
+        IdentityFile "C:\Users\{username}\.tsh\keys\rdc.si\{username}"
+        CertificateFile "C:\Users\{username}\.tsh/keys\rdc.si\{username}-ssh\rdc.si-cert.pub"
+        HostKeyAlgorithms rsa-sha2-512-cert-v01@openssh.com,rsa-sha2-256-cert-v01@openssh.com,ssh-rsa-cert-v01@openssh.com
+        # copy from '# Flags for all rdc.si hosts except the proxy'
+        Port 3022
+        ProxyCommand tsh proxy ssh --cluster=rdc.si --proxy=rdc.si:443 %r@%h:%p
+        # copy from '# Flags for all rdc.si hosts except the proxy', optional lines that were appended during First access
+        ServerAliveInterval 300
+        ServerAliveCountMax 2
+        TCPKeepAlive yes
+        ForwardAgent yes
+        AddKeysToAgent yes
+    ```
 
 !!! note
     To be compatible with Teleport connections, Visual Studio Code needs to be configured properly, i.e. the `Remote.SSH: Use Local Server` config setting must be disabled. For details see the official [Teleport documentation](https://goteleport.com/docs/server-access/guides/vscode/#step-23-configure-visual-studio-code).
