@@ -42,6 +42,9 @@ nav:
     - About: FRIDA/about.md
     - Access: FRIDA/access.md
     - Slurm: FRIDA/slurm.md
+  - FRIKA:
+    - About: FRIKA/about.md
+    - Access: FRIKA/access.md
 markdown_extensions:
   - admonition
   - pymdownx.emoji:
