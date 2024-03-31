@@ -193,7 +193,7 @@ exit
 ilb@login-frida:~$
 ```
 
-The following snippet allocates resources on `dev` partition, then starts an `ubuntu:20.04` container and checks if `file` utility exists. The command results in an error indicating that the utility is not present. It then creates a named container that is based on `ubuntu:20.04` and installs the utility. Then it rechecks if the utility exists in the named container. The snippet ends by releasing the resources, which jointly purges the named container.
+The following snippet allocates resources on `dev` partition, then starts an `ubuntu:20.04` container and checks if `file` utility exists. The command results in an error indicating that the utility is not present. The snippet then creates a named container that is based on `ubuntu:20.04` and installs the utility. Then it rechecks if the utility exists in the named container. The snippet ends by releasing the resources, which jointly purges the named container.
 ```bash
 ilb@login-frida:~$ salloc -p dev
 salloc: Granted job allocation 526
@@ -270,7 +270,7 @@ salloc: Job allocation 526 has been revoked.
 ilb@login-frida:~$
 ```
 
-Using named containers becomes handy on occasions when one needs to open a second shell inside the same container (within the same job with the same resources). Assuming a job with id `527` is already running, that it was created with the parameter `--container-name=myubuntu`, and that it installed the `file` utility. The next snippet shows how to open a second bash shell in the same container.
+Using named containers becomes handy on occasions when one needs to open a second shell inside the same container (within the same job with the same resources). Let's assume a job with id `527` that was created with the parameter `--container-name=myubuntu` is running. Let's also assume that the `file` utility has been installed. The next snippet shows how to open a second bash shell into the same container.
 ```bash
 ilb@login-frida:~$ srun --overlap --jobid=527 --container-name=myubuntu --pty bash
 
@@ -283,7 +283,7 @@ exit
 ilb@login-frida:~$
 ```
 
-Without the use of named containers, the task becomes more challenging as one needs to first start an overlapping shell on the node, find out the PID of the enroot container in question, and then use enroot commands to start a bash shell in that container. The following snippet shows an example.
+Without the use of named containers, the task becomes more challenging as one needs to first start an overlapping shell on the node, find out the PID of the Enroot container in question, and then use Enroot commands to start a bash shell in that container. The following snippet shows an example.
 ```bash
 ilb@login-frida:~$ srun --overlap --jobid=527 --pty bash
 
@@ -338,11 +338,23 @@ exit
 ilb@login-frida:~$
 ```
 
-<!--
-##### Private container registries
+#### Private container registries
 
-https://github.com/NVIDIA/enroot/blob/fb267cbebceced24556e05c7661fbd9a958f5540/doc/cmd/import.md#description
--->
+Enroot uses credentials configured through `$HOME/.config/enroot/.credentials`. Because the Pyxis/Enroot bundle pulls containers on the fly during the Slurm job start, the credentials file needs to be accessible in a shared filesystem which all nodes can access at job start. The file format of the credentials file is the following.
+
+``` bash title="$HOME/.config/enroot/.credentials"
+machine <hostname> login <username> password <password>
+```
+
+For example, credentials for the NVIDIA NGC registry would look as follows.
+
+```bash
+# NVIDIA GPU Cloud (both endpoints are required)
+machine nvcr.io login $oauthtoken password <token>
+machine authn.nvidia.com login $oauthtoken password <token>
+```
+
+For further details consult the [Enroot documentation](https://github.com/NVIDIA/enroot/blob/fb267cbebceced24556e05c7661fbd9a958f5540/doc/cmd/import.md#description), which provides additional examples.
 
 #### Requesting GPUs
 
