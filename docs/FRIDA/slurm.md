@@ -6,13 +6,13 @@ Reservation and management of FRIDA compute resources is based on Slurm ([Simple
 
 FRIDA currently consists of one login node and 3 compute nodes with characteristics listed in the table below. Although the login node has Python 3.10 and venv pre-installed, these are provided only to aid in quick scripting, and the login node is not intended for any intensive processing. Refrain from installing user space additions like conda and others. All computationally intensive tasks must be submitted as Slurm jobs via the corresponding Slurm commands. User accounts that fail to adhere to these guidelines will be subject to suspension.
 
-| NODE  | ROLE    | vCPU | MEM   | nGPU | GPU type       |
-|-------|--------:|-----:|------:|-----:|---------------:|
-| login | login   |   64 | 256GB |    - |              - |
-| aga   | compute |  256 | 512GB |    4 | A100 40GB SXM4 |
-| ana   | compute |  112 |   1TB |    8 | A100 80GB PCIe |
-| axa   | compute |  256 |   2TB |    8 | A100 40GB SXM4 |
-| ixh   | compute |  224 |   2TB |    8 | H100 80GB HBM3 |
+| NODE       | ROLE    | vCPU | MEM   | nGPU | GPU type       |
+|------------|--------:|-----:|------:|-----:|---------------:|
+| login      | login   |   64 | 256GB |    - |              - |
+| aga[1-2]   | compute |  256 | 512GB |    4 | A100 40GB SXM4 |
+| ana        | compute |  112 |   1TB |    8 | A100 80GB PCIe |
+| axa        | compute |  256 |   2TB |    8 | A100 40GB SXM4 |
+| ixh        | compute |  224 |   2TB |    8 | H100 80GB HBM3 |
 
 <!--
 | NODE    | CPU_BRD | CPU_GEN     | CPU_SKU         | GPU_BRD | GPU_GEN | GPU_MEM | GPU_SKU        |
@@ -30,13 +30,13 @@ FRIDA currently consists of one login node and 3 compute nodes with characterist
 
 Within Slurm subsets of compute nodes are organized into partitions. On FRIDA there are two types of partitions, general and private (available to selected research labs or groups based on their co-funding of FRIDA). Interactive jobs can be run only on `dev` partition. Production runs are not permitted in interactive jobs, `dev` partition is thus intended to be used for code development, testing, and debugging only.
 
-| PARTITION | TYPE    |   nodes | default time |     max time |                   available gres types |
-|-----------|--------:|--------:|-------------:|-------------:|---------------------------------------:|
-| frida     | general |     all |           4h |           7d | gpu, gpu:A100, gpu:A100_80GB, gpu:H100 |
-| dev       | general | aga,ana |           2h |          12h | shard, gpu, gpu:A100, gpu:A100_80GB    |
-| _exp_     | general |       - |           2h |           1d | _Planed for Q1 2024_                   |
-| cjvt      | private |     axa |           4h |           4d | gpu, gpu:A100                          |
-| psuiis    | private |     ana |           4h |           4d | gpu, gpu:A100_80GB                     |
+| PARTITION | TYPE    |        nodes | default time |     max time |                   available gres types |
+|-----------|--------:|-------------:|-------------:|-------------:|---------------------------------------:|
+| frida     | general |          all |           4h |           7d | gpu, gpu:A100, gpu:A100_80GB, gpu:H100 |
+| dev       | general | aga[1-2],ana |           2h |          12h | shard, gpu, gpu:A100, gpu:A100_80GB    |
+| _nxt_     | general |            - |           2h |           1d | _Planed for Q2 2024_                   |
+| cjvt      | private |          axa |           4h |           4d | gpu, gpu:A100                          |
+| psuiis    | private |          ana |           4h |           4d | gpu, gpu:A100_80GB                     |
 
 <!--
 | PARTITION | TYPE    | nodes | default time |     max time |                   available gres types |   allowd QoS         |
