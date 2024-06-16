@@ -20,8 +20,13 @@
     "sub_title": "2024-M3"
   },
   {
-      "title": "Setup, deployment & debugging of the FRIDA future tech partition",
+      "title": "Setup, deployment & debugging of the FRIDA future tech partitions",
       "icon": ":octicons-bug-16:",
       "sub_title": "2024-Q2"
+  },
+  {
+    "title": "FRIDA nxt & amd partitions go live",
+    "icon": ":octicons-rocket-16:",
+    "sub_title": "2024-M6"
   }
 ]
