@@ -1,0 +1,32 @@
+[
+  {
+      "title": "Setup, deployment & debugging",
+      "icon": ":octicons-bug-16:",
+      "sub_title": "2023-Q4"
+  },
+  {
+      "title": "FRIDA & FRIKA go live",
+      "icon": ":octicons-rocket-16:",
+      "sub_title": "2024-M1"
+  },
+  {
+      "title": "Docs, Support desk setup, Monitoring, Teleport, onboarding of first users",
+      "icon": ":octicons-sun-16:",
+      "sub_title": "2024-Q1"
+  },
+  {
+    "title": "Planning of new RDC starts",
+    "icon": ":material-train-car-container:",
+    "sub_title": "2024-M3"
+  },
+  {
+      "title": "Setup, deployment & debugging of the FRIDA future tech partitions",
+      "icon": ":octicons-bug-16:",
+      "sub_title": "2024-Q2"
+  },
+  {
+    "title": "FRIDA nxt & amd partitions go live",
+    "icon": ":octicons-rocket-16:",
+    "sub_title": "2024-M6"
+  }
+]

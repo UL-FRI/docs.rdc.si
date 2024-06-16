@@ -42,7 +42,15 @@ nav:
     - About: FRIDA/about.md
     - Access: FRIDA/access.md
     - Slurm: FRIDA/slurm.md
+  - FRIKA:
+    - About: FRIKA/about.md
+    - Access: FRIKA/access.md
+
+extra_css:
+  - css/neoteroi-mkdocs.css
+
 markdown_extensions:
+  - neoteroi.timeline
   - admonition
   - pymdownx.emoji:
       emoji_index: !!python/name:material.extensions.emoji.twemoji
