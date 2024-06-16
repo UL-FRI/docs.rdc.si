@@ -6,37 +6,44 @@ Reservation and management of FRIDA compute resources is based on Slurm ([Simple
 
 FRIDA currently consists of one login node and 3 compute nodes with characteristics listed in the table below. Although the login node has Python 3.10 and venv pre-installed, these are provided only to aid in quick scripting, and the login node is not intended for any intensive processing. Refrain from installing user space additions like conda and others. All computationally intensive tasks must be submitted as Slurm jobs via the corresponding Slurm commands. User accounts that fail to adhere to these guidelines will be subject to suspension.
 
-| NODE       | ROLE    | vCPU | MEM   | nGPU | GPU type       |
-|------------|--------:|-----:|------:|-----:|---------------:|
-| login      | login   |   64 | 256GB |    - |              - |
-| aga[1-2]   | compute |  256 | 512GB |    4 | A100 40GB SXM4 |
-| ana        | compute |  112 |   1TB |    8 | A100 80GB PCIe |
-| axa        | compute |  256 |   2TB |    8 | A100 40GB SXM4 |
-| ixh        | compute |  224 |   2TB |    8 | H100 80GB HBM3 |
+| NODE       | ROLE    | vCPU | MEM   | nGPU | GPU type                |
+|------------|--------:|-----:|------:|-----:|------------------------:|
+| login      | login   |   64 | 256GB |    - |                       - |
+| aga[1-2]   | compute |  256 | 512GB |    4 | NVIDIA A100 40GB SXM4   |
+| ana        | compute |  112 |   1TB |    8 | NVIDIA A100 80GB PCIe   |
+| axa        | compute |  256 |   2TB |    8 | NVIDIA A100 40GB SXM4   |
+| ixh        | compute |  224 |   2TB |    8 | NVIDIA H100 80GB HBM3   |
+| vpa        | compute |   40 | 400GB |    6 | NVIDIA L4 24GB PCIe     |
+| vim        | compute |   40 | 400GB |    2 | AMD MI210               |
+| gh[1-2]    | compute |   72 | 576GB |    1 | NVIDIA GH200 480GB      |
 
 <!--
-| NODE    | CPU_BRD | CPU_GEN     | CPU_SKU         | GPU_BRD | GPU_GEN | GPU_MEM | GPU_SKU        |
-|---------|--------:|------------:|----------------:|--------:|--------:|--------:|---------------:|
-| aga     | AMD     | ZEN3        | EPYC_7763       | A100    | AMPERE  | 40GB    | A100_SXM4_40GB |
-| ana     | AMD     | ZEN3        | EPYC_7453       | A100    | AMPERE  | 80GB    | A100_80GB_PCIE |
-| axa     | AMD     | ZEN2        | EPYC_7742       | A100    | AMPERE  | 40GB    | A100_SXM4_40GB |
-| ixh     | INTEL   | GOLDEN_COVE | PLATINUM_8480CL | H100    | HOPPER  | 80GB    | H100_80GB_HBM3 |
-| vpa     | AMD     | ZEN3        | EPYC_7453       | A30     | AMPERE  | 24GB    | A30_24GB_PCIE  |
-| vim     | AMD     | ZEN3        | EPYC_7453       | MI210   | CDNA2   | 64GB    | MI210          |
-| gh[1-2] | ARM     | NEO2        | GRACe           | H100    | HOPPER  | 96GB    | GH200          |
+| NODE     | CPU_BRD | CPU_GEN     | CPU_SKU         | GPU_BRD | GPU_GEN | GPU_MEM | GPU_SKU        |
+|----------|--------:|------------:|----------------:|--------:|--------:|--------:|---------------:|
+| aga[1-2] | AMD     | ZEN3        | EPYC_7763       | NVIDIA  | AMPERE  | 40GB    | A100_SXM4_40GB |
+| ana      | AMD     | ZEN3        | EPYC_7453       | NVIDIA  | AMPERE  | 80GB    | A100_80GB_PCIE |
+| axa      | AMD     | ZEN2        | EPYC_7742       | NVIDIA  | AMPERE  | 40GB    | A100_SXM4_40GB |
+| ixh      | INTEL   | GOLDEN_COVE | PLATINUM_8480CL | NVIDIA  | HOPPER  | 80GB    | H100_80GB_HBM3 |
+| vpa      | AMD     | ZEN3        | EPYC_7453       | NVIDIA  | ADA     | 24GB    | L4_24GB_PCIE   |
+| vim      | AMD     | ZEN3        | EPYC_7453       | AMD     | CDNA2   | 64GB    | MI210          |
+| gh[1-2]  | ARM     | NEO2        | GRACE           | NVIDIA  | HOPPER  | 96GB    | GH200_480GB    |
 -->
 
 ## Partitions
 
-Within Slurm subsets of compute nodes are organized into partitions. On FRIDA there are two types of partitions, general and private (available to selected research labs or groups based on their co-funding of FRIDA). Interactive jobs can be run only on `dev` partition. Production runs are not permitted in interactive jobs, `dev` partition is thus intended to be used for code development, testing, and debugging only.
+Within Slurm subsets of compute nodes are organized into partitions. On FRIDA there are two types of partitions, general and private (available to selected research labs or groups based on their co-funding of FRIDA). Interactive jobs can be run only on partition `dev`. Production runs are not permitted in interactive jobs, `dev` partition is thus intended to be used for code development, testing, and debugging only.
 
-| PARTITION | TYPE    |        nodes | default time |     max time |                   available gres types |
-|-----------|--------:|-------------:|-------------:|-------------:|---------------------------------------:|
-| frida     | general |          all |           4h |           7d | gpu, gpu:A100, gpu:A100_80GB, gpu:H100 |
-| dev       | general | aga[1-2],ana |           2h |          12h | shard, gpu, gpu:A100, gpu:A100_80GB    |
-| _nxt_     | general |            - |           2h |           1d | _Planed for Q2 2024_                   |
-| cjvt      | private |          axa |           4h |           4d | gpu, gpu:A100                          |
-| psuiis    | private |          ana |           4h |           4d | gpu, gpu:A100_80GB                     |
+| PARTITION | TYPE          |            nodes | default time |     max time |                           available gres types |
+|-----------|--------------:|-----------------:|-------------:|-------------:|-----------------------------------------------:|
+| frida     | general       |             all* |           4h |           7d | gpu, gpu:L4, gpu:A100, gpu:A100_80GB, gpu:H100 |
+| dev       | general       | aga[1-2],ana,vpa |           2h |          12h | shard, gpu, gpu:L4, gpu:A100, gpu:A100_80GB    |
+| cjvt      | private       |              axa |           4h |           4d | gpu, gpu:A100                                  |
+| psuiis    | private       |              ana |           4h |           4d | gpu, gpu:A100_80GB                             |
+| amd       | experimental  |              vim |           2h |           2d | gpu, gpu:MI210                                 |
+| nxt       | experimental  |          gh[1-2] |           2h |           2d | gpu, gpu:GH200                                 |
+
+!!! note
+    To avoid issues related to differences in CPU and/or GPU architecture, partition `frida` includes all nodes, but those that are part of partitions `nxt` and `amd`.
 
 <!--
 | PARTITION | TYPE    | nodes | default time |     max time |                   available gres types |   allowd QoS         |
