@@ -309,6 +309,28 @@ exit
 ilb@login-frida:~$
 ```
 
+Named containers work very well throughout a single sbatch allocation, but when the same scripts are run multiple times, downloading from online container registries may take too much time. With multi-node runs certain container registries may even throttle downloads (e.g. when a large number of nodes starts to download concurrently). Or simply the container is seen just as a starting point on which one builds (installs other dependencies). For such cases it is useful to create a local copy of the container via the parameter `--container-save`. For example, the following snippet shows this workflow on the earlier example with `file`.
+```bash
+ilb@login-frida:~$ srun -p dev --container-image=ubuntu:20.04 --container-save=./ubuntu_with_file.sqfs sh -c 'apt-get update && apt-get install -y file'
+srun: job 7822 queued and waiting for resources
+srun: job 7822 has been allocated resources
+pyxis: importing docker image: ubuntu:20.04
+pyxis: imported docker image: ubuntu:20.04
+...
+pyxis: exported container pyxis_7822_7822.0 to ./ubuntu_with_file.sqfs
+
+ilb@login-frida:~$ ls -alht ubuntu_with_file.sqfs
+-rw-r----- 1 ilb lpt 128M Oct 24 12:07 ubuntu_with_file.sqfs
+
+ilb@login-frida:~$ srun -p dev --container-image=./ubuntu_with_file.sqfs which file
+srun: job 7823 queued and waiting for resources
+srun: job 7823 has been allocated resources
+/usr/bin/file
+```
+
+!!! Warning
+    The parameter `--container-save` expects a file path, providing a folder path may lead to data loss. The parameter `--container-image` by default assumes an online image name, so local files should be provided in absolute path format, or prepended with `./` in the case of relative path format.
+
 Some containers are big and memory-hungry. One such example is Pytorch, whose latest containers are very large and require large amounts of memory to start. The following snippet shows the output of a failed attempt to start the `pytorch:23.08` container with just 2 vCPU and 8GB of RAM, and a successful one with 32GB.
 ```bash
 ilb@login-frida:~$ srun -p dev --container-image=nvcr.io#nvidia/pytorch:23.08-py3 --pty bash
