@@ -4,29 +4,41 @@ Reservation and management of FRIDA compute resources is based on Slurm ([Simple
 
 ## Nodes
 
-FRIDA currently consists of one login node and 3 compute nodes with characteristics listed in the table below. Although the login node has Python 3.10 and venv pre-installed, these are provided only to aid in quick scripting, and the login node is not intended for any intensive processing. Refrain from installing user space additions like conda and others. All computationally intensive tasks must be submitted as Slurm jobs via the corresponding Slurm commands. User accounts that fail to adhere to these guidelines will be subject to suspension.
+FRIDA currently consists of one login node and several compute nodes with characteristics listed in the table below. The total compute currently consists of 1744 vCPUs with 8896GB of system RAM, and 43 GPUs with 2408GB GPU RAM. Although the login node has Python 3.10 and venv pre-installed, these are provided only to aid in quick scripting, and the login node is not intended for any intensive processing. Refrain from installing user space additions like conda and others. All computationally intensive tasks must be submitted as Slurm jobs via the corresponding Slurm commands. User accounts that fail to adhere to these guidelines will be subject to suspension.
 
 | NODE       | ROLE    | vCPU | MEM   | nGPU | GPU type                |
 |------------|--------:|-----:|------:|-----:|------------------------:|
 | login      | login   |   64 | 256GB |    - |                       - |
 | aga[1-2]   | compute |  256 | 512GB |    4 | NVIDIA A100 40GB SXM4   |
+| apl        | compute |  112 |   1TB |    7 | NVIDIA L4 24GB PCIe     |
 | ana        | compute |  112 |   1TB |    8 | NVIDIA A100 80GB PCIe   |
 | axa        | compute |  256 |   2TB |    8 | NVIDIA A100 40GB SXM4   |
 | ixh        | compute |  224 |   2TB |    8 | NVIDIA H100 80GB HBM3   |
-| vpa        | compute |   40 | 400GB |    6 | NVIDIA L4 24GB PCIe     |
-| vim        | compute |   40 | 400GB |    2 | AMD MI210               |
 | gh[1-2]    | compute |   72 | 576GB |    1 | NVIDIA GH200 480GB      |
+| api        | compute |  384 | 768GB |    2 | AMD MI210 64GB PCIe     |
 
 <!--
-| NODE     | CPU_BRD | CPU_GEN     | CPU_SKU         | GPU_BRD | GPU_GEN | GPU_MEM | GPU_SKU        |
-|----------|--------:|------------:|----------------:|--------:|--------:|--------:|---------------:|
-| aga[1-2] | AMD     | ZEN3        | EPYC_7763       | NVIDIA  | AMPERE  | 40GB    | A100_SXM4_40GB |
-| ana      | AMD     | ZEN3        | EPYC_7453       | NVIDIA  | AMPERE  | 80GB    | A100_80GB_PCIE |
-| axa      | AMD     | ZEN2        | EPYC_7742       | NVIDIA  | AMPERE  | 40GB    | A100_SXM4_40GB |
-| ixh      | INTEL   | GOLDEN_COVE | PLATINUM_8480CL | NVIDIA  | HOPPER  | 80GB    | H100_80GB_HBM3 |
-| vpa      | AMD     | ZEN3        | EPYC_7453       | NVIDIA  | ADA     | 24GB    | L4_24GB_PCIE   |
-| vim      | AMD     | ZEN3        | EPYC_7453       | AMD     | CDNA2   | 64GB    | MI210          |
-| gh[1-2]  | ARM     | NEO2        | GRACE           | NVIDIA  | HOPPER  | 96GB    | GH200_480GB    |
+| vpa        | compute |   40 | 400GB |    6 | NVIDIA L4 24GB PCIe     |
+| vim        | compute |   40 | 400GB |    2 | AMD MI210 64GB PCIe     |
+| ixh2       | compute |  224 |   2TB |    8 | NVIDIA H200 141GB HBM3e |
+-->
+
+The compute node naming scheme follows a two/three letter acronym that is based on the node architecture and suffixed by a number, if multiple such nodes exist. For example node name `ana` stands for **A**MD CPU, **N**VLink interconnect, and **A**mpere GPU, `api` stands for **A**MD CPU, **P**CIe interconnect, and AMD **I**nstinct MIxxx GPU, `aga` stands for **A**MD CPU, **g**ang NVLink (gen 3) interconnect (i.e. no NVSwitch), and **A**mpere GPU, `ixh` stands for **I**ntel CPU, S**X**M5 - NVLink + NVSwitch (gen 4) interconnect, and **H**opper GPU, and `gh` stands for **G**race**H**opper superchip (i.e. Grace CPU and Hopper GPU tightly bound via a 900GB/s NVLink-C2C interconnect, allowing for cache and memory coherency). More details about the nodes can be obtaind by executing the command `scontrol show node <node_name>`; note that each node is also assigned a series of features which can be used in conjuction with parameter `-C/--constraint <key>:<value>` to target a specific node.
+
+| NODE     | CPU_BRD | CPU_GEN     | CPU_SKU         | CPU_MEM | GPU_BRD | GPU_GEN      | GPU_SKU        | GPU_MEM |
+|----------|--------:|------------:|----------------:|--------:|--------:|-------------:|---------------:|--------:|
+| aga[1-2] | AMD     | ZEN3        | EPYC_7763       | 512GB   | NVIDIA  | AMPERE       | A100_SXM4_40GB | 40GB    |
+| apl      | AMD     | ZEN3        | EPYC_7453       | 1TB     | NVIDIA  | ADA_LOVELACE | L4_24GB_PCIE   | 24GB    |
+| ana      | AMD     | ZEN3        | EPYC_7453       | 1TB     | NVIDIA  | AMPERE       | A100_80GB_PCIE | 80GB    |
+| axa      | AMD     | ZEN2        | EPYC_7742       | 2TB     | NVIDIA  | AMPERE       | A100_SXM4_40GB | 40GB    |
+| ixh      | INTEL   | GOLDEN_COVE | PLATINUM_8480CL | 2TB     | NVIDIA  | HOPPER       | H100_80GB_HBM3 | 80GB    |
+| gh[1-2]  | ARM     | NEO2        | GRACE           | 576GB   | NVIDIA  | HOPPER       | GH200_480GB    | 96GB    |
+| api      | AMD     | ZEN4        | EPYC_9684X      | 768GB   | AMD     | CDNA2        | MI210          | 64GB    |
+
+<!--
+| vpa      | AMD     | ZEN3        | EPYC_7453       | 400GB   | NVIDIA  | ADA          | L4_24GB_PCIE   | 24GB    |
+| vim      | AMD     | ZEN3        | EPYC_7453       | 400GB   | AMD     | CDNA2        | MI210          | 64GB    |
+| ixh2     | INTEL   | GOLDEN_COVE | PLATINUM_8480CL | 2TB     | NVIDIA  | HOPPER       | H200_141GB_HBM3e | 141GB   |
 -->
 
 ## Partitions
@@ -36,14 +48,17 @@ Within Slurm subsets of compute nodes are organized into partitions. On FRIDA th
 | PARTITION | TYPE          |            nodes | default time |     max time |                           available gres types |
 |-----------|--------------:|-----------------:|-------------:|-------------:|-----------------------------------------------:|
 | frida     | general       |             all* |           4h |           7d | gpu, gpu:L4, gpu:A100, gpu:A100_80GB, gpu:H100 |
-| dev       | general       | aga[1-2],ana,vpa |           2h |          12h | shard, gpu, gpu:L4, gpu:A100, gpu:A100_80GB    |
+| dev       | general       | aga[1-2],ana,apl |           2h |          12h | shard, gpu, gpu:L4, gpu:A100, gpu:A100_80GB    |
 | cjvt      | private       |              axa |           4h |           4d | gpu, gpu:A100                                  |
 | psuiis    | private       |              ana |           4h |           4d | gpu, gpu:A100_80GB                             |
-| amd       | experimental  |              vim |           2h |           2d | gpu, gpu:MI210                                 |
 | nxt       | experimental  |          gh[1-2] |           2h |           2d | gpu, gpu:GH200                                 |
+| amd       | experimental  |              api |           2h |           2d | gpu, gpu:MI210                                 |
 
 !!! note
     To avoid issues related to differences in CPU and/or GPU architecture, partition `frida` includes all nodes, but those that are part of partitions `nxt` and `amd`.
+
+!!! tip
+    Jobs that are CPU intense should target partition `amd` as it is equipped with large cache AMD Epyc 9684X CPUs.
 
 <!--
 | PARTITION | TYPE    | nodes | default time |     max time |                   available gres types |   allowd QoS         |
