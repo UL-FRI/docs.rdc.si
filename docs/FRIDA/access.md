@@ -27,7 +27,7 @@ Once granted access to your request, you will receive a Teleport signup link. Op
 Once the registration is finished, follow the official Teleport instructions to install the Teleport Community Edition of the `tsh` CLI client appropriate to your OS ([macOS](https://goteleport.com/docs/installation/#macos), [Windows](https://goteleport.com/docs/installation/#windows-tsh-client-only), or [Linux](https://goteleport.com/docs/installation/#linux)). Ensure that the `tsh` client install location is included in your `PATH` variable. If you wish to do so, you can, as an addition, install [Teleport Connect](https://goteleport.com/docs/connect-your-client/teleport-connect/) (a Graphical User Interface (GUI) desktop client), but for most use cases this is not necessary.
 
 !!! warning
-    To have TouchID support on macOS make sure to install the package that contains only the `tsh` binary. Support can be checked by running `tsh touchid diag`.
+    TouchID support on macOS is now included the main package. Support can be checked by running `tsh touchid diag`.
 
 Now you can register your hardware key (Apple Touch ID, Windows Hello, or Yubikey BIO) to enable passwordless infrastructure access also via CLI. To do so, you execute the following commands in your terminal. For successful registration, you will need to provide your password and second-factor key (OTP).
 ```bash
