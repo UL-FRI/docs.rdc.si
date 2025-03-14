@@ -85,9 +85,9 @@ In addition to access to shared storage, compute nodes provide also an even smal
 
 | TYPE      | backend | backups | access  | location                                  | env        | quota        |
 |-----------|--------:|--------:|--------:|------------------------------------------:|-----------:|-------------:|
-| shared    | raid0   | no      | user    | `/shared/home/$USER`                      | `$HOME`    |            - |
-| shared    | raid0   | no      | group   | `/shared/workspace/$SLURM_JOB_ACCOUNT`    | `$WORK`    |            - |
-| scratch   | varies  | no      | job     | `/local/scratch/$USER/$SLURM_JOB_ID`      | `$SCRATCH` |            - |
+| shared    | weka    | no      | user    | `/shared/home/$USER`                      | `$HOME`    |            - |
+| shared    | weka    | no      | group   | `/shared/workspace/$SLURM_JOB_ACCOUNT`    | `$WORK`    |            - |
+| scratch   | raid0   | no      | job     | `/local/scratch/$USER/$SLURM_JOB_ID`      | `$SCRATCH` |            - |
 
 ## Usage
 
