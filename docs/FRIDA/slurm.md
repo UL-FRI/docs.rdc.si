@@ -9,7 +9,7 @@ FRIDA currently consists of one login node and several compute nodes with charac
 | NODE       | ROLE    | vCPU | MEM   | nGPU | GPU type                |
 |------------|--------:|-----:|------:|-----:|------------------------:|
 | login      | login   |   64 | 256GB |    - |                       - |
-| aga[1-2]   | compute |  256 | 512GB |    4 | NVIDIA A100 40GB SXM4   |
+| aga        | compute |  256 | 512GB |    4 | NVIDIA A100 40GB SXM4   |
 | apl        | compute |  112 |   1TB |    7 | NVIDIA L4 24GB PCIe     |
 | ana        | compute |  112 |   1TB |    8 | NVIDIA A100 80GB PCIe   |
 | axa        | compute |  256 |   2TB |    8 | NVIDIA A100 40GB SXM4   |
@@ -18,27 +18,23 @@ FRIDA currently consists of one login node and several compute nodes with charac
 | api        | compute |  384 | 768GB |    2 | AMD MI210 64GB PCIe     |
 
 <!--
-| vpa        | compute |   40 | 400GB |    6 | NVIDIA L4 24GB PCIe     |
-| vim        | compute |   40 | 400GB |    2 | AMD MI210 64GB PCIe     |
-| ixh2       | compute |  224 |   2TB |    8 | NVIDIA H200 141GB HBM3e |
+| ixb        | compute |  224 |   2TB |    8 | NVIDIA B200 180GB HBM3e |
 -->
 
 The compute node naming scheme follows a two/three letter acronym that is based on the node architecture and suffixed by a number, if multiple such nodes exist. For example node name `ana` stands for **A**MD CPU, **N**VLink interconnect, and **A**mpere GPU, `api` stands for **A**MD CPU, **P**CIe interconnect, and AMD **I**nstinct MIxxx GPU, `aga` stands for **A**MD CPU, **g**ang NVLink (gen 3) interconnect (i.e. no NVSwitch), and **A**mpere GPU, `ixh` stands for **I**ntel CPU, S**X**M5 - NVLink + NVSwitch (gen 4) interconnect, and **H**opper GPU, and `gh` stands for **G**race**H**opper superchip (i.e. Grace CPU and Hopper GPU tightly bound via a 900GB/s NVLink-C2C interconnect, allowing for cache and memory coherency). More details about the nodes can be obtaind by executing the command `scontrol show node <node_name>`; note that each node is also assigned a series of features which can be used in conjuction with parameter `-C/--constraint <key>:<value>` to target a specific node.
 
-| NODE     | CPU_BRD | CPU_GEN     | CPU_SKU         | CPU_MEM | GPU_BRD | GPU_GEN      | GPU_SKU        | GPU_MEM |
-|----------|--------:|------------:|----------------:|--------:|--------:|-------------:|---------------:|--------:|
-| aga[1-2] | AMD     | ZEN3        | EPYC_7763       | 512GB   | NVIDIA  | AMPERE       | A100_SXM4_40GB | 40GB    |
-| apl      | AMD     | ZEN3        | EPYC_7453       | 1TB     | NVIDIA  | ADA_LOVELACE | L4_24GB_PCIE   | 24GB    |
-| ana      | AMD     | ZEN3        | EPYC_7453       | 1TB     | NVIDIA  | AMPERE       | A100_80GB_PCIE | 80GB    |
-| axa      | AMD     | ZEN2        | EPYC_7742       | 2TB     | NVIDIA  | AMPERE       | A100_SXM4_40GB | 40GB    |
-| ixh      | INTEL   | GOLDEN_COVE | PLATINUM_8480CL | 2TB     | NVIDIA  | HOPPER       | H100_80GB_HBM3 | 80GB    |
-| gh[1-2]  | ARM     | NEO2        | GRACE           | 576GB   | NVIDIA  | HOPPER       | GH200_480GB    | 96GB    |
-| api      | AMD     | ZEN4        | EPYC_9684X      | 768GB   | AMD     | CDNA2        | MI210          | 64GB    |
+| NODE     | CPU_BRD | CPU_GEN     | CPU_SKU         | CPU_L3 | CPU_MEM | GPU_BRD | GPU_GEN      | GPU_SKU        | GPU_MEM | GPU_CC |
+|----------|--------:|------------:|----------------:|-------:|--------:|--------:|-------------:|---------------:|--------:|-------:|
+| aga      | AMD     | ZEN3        | EPYC_7763       | 256MB  | 512GB   | NVIDIA  | AMPERE       | A100_SXM4_40GB | 40GB    | 8.0    |
+| apl      | AMD     | ZEN3        | EPYC_7453       | 64MB   | 1TB     | NVIDIA  | ADA_LOVELACE | L4_24GB_PCIE   | 24GB    | 8.9    |
+| ana      | AMD     | ZEN3        | EPYC_7453       | 64MB   | 1TB     | NVIDIA  | AMPERE       | A100_80GB_PCIE | 80GB    | 8.0    |
+| axa      | AMD     | ZEN2        | EPYC_7742       | 256MB  | 2TB     | NVIDIA  | AMPERE       | A100_SXM4_40GB | 40GB    | 8.0    |
+| ixh      | INTEL   | GOLDEN_COVE | PLATINUM_8480CL | 105MB  | 2TB     | NVIDIA  | HOPPER       | H100_80GB_HBM3 | 80GB    | 9.0    |
+| gh[1-2]  | ARM     | NEO2        | GRACE           | 234MB  | 576GB   | NVIDIA  | HOPPER       | GH200_480GB    | 96GB    | 9.0    |
+| api      | AMD     | ZEN4        | EPYC_9684X      | 1152MB | 768GB   | AMD     | CDNA2        | MI210          | 64GB    | -      |
 
 <!--
-| vpa      | AMD     | ZEN3        | EPYC_7453       | 400GB   | NVIDIA  | ADA          | L4_24GB_PCIE   | 24GB    |
-| vim      | AMD     | ZEN3        | EPYC_7453       | 400GB   | AMD     | CDNA2        | MI210          | 64GB    |
-| ixh2     | INTEL   | GOLDEN_COVE | PLATINUM_8480CL | 2TB     | NVIDIA  | HOPPER       | H200_141GB_HBM3e | 141GB   |
+| ixb      | INTEL   | GOLDEN_COVE | PLATINUM_8480CL | 105MB  | 2TB     | NVIDIA  | BLACKWELL    | B200_180B_HBM3e | 180GB  | 10.0   |
 -->
 
 ## Partitions
@@ -48,7 +44,7 @@ Within Slurm subsets of compute nodes are organized into partitions. On FRIDA th
 | PARTITION | TYPE          |            nodes | default time |     max time |                           available gres types |
 |-----------|--------------:|-----------------:|-------------:|-------------:|-----------------------------------------------:|
 | frida     | general       |             all* |           4h |           7d | gpu, gpu:L4, gpu:A100, gpu:A100_80GB, gpu:H100 |
-| dev       | general       | aga[1-2],ana,apl |           2h |          12h | shard, gpu, gpu:L4, gpu:A100, gpu:A100_80GB    |
+| dev       | general       |      aga,ana,apl |           2h |          12h | gpu, gpu:L4, gpu:A100, gpu:A100_80GB           |
 | cjvt      | private       |              axa |           4h |           4d | gpu, gpu:A100                                  |
 | psuiis    | private       |              ana |           4h |           4d | gpu, gpu:A100_80GB                             |
 | nxt       | experimental  |          gh[1-2] |           2h |           2d | gpu, gpu:GH200                                 |
@@ -89,9 +85,9 @@ In addition to access to shared storage, compute nodes provide also an even smal
 
 | TYPE      | backend | backups | access  | location                                  | env        | quota        |
 |-----------|--------:|--------:|--------:|------------------------------------------:|-----------:|-------------:|
-| shared    | raid0   | no      | user    | `/shared/home/$USER`                      | `$HOME`    |            - |
-| shared    | raid0   | no      | group   | `/shared/workspace/$SLURM_JOB_ACCOUNT`    | `$WORK`    |            - |
-| scratch   | varies  | no      | job     | `/local/scratch/$USER/$SLURM_JOB_ID`      | `$SCRATCH` |            - |
+| shared    | weka    | no      | user    | `/shared/home/$USER`                      | `$HOME`    |            - |
+| shared    | weka    | no      | group   | `/shared/workspace/$SLURM_JOB_ACCOUNT`    | `$WORK`    |            - |
+| scratch   | raid0   | no      | job     | `/local/scratch/$USER/$SLURM_JOB_ID`      | `$SCRATCH` |            - |
 
 ## Usage
 
@@ -406,7 +402,7 @@ All FRIDA compute nodes provide GPUs, but they differ in provider, architecture,
 
 ```bash
 ilb@login-frida:~$ srun -p dev --gres=gpu nvidia-smi -L
-GPU 0: NVIDIA A100 80GB PCIe (UUID: GPU-845e3442-e0ca-a376-a3de-50e4cb7fd421)
+GPU 0: NVIDIA L4 (UUID: GPU-42461b88-e6ff-2a6d-cad6-583f99df26d2)
 
 ilb@login-frida:~$ srun -p dev --gpus=A100_80GB:4 nvidia-smi -L
 GPU 0: NVIDIA A100 80GB PCIe (UUID: GPU-845e3442-e0ca-a376-a3de-50e4cb7fd421)
@@ -415,6 +411,7 @@ GPU 2: NVIDIA A100 80GB PCIe (UUID: GPU-d666e6d2-5265-29ae-9a6f-d8772807d34f)
 GPU 3: NVIDIA A100 80GB PCIe (UUID: GPU-fd552b1f-e767-edd6-5cc0-69514f1748d2)
 ```
 
+<!--
 When the nature of a job is such that it does not require exclusive access to a full GPU, the `dev` partition on FRIDA allows also a partial allocation of GPUs. This can be done via the `--gres=shard[:{count}]` parameter, where the value `{count}` can be interpreted as the amount of requested GPU memory in GB. For example, the following snippet allocates a 15GB slice on an otherwise 80GB GPU.
 
 ```bash
@@ -424,7 +421,7 @@ GPU 0: NVIDIA A100 80GB PCIe (UUID: GPU-845e3442-e0ca-a376-a3de-50e4cb7fd421)
 
 !!! Warning
     Partial GPU allocation via `shard` reserves the GPUs in a non-exclusive mode and as such allows for sharing GPUs. However, currently, Slurm has no viable techniques to enforce these limits, and thus jobs, even if they request only a portion of a GPU, are granted access to the full GPU. Allocation with `shard` then needs to be interpreted as _a promise_ that the job will not consume more GPU memory than what it requested. Failure to do so may result in the failure of the user's job as well as the failure of jobs of other users that happen to share the same GPU. Ensuring that the job does not consume more GPU memory than what it requested for, is thus mandatory, and entirely under the responsibility of the user who submitted the job. In case your job is based on Tensorflow or Pytorch there exist [approaches to GPU memory management](https://wiki.ncsa.illinois.edu/display/ISL20/Managing+GPU+memory+when+using+Tensorflow+and+Pytorch) that you can use to ensure the job does not consume more than what it requested. In addition, Pytorch version 1.8 introduced a special function for limiting process GPU memory, see  [`set_per_proces_memory_fraction`](https://github.com/pytorch/pytorch/blob/e44b2b72bd4ccecf9c2f6c18d09c11eff446b5a3/torch/cuda/memory.py#L75-L99). For further details on sharding consult the [Slurm official documentation](https://slurm.schedmd.com/gres.html#Sharding). User accounts that fail to adhere to these guidelines will be subject to suspension.
-
+-->
 
 #### Code tunnel
 
@@ -433,8 +430,8 @@ When an interactive session is intended for code development, testing, and/or de
 On every run of `code_tunnel` you will need to register the tunnel with your GitHub or Microsoft account; this interaction requires the `srun` command to be run with the parameter `--pty`, and for this reason, a suitable alias command named `stunnel` was setup. Once registered you will be able to access the compute node (while `code_tunnel` is running) either in a browser by visiting [https://vscode.dev](https://vscode.dev) or with a desktop version of VSCode via the Remote Explorer (part of the [Remote Development Extension pack](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack)). In both cases, the 'Remotes (Tunnels/SSH)' list in the Remote Explorer pane should contain a list of tunnels to FRIDA (named `frida-{job-name}`) that you have registered and also denote which of these are currently online (with your job running). In the browser, it is also possible to connect directly to a workspace on the node (on which the `code_tunnel` job is running). Simply visit the URL of the form `https://vscode.dev/tunnel/frida-{job-name}[/{path-to-workspace}]`. If you wish to close the tunnel before the job times out press `Ctrl-C` in the terminal where you started the job.
 
 ```bash
-ilb@login-frida:~$ stunnel -c32 --mem=48G --gres=shard:20 --container-image=nvcr.io#nvidia/pytorch:23.10-py3 --job-name torch-debug
-# srun -p dev -c32 --mem=48G --gres=shard:20 --container-image=nvcr.io#nvidia/pytorch:23.10-py3 --job-name torch-debug --pty code_tunnel
+ilb@login-frida:~$ stunnel -c32 --mem=48G --gres=gpu:1 --container-image=nvcr.io#nvidia/pytorch:23.10-py3 --job-name torch-debug
+# srun -p dev -c32 --mem=48G --gres=gpu:1 --container-image=nvcr.io#nvidia/pytorch:23.10-py3 --job-name torch-debug --pty code_tunnel
 pyxis: importing docker image: nvcr.io#nvidia/pytorch:23.10-py3
 pyxis: imported docker image: nvcr.io#nvidia/pytorch:23.10-py3
 Tue Nov 28 21:31:40 UTC 2023
