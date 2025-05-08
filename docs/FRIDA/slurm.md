@@ -10,7 +10,7 @@ FRIDA currently consists of one login node and several compute nodes with charac
 |------------|--------:|-----:|------:|-----:|------------------------:|
 | login      | login   |   64 | 256GB |    - |                       - |
 | aga        | compute |  256 | 512GB |    4 | NVIDIA A100 40GB SXM4   |
-| apl        | compute |  112 |   1TB |    7 | NVIDIA L4 24GB PCIe     |
+| apl        | compute |  112 |   1TB |    8 | NVIDIA L4 24GB PCIe     |
 | ana        | compute |  112 |   1TB |    8 | NVIDIA A100 80GB PCIe   |
 | axa        | compute |  256 |   2TB |    8 | NVIDIA A100 40GB SXM4   |
 | ixh        | compute |  224 |   2TB |    8 | NVIDIA H100 80GB HBM3   |
