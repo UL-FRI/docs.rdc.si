@@ -97,6 +97,7 @@ Some useful Slurm commands with their typical use case, notes and corresponding 
 
 | CMD  | typical use case | notes | help |
 |------|:-----------------|:------|-----:|
+| `frida` | view the current state of resources | this is a custom, FRIDA command, which in a compact form presents important FRIDA notices about maintenance; it also prints detailed info of the last five jobs submitted by the user, a list of their shared storage locations with usage and remaining space, and a list of currently available GPUs |  |
 | `slurm` | view the current status of all resources | this is a custom, FRIDA alias built on top of the more general `sinfo` Slurm command | see Slurm docs on [`sinfo`](https://slurm.schedmd.com/sinfo.html) |
 | `salloc` | resource reservation and allocation for interactive use | intended for interactive jobs; upon successful allocation `srun` commands can be used to open a shell with the allocated resources | see Slurm docs on [`salloc`](https://slurm.schedmd.com/salloc.html) |
 | `srun` | resource reservation, allocation and execution of supplied command on these resources | a blocking command; with `--pty` can be used for interactive jobs; by appending `&` followed by a `wait` the command can be turned into non-blocking | see Slurm docs on [`srun`](https://slurm.schedmd.com/srun.html) |
