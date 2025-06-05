@@ -343,6 +343,7 @@ srun: job 7823 has been allocated resources
 !!! Warning
     The parameter `--container-save` expects a file path, providing a folder path may lead to data loss. The parameter `--container-image` by default assumes an online image name, so local files should be provided in absolute path format, or prepended with `./` in the case of relative path format.
 
+<!--
 Some containers are big and memory-hungry. One such example is Pytorch, whose latest containers are very large and require large amounts of memory to start. The following snippet shows the output of a failed attempt to start the `pytorch:23.08` container with just 2 vCPU and 8GB of RAM, and a successful one with 32GB.
 ```bash
 ilb@login-frida:~$ srun -p dev --container-image=nvcr.io#nvidia/pytorch:23.08-py3 --pty bash
@@ -378,6 +379,7 @@ exit
 
 ilb@login-frida:~$
 ```
+//-->
 
 #### Private container registries
 
