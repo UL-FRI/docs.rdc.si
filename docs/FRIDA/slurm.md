@@ -289,6 +289,8 @@ salloc: Job allocation 526 has been revoked.
 ilb@login-frida:~$
 ```
 
+#### Start a second shell inside the same container
+
 Using named containers becomes handy on occasions when one needs to open a second shell inside the same container (within the same job with the same resources). Let's assume a job with id `527` that was created with the parameter `--container-name=myubuntu` is running. Let's also assume that the `file` utility has been installed. The next snippet shows how to open a second bash shell into the same container.
 ```bash
 ilb@login-frida:~$ srun --overlap --jobid=527 --container-name=myubuntu --pty bash
@@ -320,6 +322,8 @@ exit
 
 ilb@login-frida:~$
 ```
+
+#### Save the container image to a local filesystem
 
 Named containers work very well throughout a single sbatch allocation, but when the same scripts are run multiple times, downloading from online container registries may take too much time. With multi-node runs certain container registries may even throttle downloads (e.g. when a large number of nodes starts to download concurrently). Or simply the container is seen just as a starting point on which one builds (installs other dependencies). For such cases it is useful to create a local copy of the container via the parameter `--container-save`. For example, the following snippet shows this workflow on the earlier example with `file`.
 ```bash
