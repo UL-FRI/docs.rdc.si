@@ -1,0 +1,1884 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://docs.rdc.si/FRIDA/slurm/">
+      
+      
+        <link rel="prev" href="../access/">
+      
+      
+        <link rel="next" href="../../FRIKA/about/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.16">
+    
+    
+      
+        <title>Slurm - RDC@FRI</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.7e37652d.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../css/neoteroi-mkdocs.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#slurm" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="RDC@FRI" class="md-header__button md-logo" aria-label="RDC@FRI" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            RDC@FRI
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Slurm
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m14.3 16-.7-2h-3.2l-.7 2H7.8L11 7h2l3.2 9zM20 8.69V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12zm-9.15 3.96h2.3L12 9z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to system preference"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to system preference" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="RDC@FRI" class="md-nav__button md-logo" aria-label="RDC@FRI" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    RDC@FRI
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    News
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    FRIDA
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            FRIDA
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    About
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../access/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Access
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Slurm
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    Slurm
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#nodes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Nodes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#partitions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Partitions
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#shared-storage" class="md-nav__link">
+    <span class="md-ellipsis">
+      Shared storage
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      Usage
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Usage">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#interactive-sessions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Interactive sessions
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Interactive sessions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#running-jobs-in-containers" class="md-nav__link">
+    <span class="md-ellipsis">
+      Running jobs in containers
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#start-a-second-shell-inside-the-same-container" class="md-nav__link">
+    <span class="md-ellipsis">
+      Start a second shell inside the same container
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#save-the-container-image-to-a-local-filesystem" class="md-nav__link">
+    <span class="md-ellipsis">
+      Save the container image to a local filesystem
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#private-container-registries" class="md-nav__link">
+    <span class="md-ellipsis">
+      Private container registries
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#requesting-gpus" class="md-nav__link">
+    <span class="md-ellipsis">
+      Requesting GPUs
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#code-tunnel" class="md-nav__link">
+    <span class="md-ellipsis">
+      Code tunnel
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#keeping-interactive-jobs-alive" class="md-nav__link">
+    <span class="md-ellipsis">
+      Keeping interactive jobs alive
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#batch-jobs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Batch jobs
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    FRIKA
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            FRIKA
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../FRIKA/about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    About
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../FRIKA/access/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Access
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="slurm">Slurm</h1>
+<p>Reservation and management of FRIDA compute resources is based on Slurm (<a href="https://slurm.schedmd.com/">Simple Linux Utility for Resource Management</a>), a software package for submitting, scheduling, and monitoring jobs on large compute clusters. Slurm governs access to the cluster's resources through three views; account/user association, partition, and QoS (Quality of Service). Accounts link users into groups (based on research lab, project or other shared properties). Partitions link nodes and QoS allow users to control the priority and limits on a job level. Each of these views can impose limits and affect the submitted job's priority.</p>
+<h2 id="nodes">Nodes</h2>
+<p>FRIDA currently consists of one login node and several compute nodes with characteristics listed in the table below. The total compute currently consists of 1456 vCPUs with 8576GB of system RAM, and 40 GPUs with 3392GB GPU RAM. Although the login node has Python 3.10 and venv pre-installed, these are provided only to aid in quick scripting, and the login node is not intended for any intensive processing. Refrain from installing user space additions like conda and others. All computationally intensive tasks must be submitted as Slurm jobs via the corresponding Slurm commands. User accounts that fail to adhere to these guidelines will be subject to suspension.</p>
+<table>
+<thead>
+<tr>
+<th>NODE</th>
+<th style="text-align: right;">ROLE</th>
+<th style="text-align: right;">vCPU</th>
+<th style="text-align: right;">MEM</th>
+<th style="text-align: right;">nGPU</th>
+<th style="text-align: right;">GPU type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>login</td>
+<td style="text-align: right;">login</td>
+<td style="text-align: right;">64</td>
+<td style="text-align: right;">256GB</td>
+<td style="text-align: right;">-</td>
+<td style="text-align: right;">-</td>
+</tr>
+<tr>
+<td>aga</td>
+<td style="text-align: right;">compute</td>
+<td style="text-align: right;">256</td>
+<td style="text-align: right;">512GB</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">NVIDIA A100 40GB SXM4</td>
+</tr>
+<tr>
+<td>apl</td>
+<td style="text-align: right;">compute</td>
+<td style="text-align: right;">112</td>
+<td style="text-align: right;">1TB</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">NVIDIA L4 24GB PCIe</td>
+</tr>
+<tr>
+<td>ana</td>
+<td style="text-align: right;">compute</td>
+<td style="text-align: right;">112</td>
+<td style="text-align: right;">1TB</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">NVIDIA A100 80GB PCIe</td>
+</tr>
+<tr>
+<td>ixh</td>
+<td style="text-align: right;">compute</td>
+<td style="text-align: right;">224</td>
+<td style="text-align: right;">2TB</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">NVIDIA H100 80GB HBM3</td>
+</tr>
+<tr>
+<td>ixb</td>
+<td style="text-align: right;">compute</td>
+<td style="text-align: right;">224</td>
+<td style="text-align: right;">2TB</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">NVIDIA B200 180GB</td>
+</tr>
+<tr>
+<td>gh[1-2]</td>
+<td style="text-align: right;">compute</td>
+<td style="text-align: right;">72</td>
+<td style="text-align: right;">576GB</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">NVIDIA GH200 480GB</td>
+</tr>
+<tr>
+<td>api</td>
+<td style="text-align: right;">compute</td>
+<td style="text-align: right;">384</td>
+<td style="text-align: right;">768GB</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">AMD MI210 64GB PCIe</td>
+</tr>
+</tbody>
+</table>
+<!--
+| axa        | compute |  256 |   2TB |    8 | NVIDIA A100 40GB SXM4   |
+-->
+
+<p>The compute node naming scheme follows a two/three letter acronym that is based on the node architecture and suffixed by a number, if multiple such nodes exist. For example node name <code>ana</code> stands for <strong>A</strong>MD CPU, <strong>N</strong>VLink interconnect, and <strong>A</strong>mpere GPU, <code>api</code> stands for <strong>A</strong>MD CPU, <strong>P</strong>CIe interconnect, and AMD <strong>I</strong>nstinct MIxxx GPU, <code>aga</code> stands for <strong>A</strong>MD CPU, <strong>g</strong>ang NVLink (gen 3) interconnect (i.e. no NVSwitch), <strong>A</strong>mpere GPU, <code>ixh</code> stands for <strong>I</strong>ntel CPU, S<strong>X</strong>M5 - NVLink + NVSwitch (gen 4) interconnect, and <strong>H</strong>opper GPU, <strong>A</strong>mpere GPU, <code>ixb</code> stands for <strong>I</strong>ntel CPU, S<strong>X</strong>M6 - NVLink + NVSwitch (gen 5) interconnect, and <strong>B</strong>lackwell GPU, and <code>gh</code> stands for <strong>G</strong>race<strong>H</strong>opper superchip (i.e. Grace CPU and Hopper GPU tightly bound via a 900GB/s NVLink-C2C interconnect, allowing for cache and memory coherency). More details about the nodes can be obtaind by executing the command <code>scontrol show node &lt;node_name&gt;</code>; note that each node is also assigned a series of features which can be used in conjuction with parameter <code>-C/--constraint &lt;key&gt;:&lt;value&gt;</code> to target a specific node.</p>
+<table>
+<thead>
+<tr>
+<th>NODE</th>
+<th style="text-align: right;">CPU_BRD</th>
+<th style="text-align: right;">CPU_GEN</th>
+<th style="text-align: right;">CPU_SKU</th>
+<th style="text-align: right;">CPU_L3</th>
+<th style="text-align: right;">CPU_MEM</th>
+<th style="text-align: right;">GPU_BRD</th>
+<th style="text-align: right;">GPU_GEN</th>
+<th style="text-align: right;">GPU_SKU</th>
+<th style="text-align: right;">GPU_MEM</th>
+<th style="text-align: right;">GPU_CC</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>aga</td>
+<td style="text-align: right;">AMD</td>
+<td style="text-align: right;">ZEN3</td>
+<td style="text-align: right;">EPYC_7763</td>
+<td style="text-align: right;">256MB</td>
+<td style="text-align: right;">512GB</td>
+<td style="text-align: right;">NVIDIA</td>
+<td style="text-align: right;">AMPERE</td>
+<td style="text-align: right;">A100_SXM4_40GB</td>
+<td style="text-align: right;">40GB</td>
+<td style="text-align: right;">8.0</td>
+</tr>
+<tr>
+<td>apl</td>
+<td style="text-align: right;">AMD</td>
+<td style="text-align: right;">ZEN3</td>
+<td style="text-align: right;">EPYC_7453</td>
+<td style="text-align: right;">64MB</td>
+<td style="text-align: right;">1TB</td>
+<td style="text-align: right;">NVIDIA</td>
+<td style="text-align: right;">ADA_LOVELACE</td>
+<td style="text-align: right;">L4_24GB_PCIE</td>
+<td style="text-align: right;">24GB</td>
+<td style="text-align: right;">8.9</td>
+</tr>
+<tr>
+<td>ana</td>
+<td style="text-align: right;">AMD</td>
+<td style="text-align: right;">ZEN3</td>
+<td style="text-align: right;">EPYC_7453</td>
+<td style="text-align: right;">64MB</td>
+<td style="text-align: right;">1TB</td>
+<td style="text-align: right;">NVIDIA</td>
+<td style="text-align: right;">AMPERE</td>
+<td style="text-align: right;">A100_80GB_PCIE</td>
+<td style="text-align: right;">80GB</td>
+<td style="text-align: right;">8.0</td>
+</tr>
+<tr>
+<td>ixh</td>
+<td style="text-align: right;">INTEL</td>
+<td style="text-align: right;">GOLDEN_COVE</td>
+<td style="text-align: right;">PLATINUM_8480CL</td>
+<td style="text-align: right;">105MB</td>
+<td style="text-align: right;">2TB</td>
+<td style="text-align: right;">NVIDIA</td>
+<td style="text-align: right;">HOPPER</td>
+<td style="text-align: right;">H100_80GB_HBM3</td>
+<td style="text-align: right;">80GB</td>
+<td style="text-align: right;">9.0</td>
+</tr>
+<tr>
+<td>ixb</td>
+<td style="text-align: right;">INTEL</td>
+<td style="text-align: right;">EMERALD_RAPIDS</td>
+<td style="text-align: right;">PLATINUM_8570</td>
+<td style="text-align: right;">200MB</td>
+<td style="text-align: right;">2TB</td>
+<td style="text-align: right;">NVIDIA</td>
+<td style="text-align: right;">BLACKWELL</td>
+<td style="text-align: right;">B200_180GB</td>
+<td style="text-align: right;">180GB</td>
+<td style="text-align: right;">10.0</td>
+</tr>
+<tr>
+<td>gh[1-2]</td>
+<td style="text-align: right;">ARM</td>
+<td style="text-align: right;">NEO2</td>
+<td style="text-align: right;">GRACE</td>
+<td style="text-align: right;">234MB</td>
+<td style="text-align: right;">576GB</td>
+<td style="text-align: right;">NVIDIA</td>
+<td style="text-align: right;">HOPPER</td>
+<td style="text-align: right;">GH200_480GB</td>
+<td style="text-align: right;">96GB</td>
+<td style="text-align: right;">9.0</td>
+</tr>
+<tr>
+<td>api</td>
+<td style="text-align: right;">AMD</td>
+<td style="text-align: right;">ZEN4</td>
+<td style="text-align: right;">EPYC_9684X</td>
+<td style="text-align: right;">1152MB</td>
+<td style="text-align: right;">768GB</td>
+<td style="text-align: right;">AMD</td>
+<td style="text-align: right;">CDNA2</td>
+<td style="text-align: right;">MI210</td>
+<td style="text-align: right;">64GB</td>
+<td style="text-align: right;">-</td>
+</tr>
+</tbody>
+</table>
+<!--
+| axa      | AMD     | ZEN2        | EPYC_7742       | 256MB  | 2TB     | NVIDIA  | AMPERE       | A100_SXM4_40GB | 40GB    | 8.0    |
+-->
+
+<h2 id="partitions">Partitions</h2>
+<p>Within Slurm subsets of compute nodes are organized into partitions. On FRIDA there are two types of partitions, general and private (available to selected research labs or groups based on their co-funding of FRIDA). Interactive jobs can be run only on partition <code>dev</code>. Production runs are not permitted in interactive jobs, <code>dev</code> partition is thus intended to be used for code development, testing, and debugging only.</p>
+<table>
+<thead>
+<tr>
+<th>PARTITION</th>
+<th style="text-align: right;">TYPE</th>
+<th style="text-align: right;">nodes</th>
+<th style="text-align: right;">default time</th>
+<th style="text-align: right;">max time</th>
+<th style="text-align: right;">available gres types</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>frida</td>
+<td style="text-align: right;">general</td>
+<td style="text-align: right;">all*</td>
+<td style="text-align: right;">4h</td>
+<td style="text-align: right;">7d</td>
+<td style="text-align: right;">gpu, gpu:L4, gpu:A100, gpu:A100_80GB, gpu:H100, gpu:B200</td>
+</tr>
+<tr>
+<td>dev</td>
+<td style="text-align: right;">general</td>
+<td style="text-align: right;">aga,ana,apl</td>
+<td style="text-align: right;">2h</td>
+<td style="text-align: right;">12h</td>
+<td style="text-align: right;">gpu, gpu:L4, gpu:A100, gpu:A100_80GB</td>
+</tr>
+<tr>
+<td>cjvt</td>
+<td style="text-align: right;">private</td>
+<td style="text-align: right;">axa</td>
+<td style="text-align: right;">4h</td>
+<td style="text-align: right;">4d</td>
+<td style="text-align: right;">gpu, gpu:A100</td>
+</tr>
+<tr>
+<td>psuiis</td>
+<td style="text-align: right;">private</td>
+<td style="text-align: right;">ana</td>
+<td style="text-align: right;">4h</td>
+<td style="text-align: right;">4d</td>
+<td style="text-align: right;">gpu, gpu:A100_80GB</td>
+</tr>
+<tr>
+<td>nxt</td>
+<td style="text-align: right;">experimental</td>
+<td style="text-align: right;">gh[1-2]</td>
+<td style="text-align: right;">2h</td>
+<td style="text-align: right;">2d</td>
+<td style="text-align: right;">gpu, gpu:GH200</td>
+</tr>
+<tr>
+<td>amd</td>
+<td style="text-align: right;">experimental</td>
+<td style="text-align: right;">api</td>
+<td style="text-align: right;">2h</td>
+<td style="text-align: right;">2d</td>
+<td style="text-align: right;">gpu, gpu:MI210</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>To avoid issues related to differences in CPU and/or GPU architecture, partition <code>frida</code> includes all nodes, but those that are part of partitions <code>nxt</code> and <code>amd</code>.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Jobs that are CPU intense should target partition <code>amd</code> as it is equipped with large cache AMD Epyc 9684X CPUs.</p>
+</div>
+<!--
+| PARTITION | TYPE    | nodes | default time |     max time |                   available gres types |   allowd QoS         |
+|-----------|--------:|------:|-------------:|-------------:|---------------------------------------:|---------------------:|
+| frida     | general |   all |           4h |           7d | gpu, gpu:A100, gpu:A100_80GB, gpu:H100 | normal, cjvt, psuiis |
+| dev       | general |   ana |           2h |          12h | shard, gpu, gpu:A100_80GB              | dev                  |
+| _exp_     | general |     - |           2h |           1d | _Planed for Q1 2024_                   | dev                  |
+| cjvt      | private |   axa |           4h |           4d | gpu, gpu:A100                          | cjvt                 |
+| psuiis    | private |   ana |           4h |           4d | gpu, gpu:A100_80GB                     | psuiis               |
+
+### QoS
+
+As a further tool in affecting job submission, Slurm allows users the ability to provide the desired QoS (Quality of Service). Depending on the user's associations only certain QoS levels may be available, similarly depending on the partition only certain QoS levels will be accepted. In contrast to general QoS levels, private QoS levels provide a higher priority but are limited by a monthly quota. Once the sum of wall-times of all jobs submitted using a QoS exhausts the available quota, jobs that specify this QoS will not be accepted until the quota's next reset (monthly). Similarly, jobs will be rejected if they are not able to finish before the quota's exhaustion.
+
+| QOS       | TYPE    | partition | default time |     max time | priority | monthly quota [d-hh:mm] |
+|-----------|--------:|----------:|-------------:|-------------:|---------:|------------------------:|
+| normal    | general |       any |           4h |           7d |        1 |                       - |
+| dev       | general |       dev |           2h |          12h |       10 |                       - |
+| cjvt      | private |       any |           4h |           4d |      100 |                 8-02:42 |
+| psuiis    | private |       any |           4h |           4d |      100 |                 4-07:50 |
+-->
+
+<h2 id="shared-storage">Shared storage</h2>
+<p>All FRIDA nodes have access to a limited amount of shared data storage. For performance reasons, it is served by a raid0 backend. Note that FRIDA does not provide automatic backups, these are entirely in the domain of the end user. Also, as of current settings, FRIDA does not enforce shared storage quotas, but this may change in future upgrades. Access permissions on the user folder are set to user only. Depending on the groups a user is a member of, they may have access to multiple workspace folders. These folders have the group special (<a href="https://www.redhat.com/sysadmin/suid-sgid-sticky-bit">SGID</a>) bit set, so files created within them will automatically have the correct group ownership. All group members will have read and execute rights. Note, however, that group write access is masked, so users who wish to make their files writable by other group members should change permissions by using the <code>chmod g+w</code> command. All other security measures dictated by the nature of your data are the responsibility of the end users.</p>
+<p>In addition to access to shared storage, compute nodes provide also an even smaller amount of local storage. The amount varies per node and may change with FRIDA's future updates. Local storage is intended as scratch space, the corresponding path is created on a per-job basis at job start and purged as soon as the job ends.</p>
+<table>
+<thead>
+<tr>
+<th>TYPE</th>
+<th style="text-align: right;">backend</th>
+<th style="text-align: right;">backups</th>
+<th style="text-align: right;">access</th>
+<th style="text-align: right;">location</th>
+<th style="text-align: right;">env</th>
+<th style="text-align: right;">quota</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>shared</td>
+<td style="text-align: right;">weka</td>
+<td style="text-align: right;">no</td>
+<td style="text-align: right;">user</td>
+<td style="text-align: right;"><code>/shared/home/$USER</code></td>
+<td style="text-align: right;"><code>$HOME</code></td>
+<td style="text-align: right;">-</td>
+</tr>
+<tr>
+<td>shared</td>
+<td style="text-align: right;">weka</td>
+<td style="text-align: right;">no</td>
+<td style="text-align: right;">group</td>
+<td style="text-align: right;"><code>/shared/workspace/$SLURM_JOB_ACCOUNT</code></td>
+<td style="text-align: right;"><code>$WORK</code></td>
+<td style="text-align: right;">-</td>
+</tr>
+<tr>
+<td>scratch</td>
+<td style="text-align: right;">raid0</td>
+<td style="text-align: right;">no</td>
+<td style="text-align: right;">job</td>
+<td style="text-align: right;"><code>/local/scratch/$USER/$SLURM_JOB_ID</code></td>
+<td style="text-align: right;"><code>$SCRATCH</code></td>
+<td style="text-align: right;">-</td>
+</tr>
+</tbody>
+</table>
+<h2 id="usage">Usage</h2>
+<p>In Slurm there are two principal ways of submitting jobs. Interactive and non-interactive, or batch submission. What follows in the next subsections is a quick review of most typical use cases.</p>
+<p>Some useful Slurm commands with their typical use case, notes and corresponding Slurm help are displayed in the table below. In the next sections, we will be using these commands to submit and view jobs.</p>
+<table>
+<thead>
+<tr>
+<th>CMD</th>
+<th style="text-align: left;">typical use case</th>
+<th style="text-align: left;">notes</th>
+<th style="text-align: right;">help</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>frida</code></td>
+<td style="text-align: left;">view the current state of resources</td>
+<td style="text-align: left;">this is a custom, FRIDA command, which in a compact form presents important FRIDA notices about maintenance; it also prints detailed info of the last five jobs submitted by the user, a list of their shared storage locations with usage and remaining space, and a list of currently available GPUs</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr>
+<td><code>slurm</code></td>
+<td style="text-align: left;">view the current status of all resources</td>
+<td style="text-align: left;">this is a custom, FRIDA alias built on top of the more general <code>sinfo</code> Slurm command</td>
+<td style="text-align: right;">see Slurm docs on <a href="https://slurm.schedmd.com/sinfo.html"><code>sinfo</code></a></td>
+</tr>
+<tr>
+<td><code>salloc</code></td>
+<td style="text-align: left;">resource reservation and allocation for interactive use</td>
+<td style="text-align: left;">intended for interactive jobs; upon successful allocation <code>srun</code> commands can be used to open a shell with the allocated resources</td>
+<td style="text-align: right;">see Slurm docs on <a href="https://slurm.schedmd.com/salloc.html"><code>salloc</code></a></td>
+</tr>
+<tr>
+<td><code>srun</code></td>
+<td style="text-align: left;">resource reservation, allocation and execution of supplied command on these resources</td>
+<td style="text-align: left;">a blocking command; with <code>--pty</code> can be used for interactive jobs; by appending <code>&amp;</code> followed by a <code>wait</code> the command can be turned into non-blocking</td>
+<td style="text-align: right;">see Slurm docs on <a href="https://slurm.schedmd.com/srun.html"><code>srun</code></a></td>
+</tr>
+<tr>
+<td><code>stunnel</code></td>
+<td style="text-align: left;">resource reservation, allocation and setup of a vscode tunnel to these resources</td>
+<td style="text-align: left;">this is a custom, FRIDA alias built on top of the more general <code>srun --pty</code> Slurm command; requires a GitHub or Microsoft account for tunnel registration; intended for dvelopment, testing and debugging</td>
+<td style="text-align: right;">see section <a href="#code-tunnel">code tunnel</a></td>
+</tr>
+<tr>
+<td><code>sbatch</code></td>
+<td style="text-align: left;">resource reservation, allocation and execution of non-interactive batch job on these resources</td>
+<td style="text-align: left;">asynchronous execution of sbatch script; when combined with <code>srun</code> multiple sub-steps become possible</td>
+<td style="text-align: right;">see Slurm docs on <a href="https://slurm.schedmd.com/sbatch.html"><code>sbatch</code></a></td>
+</tr>
+<tr>
+<td><code>squeue</code></td>
+<td style="text-align: left;">view the current queue status</td>
+<td style="text-align: left;">on large clusters the output can be large; filter can be applied to limit output to specific partition by <code>-p {partition}</code></td>
+<td style="text-align: right;">see Slurm docs on <a href="https://slurm.schedmd.com/squeue.html"><code>squeue</code></a></td>
+</tr>
+<tr>
+<td><code>sprio</code></td>
+<td style="text-align: left;">view the current priority status on queue</td>
+<td style="text-align: left;">this is a custom FRIDA alias built on top of the more general <code>sprio</code> Slurm command</td>
+<td style="text-align: right;">see Slurm docs on <a href="https://slurm.schedmd.com/sprio.html"><code>sprio</code></a></td>
+</tr>
+<tr>
+<td><code>scancel</code></td>
+<td style="text-align: left;">cancel a running job</td>
+<td style="text-align: left;"></td>
+<td style="text-align: right;">see Slurm docs on <a href="https://slurm.schedmd.com/scancel.html"><code>scancel</code></a></td>
+</tr>
+<tr>
+<td><code>scontrol show job</code></td>
+<td style="text-align: left;">show detailed information of a job</td>
+<td style="text-align: left;"></td>
+<td style="text-align: right;">see Slurm docs on <a href="https://slurm.schedmd.com/scontrol.html"><code>scontrol</code></a></td>
+</tr>
+</tbody>
+</table>
+<!-- | `slimits` | view limits imposed on current user | this is a custom, FRIDA alias built on top of the more general `sacctmgr` Slurm command | see Slurm docs on [`sacctmgr`](https://slurm.schedmd.com/sacctmgr.html) |
+| `sqos` | view the current status of resources | this is a custom, FRIDA alias built on top of the more general `sacctmgr` Slurm command | see Slurm docs on [`sacctmgr`](https://slurm.schedmd.com/sacctmgr.html) | --->
+
+<h3 id="interactive-sessions">Interactive sessions</h3>
+<p>Slurm in general provides two ways of running interactive jobs; either via the <code>salloc</code> or via the <code>srun --pty</code> command. The former will first reserve the resources, which you then explicitly use via the latter, while the latter can be used to do the reservation and execution in a single step.</p>
+<p>For example, the following snippet shows how to allocate resources on <code>dev</code> partition with default parameters (2 vCPU, 8GB RAM) and then start a bash shell on the allocated resources. Done that it shows how to check what was allocated, then exits the bash shell and finally releases the allocated resources.
+<div class="highlight"><pre><span></span><code>ilb@login-frida:~$<span class="w"> </span>salloc<span class="w"> </span>-p<span class="w"> </span>dev
+salloc:<span class="w"> </span>Granted<span class="w"> </span>job<span class="w"> </span>allocation<span class="w"> </span><span class="m">498</span>
+salloc:<span class="w"> </span>Waiting<span class="w"> </span><span class="k">for</span><span class="w"> </span>resource<span class="w"> </span>configuration
+salloc:<span class="w"> </span>Nodes<span class="w"> </span>ana<span class="w"> </span>are<span class="w"> </span>ready<span class="w"> </span><span class="k">for</span><span class="w"> </span>job
+
+ilb@login-frida:~<span class="w"> </span><span class="o">[</span>interactive<span class="o">]</span>$<span class="w"> </span>srun<span class="w"> </span>--pty<span class="w"> </span>bash
+
+ilb@ana-frida:~<span class="w"> </span><span class="o">[</span>interactive<span class="o">]</span>$<span class="w"> </span>scontrol<span class="w"> </span>show<span class="w"> </span>job<span class="w"> </span><span class="nv">$SLURM_JOB_ID</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>AllocTRES
+<span class="w">   </span><span class="nv">AllocTRES</span><span class="o">=</span><span class="nv">cpu</span><span class="o">=</span><span class="m">2</span>,mem<span class="o">=</span>8G,node<span class="o">=</span><span class="m">1</span>,billing<span class="o">=</span><span class="m">2</span>
+
+ilb@ana-frida:~<span class="w"> </span><span class="o">[</span>interactive<span class="o">]</span>$<span class="w"> </span><span class="nb">exit</span>
+<span class="nb">exit</span>
+
+ilb@login-frida:~<span class="w"> </span><span class="o">[</span>interactive<span class="o">]</span>$<span class="w"> </span><span class="nb">exit</span>
+<span class="nb">exit</span>
+salloc:<span class="w"> </span>Relinquishing<span class="w"> </span>job<span class="w"> </span>allocation<span class="w"> </span><span class="m">498</span>
+salloc:<span class="w"> </span>Job<span class="w"> </span>allocation<span class="w"> </span><span class="m">498</span><span class="w"> </span>has<span class="w"> </span>been<span class="w"> </span>revoked.
+
+ilb@login-frida:~$
+</code></pre></div></p>
+<p>The following snipped, on the other hand, allocates resources on <code>dev</code> partition and starts a bash shell in one call, this time requesting for 32 vCPU cores and 32 GB of RAM. It then checks what was allocated, and finally exits from the bash shell jointly releasing the allocated resources.
+<div class="highlight"><pre><span></span><code>ilb@login-frida:~$<span class="w"> </span>srun<span class="w"> </span>-p<span class="w"> </span>dev<span class="w"> </span>-c32<span class="w"> </span>--mem<span class="o">=</span>32G<span class="w"> </span>--pty<span class="w"> </span>bash
+
+ilb@ana-frida:~<span class="w"> </span><span class="o">[</span>bash<span class="o">]</span>$<span class="w"> </span>scontrol<span class="w"> </span>show<span class="w"> </span>job<span class="w"> </span><span class="nv">$SLURM_JOB_ID</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>AllocTRES
+<span class="w">   </span><span class="nv">AllocTRES</span><span class="o">=</span><span class="nv">cpu</span><span class="o">=</span><span class="m">32</span>,mem<span class="o">=</span>32G,node<span class="o">=</span><span class="m">1</span>,billing<span class="o">=</span><span class="m">32</span>
+
+ilb@ana-frida:~<span class="w"> </span><span class="o">[</span>bash<span class="o">]</span>$<span class="w"> </span><span class="nb">exit</span>
+<span class="nb">exit</span>
+
+ilb@login-frida:~$
+</code></pre></div></p>
+<p>Access to the allocated resources (nodes) can be achieved also by invoking <code>ssh</code>; however, note that then the <a href="https://slurm.schedmd.com/srun.html#lbAJ">Slurm-defined environment variables</a> will not be available to you. The auto inclusion of the corresponding environment variables is an added benefit of accessing the allocated resources via <code>srun --pty</code>. With multi-node resource allocations use <code>-w</code> to specify the node on which you wish to start a shell.
+<div class="highlight"><pre><span></span><code>ilb@login-frida:~$<span class="w"> </span>srun<span class="w"> </span>-p<span class="w"> </span>dev<span class="w"> </span>--pty<span class="w"> </span>bash
+
+ilb@ana-frida:~<span class="w"> </span><span class="o">[</span>bash<span class="o">]</span>$<span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="nv">$SLURM_</span>
+<span class="nv">$SLURM_CLUSTER_NAME</span><span class="w">       </span><span class="nv">$SLURM_JOB_ID</span><span class="w">             </span><span class="nv">$SLURM_JOB_QOS</span><span class="w">            </span><span class="nv">$SLURM_SUBMIT_HOST</span>
+<span class="nv">$SLURM_CONF</span><span class="w">               </span><span class="nv">$SLURM_JOB_NAME</span><span class="w">           </span><span class="nv">$SLURM_NNODES</span><span class="w">             </span><span class="nv">$SLURM_TASKS_PER_NODE</span>
+<span class="nv">$SLURM_JOBID</span><span class="w">              </span><span class="nv">$SLURM_JOB_NODELIST</span><span class="w">       </span><span class="nv">$SLURM_NODELIST</span>
+<span class="nv">$SLURM_JOB_ACCOUNT</span><span class="w">        </span><span class="nv">$SLURM_JOB_NUM_NODES</span><span class="w">      </span><span class="nv">$SLURM_NODE_ALIASES</span>
+<span class="nv">$SLURM_JOB_CPUS_PER_NODE</span><span class="w">  </span><span class="nv">$SLURM_JOB_PARTITION</span><span class="w">      </span><span class="nv">$SLURM_SUBMIT_DIR</span>
+
+ilb@ana-frida:~<span class="w"> </span><span class="o">[</span>bash<span class="o">]</span>$<span class="w"> </span><span class="nb">exit</span>
+<span class="nb">exit</span>
+
+ilb@login-frida:~$
+</code></pre></div></p>
+<p>Note also that when you have multiple jobs running on a single node <code>ssh</code> will always open a shell with the resources allocated by the last submitted job. The <code>srun</code> command on the other hand provides two parameters through which one can specify the desire to not start a new job, but open an additional shell in an already running job. For example, assuming a job with id <code>500</code> is already running, the next snippet shows how to open a second bash shell in the same job.
+<div class="highlight"><pre><span></span><code>ilb@login-frida:~$<span class="w"> </span>srun<span class="w"> </span>--overlap<span class="w"> </span>--jobid<span class="o">=</span><span class="m">500</span><span class="w"> </span>--pty<span class="w"> </span>bash
+
+ilb@ana-frida:~<span class="w"> </span><span class="o">[</span>bash<span class="o">]</span>$<span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="nv">$SLURM_JOB_ID</span>
+<span class="m">500</span>
+
+ilb@ana-frida:~<span class="w"> </span><span class="o">[</span>bash<span class="o">]</span>$<span class="w"> </span><span class="nb">exit</span>
+<span class="nb">exit</span>
+
+ilb@login-frida:~$
+</code></pre></div></p>
+<h4 id="running-jobs-in-containers">Running jobs in containers</h4>
+<p>FRIDA was set up by following <a href="https://github.com/NVIDIA/deepops">deepops</a>, an open-source infrastructure automation tool by NVIDIA. Our setup is focused on supporting ML/AI training tasks, and based on current trends of containerization even in HPC systems, it is also purely container-based (modules are not supported). Here we opted for <a href="https://github.com/NVIDIA/enroot">Enroot</a> an extremely lightweight container runtime capable of turning traditional container/OS images into unprivileged sandboxes. An added benefit of Enroot is its tight integration into Slurm commands via the <a href="https://github.com/NVIDIA/pyxis">Pyxis</a> plugin, thus providing a very good user experience.</p>
+<p>Regardless if the Enroot/Pyxis bundle turns containers/OS images into unprivileged sandboxes, automatic root remapping allows users to extend and update the imported images with ease. The changes can be retained for the duration of a job or exported to a squashfs file for cross-job retention. Some of the most commonly used Pyxis-provided <code>srun</code> parameters are listed in the table below. For further details on all available parameters consult the official <a href="https://github.com/NVIDIA/pyxis/wiki/Usage">Pyxis documentation</a>, while information on how to set up credentials that enable importing containers from private container registries can be found in the official <a href="https://github.com/NVIDIA/enroot/blob/master/doc/cmd/import.md">Enroot documentation</a>.</p>
+<table>
+<thead>
+<tr>
+<th><div style="width:190px">srun parameter</div></th>
+<th><div style="width:290px">format</div></th>
+<th>notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--container-image</code></td>
+<td><code>[USER@][REGISTRY#]IMAGE[:TAG]\|PATH</code></td>
+<td>container image to load, path must point to a squashfs file</td>
+</tr>
+<tr>
+<td><code>--container-name</code></td>
+<td><code>NAME</code></td>
+<td>name the container for easier access to running containters; can be used to change container contents without saving to a squashfs file, but note that non-running named containers are kept only within a <code>salloc</code> or <code>sbatch</code> allocation</td>
+</tr>
+<tr>
+<td><code>--container-save</code></td>
+<td><code>PATH</code></td>
+<td>save the container state to a squashfs file</td>
+</tr>
+<tr>
+<td><code>--container-mount-home</code></td>
+<td></td>
+<td>bind mount the user home; not mounted by default to prevent local config collisions</td>
+</tr>
+<tr>
+<td><code>--container-mounts</code></td>
+<td><code>SRC:DST[:FLAGS][,SRC:DST...]</code></td>
+<td>bind points to mount into the container; <code>$SCRATCH</code> is auto-mounted</td>
+</tr>
+</tbody>
+</table>
+<p>For example, the following snippet will check the OS release on <code>dev</code> partition, node <code>ana</code>, then start a bash shell in a CentOS container on the same node and recheck. In this case, the CentOS image tagged latest will be pulled from the official <a href="https://hub.docker.com">DockerHub</a> page.
+<div class="highlight"><pre><span></span><code>ilb@login-frida:~$<span class="w"> </span>srun<span class="w"> </span>-p<span class="w"> </span>dev<span class="w"> </span>-w<span class="w"> </span>ana<span class="w"> </span>bash<span class="w"> </span>-c<span class="w"> </span><span class="s1">&#39;echo &quot;$HOSTNAME: `grep PRETTY /etc/os-release`&quot;&#39;</span>
+ana:<span class="w"> </span><span class="nv">PRETTY_NAME</span><span class="o">=</span><span class="s2">&quot;Ubuntu 22.04.3 LTS&quot;</span>
+
+ilb@login-frida:~$<span class="w"> </span>srun<span class="w"> </span>-p<span class="w"> </span>dev<span class="w"> </span>-w<span class="w"> </span>ana<span class="w"> </span>--container-image<span class="o">=</span>centos<span class="w"> </span>--pty<span class="w"> </span>bash
+pyxis:<span class="w"> </span>importing<span class="w"> </span>docker<span class="w"> </span>image:<span class="w"> </span>centos
+pyxis:<span class="w"> </span>imported<span class="w"> </span>docker<span class="w"> </span>image:<span class="w"> </span>centos
+<span class="o">[</span>root@ana<span class="w"> </span>/<span class="o">]</span><span class="c1"># echo &quot;$HOSTNAME: `grep PRETTY /etc/os-release`&quot;</span>
+ana:<span class="w"> </span><span class="nv">PRETTY_NAME</span><span class="o">=</span><span class="s2">&quot;CentOS Linux 8&quot;</span>
+
+<span class="o">[</span>root@ana<span class="w"> </span>/<span class="o">]</span><span class="c1"># exit</span>
+<span class="nb">exit</span>
+
+ilb@login-frida:~$
+</code></pre></div></p>
+<p>The following snippet allocates resources on <code>dev</code> partition, then starts an <code>ubuntu:20.04</code> container and checks if <code>file</code> utility exists. The command results in an error indicating that the utility is not present. The snippet then creates a named container that is based on <code>ubuntu:20.04</code> and installs the utility. Then it rechecks if the utility exists in the named container. The snippet ends by releasing the resources, which jointly purges the named container.
+<div class="highlight"><pre><span></span><code>ilb@login-frida:~$<span class="w"> </span>salloc<span class="w"> </span>-p<span class="w"> </span>dev
+salloc:<span class="w"> </span>Granted<span class="w"> </span>job<span class="w"> </span>allocation<span class="w"> </span><span class="m">526</span>
+salloc:<span class="w"> </span>Waiting<span class="w"> </span><span class="k">for</span><span class="w"> </span>resource<span class="w"> </span>configuration
+salloc:<span class="w"> </span>Nodes<span class="w"> </span>ana<span class="w"> </span>are<span class="w"> </span>ready<span class="w"> </span><span class="k">for</span><span class="w"> </span>job
+
+ilb@login-frida:~<span class="w"> </span><span class="o">[</span>interactive<span class="o">]</span>$<span class="w"> </span>srun<span class="w"> </span>--container-image<span class="o">=</span>ubuntu:20.04<span class="w"> </span>which<span class="w"> </span>file
+pyxis:<span class="w"> </span>importing<span class="w"> </span>docker<span class="w"> </span>image:<span class="w"> </span>ubuntu:20.04
+pyxis:<span class="w"> </span>imported<span class="w"> </span>docker<span class="w"> </span>image:<span class="w"> </span>ubuntu:20.04
+srun:<span class="w"> </span>error:<span class="w"> </span>ana:<span class="w"> </span>task<span class="w"> </span><span class="m">0</span>:<span class="w"> </span>Exited<span class="w"> </span>with<span class="w"> </span><span class="nb">exit</span><span class="w"> </span>code<span class="w"> </span><span class="m">1</span>
+
+ilb@login-frida:~<span class="w"> </span><span class="o">[</span>interactive<span class="o">]</span>$<span class="w"> </span>srun<span class="w"> </span>--container-image<span class="o">=</span>ubuntu:20.04<span class="w"> </span>--container-name<span class="o">=</span>myubuntu<span class="w"> </span>sh<span class="w"> </span>-c<span class="w"> </span><span class="s1">&#39;apt-get update &amp;&amp; apt-get install -y file&#39;</span>
+pyxis:<span class="w"> </span>importing<span class="w"> </span>docker<span class="w"> </span>image:<span class="w"> </span>ubuntu:20.04
+pyxis:<span class="w"> </span>imported<span class="w"> </span>docker<span class="w"> </span>image:<span class="w"> </span>ubuntu:20.04
+Get:1<span class="w"> </span>http://security.ubuntu.com/ubuntu<span class="w"> </span>focal-security<span class="w"> </span>InRelease<span class="w"> </span><span class="o">[</span><span class="m">114</span><span class="w"> </span>kB<span class="o">]</span>
+Get:2<span class="w"> </span>http://archive.ubuntu.com/ubuntu<span class="w"> </span>focal<span class="w"> </span>InRelease<span class="w"> </span><span class="o">[</span><span class="m">265</span><span class="w"> </span>kB<span class="o">]</span>
+Get:3<span class="w"> </span>http://security.ubuntu.com/ubuntu<span class="w"> </span>focal-security/main<span class="w"> </span>amd64<span class="w"> </span>Packages<span class="w"> </span><span class="o">[</span><span class="m">3238</span><span class="w"> </span>kB<span class="o">]</span>
+Get:4<span class="w"> </span>http://security.ubuntu.com/ubuntu<span class="w"> </span>focal-security/multiverse<span class="w"> </span>amd64<span class="w"> </span>Packages<span class="w"> </span><span class="o">[</span><span class="m">29</span>.3<span class="w"> </span>kB<span class="o">]</span>
+Get:5<span class="w"> </span>http://security.ubuntu.com/ubuntu<span class="w"> </span>focal-security/restricted<span class="w"> </span>amd64<span class="w"> </span>Packages<span class="w"> </span><span class="o">[</span><span class="m">3079</span><span class="w"> </span>kB<span class="o">]</span>
+Get:6<span class="w"> </span>http://security.ubuntu.com/ubuntu<span class="w"> </span>focal-security/universe<span class="w"> </span>amd64<span class="w"> </span>Packages<span class="w"> </span><span class="o">[</span><span class="m">1143</span><span class="w"> </span>kB<span class="o">]</span>
+Get:7<span class="w"> </span>http://archive.ubuntu.com/ubuntu<span class="w"> </span>focal-updates<span class="w"> </span>InRelease<span class="w"> </span><span class="o">[</span><span class="m">114</span><span class="w"> </span>kB<span class="o">]</span>
+Get:8<span class="w"> </span>http://archive.ubuntu.com/ubuntu<span class="w"> </span>focal-backports<span class="w"> </span>InRelease<span class="w"> </span><span class="o">[</span><span class="m">108</span><span class="w"> </span>kB<span class="o">]</span>
+Get:9<span class="w"> </span>http://archive.ubuntu.com/ubuntu<span class="w"> </span>focal/main<span class="w"> </span>amd64<span class="w"> </span>Packages<span class="w"> </span><span class="o">[</span><span class="m">1275</span><span class="w"> </span>kB<span class="o">]</span>
+Get:10<span class="w"> </span>http://archive.ubuntu.com/ubuntu<span class="w"> </span>focal/multiverse<span class="w"> </span>amd64<span class="w"> </span>Packages<span class="w"> </span><span class="o">[</span><span class="m">177</span><span class="w"> </span>kB<span class="o">]</span>
+Get:11<span class="w"> </span>http://archive.ubuntu.com/ubuntu<span class="w"> </span>focal/restricted<span class="w"> </span>amd64<span class="w"> </span>Packages<span class="w"> </span><span class="o">[</span><span class="m">33</span>.4<span class="w"> </span>kB<span class="o">]</span>
+Get:12<span class="w"> </span>http://archive.ubuntu.com/ubuntu<span class="w"> </span>focal/universe<span class="w"> </span>amd64<span class="w"> </span>Packages<span class="w"> </span><span class="o">[</span><span class="m">11</span>.3<span class="w"> </span>MB<span class="o">]</span>
+Get:13<span class="w"> </span>http://archive.ubuntu.com/ubuntu<span class="w"> </span>focal-updates/main<span class="w"> </span>amd64<span class="w"> </span>Packages<span class="w"> </span><span class="o">[</span><span class="m">3726</span><span class="w"> </span>kB<span class="o">]</span>
+Get:14<span class="w"> </span>http://archive.ubuntu.com/ubuntu<span class="w"> </span>focal-updates/restricted<span class="w"> </span>amd64<span class="w"> </span>Packages<span class="w"> </span><span class="o">[</span><span class="m">3228</span><span class="w"> </span>kB<span class="o">]</span>
+Get:15<span class="w"> </span>http://archive.ubuntu.com/ubuntu<span class="w"> </span>focal-updates/multiverse<span class="w"> </span>amd64<span class="w"> </span>Packages<span class="w"> </span><span class="o">[</span><span class="m">32</span>.0<span class="w"> </span>kB<span class="o">]</span>
+Get:16<span class="w"> </span>http://archive.ubuntu.com/ubuntu<span class="w"> </span>focal-updates/universe<span class="w"> </span>amd64<span class="w"> </span>Packages<span class="w"> </span><span class="o">[</span><span class="m">1439</span><span class="w"> </span>kB<span class="o">]</span>
+Get:17<span class="w"> </span>http://archive.ubuntu.com/ubuntu<span class="w"> </span>focal-backports/main<span class="w"> </span>amd64<span class="w"> </span>Packages<span class="w"> </span><span class="o">[</span><span class="m">55</span>.2<span class="w"> </span>kB<span class="o">]</span>
+Get:18<span class="w"> </span>http://archive.ubuntu.com/ubuntu<span class="w"> </span>focal-backports/universe<span class="w"> </span>amd64<span class="w"> </span>Packages<span class="w"> </span><span class="o">[</span><span class="m">28</span>.6<span class="w"> </span>kB<span class="o">]</span>
+Fetched<span class="w"> </span><span class="m">29</span>.4<span class="w"> </span>MB<span class="w"> </span><span class="k">in</span><span class="w"> </span>3s<span class="w"> </span><span class="o">(</span><span class="m">9686</span><span class="w"> </span>kB/s<span class="o">)</span>
+Reading<span class="w"> </span>package<span class="w"> </span>lists...
+Reading<span class="w"> </span>package<span class="w"> </span>lists...
+Building<span class="w"> </span>dependency<span class="w"> </span>tree...
+Reading<span class="w"> </span>state<span class="w"> </span>information...
+The<span class="w"> </span>following<span class="w"> </span>additional<span class="w"> </span>packages<span class="w"> </span>will<span class="w"> </span>be<span class="w"> </span>installed:
+<span class="w">  </span>libmagic-mgc<span class="w"> </span>libmagic1
+The<span class="w"> </span>following<span class="w"> </span>NEW<span class="w"> </span>packages<span class="w"> </span>will<span class="w"> </span>be<span class="w"> </span>installed:
+<span class="w">  </span>file<span class="w"> </span>libmagic-mgc<span class="w"> </span>libmagic1
+<span class="m">0</span><span class="w"> </span>upgraded,<span class="w"> </span><span class="m">3</span><span class="w"> </span>newly<span class="w"> </span>installed,<span class="w"> </span><span class="m">0</span><span class="w"> </span>to<span class="w"> </span>remove<span class="w"> </span>and<span class="w"> </span><span class="m">0</span><span class="w"> </span>not<span class="w"> </span>upgraded.
+Need<span class="w"> </span>to<span class="w"> </span>get<span class="w"> </span><span class="m">317</span><span class="w"> </span>kB<span class="w"> </span>of<span class="w"> </span>archives.
+After<span class="w"> </span>this<span class="w"> </span>operation,<span class="w"> </span><span class="m">6174</span><span class="w"> </span>kB<span class="w"> </span>of<span class="w"> </span>additional<span class="w"> </span>disk<span class="w"> </span>space<span class="w"> </span>will<span class="w"> </span>be<span class="w"> </span>used.
+Get:1<span class="w"> </span>http://archive.ubuntu.com/ubuntu<span class="w"> </span>focal/main<span class="w"> </span>amd64<span class="w"> </span>libmagic-mgc<span class="w"> </span>amd64<span class="w"> </span><span class="m">1</span>:5.38-4<span class="w"> </span><span class="o">[</span><span class="m">218</span><span class="w"> </span>kB<span class="o">]</span>
+Get:2<span class="w"> </span>http://archive.ubuntu.com/ubuntu<span class="w"> </span>focal/main<span class="w"> </span>amd64<span class="w"> </span>libmagic1<span class="w"> </span>amd64<span class="w"> </span><span class="m">1</span>:5.38-4<span class="w"> </span><span class="o">[</span><span class="m">75</span>.9<span class="w"> </span>kB<span class="o">]</span>
+Get:3<span class="w"> </span>http://archive.ubuntu.com/ubuntu<span class="w"> </span>focal/main<span class="w"> </span>amd64<span class="w"> </span>file<span class="w"> </span>amd64<span class="w"> </span><span class="m">1</span>:5.38-4<span class="w"> </span><span class="o">[</span><span class="m">23</span>.3<span class="w"> </span>kB<span class="o">]</span>
+debconf:<span class="w"> </span>delaying<span class="w"> </span>package<span class="w"> </span>configuration,<span class="w"> </span>since<span class="w"> </span>apt-utils<span class="w"> </span>is<span class="w"> </span>not<span class="w"> </span>installed
+Fetched<span class="w"> </span><span class="m">317</span><span class="w"> </span>kB<span class="w"> </span><span class="k">in</span><span class="w"> </span>1s<span class="w"> </span><span class="o">(</span><span class="m">345</span><span class="w"> </span>kB/s<span class="o">)</span>
+Selecting<span class="w"> </span>previously<span class="w"> </span>unselected<span class="w"> </span>package<span class="w"> </span>libmagic-mgc.
+<span class="o">(</span>Reading<span class="w"> </span>database<span class="w"> </span>...<span class="w"> </span><span class="m">4124</span><span class="w"> </span>files<span class="w"> </span>and<span class="w"> </span>directories<span class="w"> </span>currently<span class="w"> </span>installed.<span class="o">)</span>
+Preparing<span class="w"> </span>to<span class="w"> </span>unpack<span class="w"> </span>.../libmagic-mgc_1%3a5.38-4_amd64.deb<span class="w"> </span>...
+Unpacking<span class="w"> </span>libmagic-mgc<span class="w"> </span><span class="o">(</span><span class="m">1</span>:5.38-4<span class="o">)</span><span class="w"> </span>...
+Selecting<span class="w"> </span>previously<span class="w"> </span>unselected<span class="w"> </span>package<span class="w"> </span>libmagic1:amd64.
+Preparing<span class="w"> </span>to<span class="w"> </span>unpack<span class="w"> </span>.../libmagic1_1%3a5.38-4_amd64.deb<span class="w"> </span>...
+Unpacking<span class="w"> </span>libmagic1:amd64<span class="w"> </span><span class="o">(</span><span class="m">1</span>:5.38-4<span class="o">)</span><span class="w"> </span>...
+Selecting<span class="w"> </span>previously<span class="w"> </span>unselected<span class="w"> </span>package<span class="w"> </span>file.
+Preparing<span class="w"> </span>to<span class="w"> </span>unpack<span class="w"> </span>.../file_1%3a5.38-4_amd64.deb<span class="w"> </span>...
+Unpacking<span class="w"> </span>file<span class="w"> </span><span class="o">(</span><span class="m">1</span>:5.38-4<span class="o">)</span><span class="w"> </span>...
+Setting<span class="w"> </span>up<span class="w"> </span>libmagic-mgc<span class="w"> </span><span class="o">(</span><span class="m">1</span>:5.38-4<span class="o">)</span><span class="w"> </span>...
+Setting<span class="w"> </span>up<span class="w"> </span>libmagic1:amd64<span class="w"> </span><span class="o">(</span><span class="m">1</span>:5.38-4<span class="o">)</span><span class="w"> </span>...
+Setting<span class="w"> </span>up<span class="w"> </span>file<span class="w"> </span><span class="o">(</span><span class="m">1</span>:5.38-4<span class="o">)</span><span class="w"> </span>...
+Processing<span class="w"> </span>triggers<span class="w"> </span><span class="k">for</span><span class="w"> </span>libc-bin<span class="w"> </span><span class="o">(</span><span class="m">2</span>.31-0ubuntu9.12<span class="o">)</span><span class="w"> </span>...
+
+
+ilb@login-frida:~<span class="w"> </span><span class="o">[</span>interactive<span class="o">]</span>$<span class="w"> </span>srun<span class="w"> </span>--container-name<span class="o">=</span>myubuntu<span class="w"> </span>which<span class="w"> </span>file
+/usr/bin/file
+
+ilb@login-frida:~<span class="w"> </span><span class="o">[</span>interactive<span class="o">]</span>$<span class="w"> </span><span class="nb">exit</span>
+<span class="nb">exit</span>
+salloc:<span class="w"> </span>Relinquishing<span class="w"> </span>job<span class="w"> </span>allocation<span class="w"> </span><span class="m">526</span>
+salloc:<span class="w"> </span>Job<span class="w"> </span>allocation<span class="w"> </span><span class="m">526</span><span class="w"> </span>has<span class="w"> </span>been<span class="w"> </span>revoked.
+
+ilb@login-frida:~$
+</code></pre></div></p>
+<h4 id="start-a-second-shell-inside-the-same-container">Start a second shell inside the same container</h4>
+<p>Using named containers becomes handy on occasions when one needs to open a second shell inside the same container (within the same job with the same resources). Let's assume a job with id <code>527</code> that was created with the parameter <code>--container-name=myubuntu</code> is running. Let's also assume that the <code>file</code> utility has been installed. The next snippet shows how to open a second bash shell into the same container.
+<div class="highlight"><pre><span></span><code>ilb@login-frida:~$<span class="w"> </span>srun<span class="w"> </span>--overlap<span class="w"> </span>--jobid<span class="o">=</span><span class="m">527</span><span class="w"> </span>--container-name<span class="o">=</span>myubuntu<span class="w"> </span>--pty<span class="w"> </span>bash
+
+root@ana:/#<span class="w"> </span>which<span class="w"> </span>file
+/usr/bin/file
+
+root@ana:/#<span class="w"> </span><span class="nb">exit</span>
+<span class="nb">exit</span>
+
+ilb@login-frida:~$
+</code></pre></div></p>
+<p>Without the use of named containers, the task becomes more challenging as one needs to first start an overlapping shell on the node, find out the PID of the Enroot container in question, and then use Enroot commands to start a bash shell in that container. The following snippet shows an example.
+<div class="highlight"><pre><span></span><code>ilb@login-frida:~$<span class="w"> </span>srun<span class="w"> </span>--overlap<span class="w"> </span>--jobid<span class="o">=</span><span class="m">527</span><span class="w"> </span>--pty<span class="w"> </span>bash
+
+ilb@ana-frida:~<span class="w"> </span><span class="o">[</span>bash<span class="o">]</span>$<span class="w"> </span>enroot<span class="w"> </span>list<span class="w"> </span>-f
+NAME<span class="w">               </span>PID<span class="w">    </span>COMM<span class="w">  </span>STATE<span class="w">  </span>STARTED<span class="w">  </span>TIME<span class="w">   </span>MNTNS<span class="w">       </span>USERNS<span class="w">      </span>COMMAND
+pyxis_527_527.0<span class="w">  </span><span class="m">11229</span><span class="w">  </span>bash<span class="w">  </span>Ss+<span class="w">    </span><span class="m">20</span>:35<span class="w">    </span><span class="m">00</span>:23<span class="w">  </span><span class="m">4026538269</span><span class="w">  </span><span class="m">4026538268</span><span class="w">  </span>/usr/bin/bash
+
+ilb@ana-frida:~<span class="w"> </span><span class="o">[</span>bash<span class="o">]</span>$<span class="w"> </span>enroot<span class="w"> </span><span class="nb">exec</span><span class="w"> </span><span class="m">11229</span><span class="w"> </span>bash
+
+root@ana:/#<span class="w"> </span>which<span class="w"> </span>file
+/usr/bin/file
+
+root@ana:/#<span class="w"> </span><span class="nb">exit</span>
+<span class="nb">exit</span>
+
+ilb@login-frida:~$
+</code></pre></div></p>
+<h4 id="save-the-container-image-to-a-local-filesystem">Save the container image to a local filesystem</h4>
+<p>Named containers work very well throughout a single sbatch allocation, but when the same scripts are run multiple times, downloading from online container registries may take too much time. With multi-node runs certain container registries may even throttle downloads (e.g. when a large number of nodes starts to download concurrently). Or simply the container is seen just as a starting point on which one builds (installs other dependencies). For such cases it is useful to create a local copy of the container via the parameter <code>--container-save</code>. For example, the following snippet shows this workflow on the earlier example with <code>file</code>.
+<div class="highlight"><pre><span></span><code>ilb@login-frida:~$<span class="w"> </span>srun<span class="w"> </span>-p<span class="w"> </span>dev<span class="w"> </span>--container-image<span class="o">=</span>ubuntu:20.04<span class="w"> </span>--container-save<span class="o">=</span>./ubuntu_with_file.sqfs<span class="w"> </span>sh<span class="w"> </span>-c<span class="w"> </span><span class="s1">&#39;apt-get update &amp;&amp; apt-get install -y file&#39;</span>
+srun:<span class="w"> </span>job<span class="w"> </span><span class="m">7822</span><span class="w"> </span>queued<span class="w"> </span>and<span class="w"> </span>waiting<span class="w"> </span><span class="k">for</span><span class="w"> </span>resources
+srun:<span class="w"> </span>job<span class="w"> </span><span class="m">7822</span><span class="w"> </span>has<span class="w"> </span>been<span class="w"> </span>allocated<span class="w"> </span>resources
+pyxis:<span class="w"> </span>importing<span class="w"> </span>docker<span class="w"> </span>image:<span class="w"> </span>ubuntu:20.04
+pyxis:<span class="w"> </span>imported<span class="w"> </span>docker<span class="w"> </span>image:<span class="w"> </span>ubuntu:20.04
+...
+pyxis:<span class="w"> </span>exported<span class="w"> </span>container<span class="w"> </span>pyxis_7822_7822.0<span class="w"> </span>to<span class="w"> </span>./ubuntu_with_file.sqfs
+
+ilb@login-frida:~$<span class="w"> </span>ls<span class="w"> </span>-alht<span class="w"> </span>ubuntu_with_file.sqfs
+-rw-r-----<span class="w"> </span><span class="m">1</span><span class="w"> </span>ilb<span class="w"> </span>lpt<span class="w"> </span>128M<span class="w"> </span>Oct<span class="w"> </span><span class="m">24</span><span class="w"> </span><span class="m">12</span>:07<span class="w"> </span>ubuntu_with_file.sqfs
+
+ilb@login-frida:~$<span class="w"> </span>srun<span class="w"> </span>-p<span class="w"> </span>dev<span class="w"> </span>--container-image<span class="o">=</span>./ubuntu_with_file.sqfs<span class="w"> </span>which<span class="w"> </span>file
+srun:<span class="w"> </span>job<span class="w"> </span><span class="m">7823</span><span class="w"> </span>queued<span class="w"> </span>and<span class="w"> </span>waiting<span class="w"> </span><span class="k">for</span><span class="w"> </span>resources
+srun:<span class="w"> </span>job<span class="w"> </span><span class="m">7823</span><span class="w"> </span>has<span class="w"> </span>been<span class="w"> </span>allocated<span class="w"> </span>resources
+/usr/bin/file
+</code></pre></div></p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The parameter <code>--container-save</code> expects a file path, providing a folder path may lead to data loss. The parameter <code>--container-image</code> by default assumes an online image name, so local files should be provided in absolute path format, or prepended with <code>./</code> in the case of relative path format.</p>
+</div>
+<!--
+Some containers are big and memory-hungry. One such example is Pytorch, whose latest containers are very large and require large amounts of memory to start. The following snippet shows the output of a failed attempt to start the `pytorch:23.08` container with just 2 vCPU and 8GB of RAM, and a successful one with 32GB.
+<div class="highlight"><pre><span></span><code>ilb@login-frida:~$<span class="w"> </span>srun<span class="w"> </span>-p<span class="w"> </span>dev<span class="w"> </span>--container-image<span class="o">=</span>nvcr.io#nvidia/pytorch:23.08-py3<span class="w"> </span>--pty<span class="w"> </span>bash
+pyxis:<span class="w"> </span>importing<span class="w"> </span>docker<span class="w"> </span>image:<span class="w"> </span>nvcr.io#nvidia/pytorch:23.08-py3
+slurmstepd:<span class="w"> </span>error:<span class="w"> </span>pyxis:<span class="w"> </span>child<span class="w"> </span><span class="m">12455</span><span class="w"> </span>failed<span class="w"> </span>with<span class="w"> </span>error<span class="w"> </span>code:<span class="w"> </span><span class="m">137</span>
+slurmstepd:<span class="w"> </span>error:<span class="w"> </span>pyxis:<span class="w"> </span>failed<span class="w"> </span>to<span class="w"> </span>import<span class="w"> </span>docker<span class="w"> </span>image
+slurmstepd:<span class="w"> </span>error:<span class="w"> </span>pyxis:<span class="w"> </span>printing<span class="w"> </span>enroot<span class="w"> </span>log<span class="w"> </span>file:
+slurmstepd:<span class="w"> </span>error:<span class="w"> </span>pyxis:<span class="w">     </span><span class="o">[</span>INFO<span class="o">]</span><span class="w"> </span>Querying<span class="w"> </span>registry<span class="w"> </span><span class="k">for</span><span class="w"> </span>permission<span class="w"> </span>grant
+slurmstepd:<span class="w"> </span>error:<span class="w"> </span>pyxis:<span class="w">     </span><span class="o">[</span>INFO<span class="o">]</span><span class="w"> </span>Authenticating<span class="w"> </span>with<span class="w"> </span>user:<span class="w"> </span>&lt;anonymous&gt;
+slurmstepd:<span class="w"> </span>error:<span class="w"> </span>pyxis:<span class="w">     </span><span class="o">[</span>INFO<span class="o">]</span><span class="w"> </span>Authentication<span class="w"> </span>succeeded
+slurmstepd:<span class="w"> </span>error:<span class="w"> </span>pyxis:<span class="w">     </span><span class="o">[</span>INFO<span class="o">]</span><span class="w"> </span>Fetching<span class="w"> </span>image<span class="w"> </span>manifest<span class="w"> </span>list
+slurmstepd:<span class="w"> </span>error:<span class="w"> </span>pyxis:<span class="w">     </span><span class="o">[</span>INFO<span class="o">]</span><span class="w"> </span>Fetching<span class="w"> </span>image<span class="w"> </span>manifest
+slurmstepd:<span class="w"> </span>error:<span class="w"> </span>pyxis:<span class="w">     </span><span class="o">[</span>INFO<span class="o">]</span><span class="w"> </span>Found<span class="w"> </span>all<span class="w"> </span>layers<span class="w"> </span><span class="k">in</span><span class="w"> </span>cache
+slurmstepd:<span class="w"> </span>error:<span class="w"> </span>pyxis:<span class="w">     </span><span class="o">[</span>INFO<span class="o">]</span><span class="w"> </span>Extracting<span class="w"> </span>image<span class="w"> </span>layers...
+slurmstepd:<span class="w"> </span>error:<span class="w"> </span>pyxis:<span class="w">     </span><span class="o">[</span>INFO<span class="o">]</span><span class="w"> </span>Converting<span class="w"> </span>whiteouts...
+slurmstepd:<span class="w"> </span>error:<span class="w"> </span>pyxis:<span class="w">     </span><span class="o">[</span>INFO<span class="o">]</span><span class="w"> </span>Creating<span class="w"> </span>squashfs<span class="w"> </span>filesystem...
+slurmstepd:<span class="w"> </span>error:<span class="w"> </span>pyxis:<span class="w">     </span>/usr/lib/enroot/docker.sh:<span class="w"> </span>line<span class="w"> </span><span class="m">337</span>:<span class="w"> </span><span class="m">12773</span><span class="w"> </span>Killed<span class="w">                  </span><span class="nv">MOUNTPOINT</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">PWD</span><span class="si">}</span><span class="s2">/rootfs&quot;</span><span class="w"> </span>enroot-mksquashovlfs<span class="w"> </span><span class="s2">&quot;0:</span><span class="k">$(</span>seq<span class="w"> </span>-s:<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="s2">&quot;</span><span class="si">${#</span><span class="nv">layers</span><span class="p">[@]</span><span class="si">}</span><span class="s2">&quot;</span><span class="k">)</span><span class="s2">&quot;</span><span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">filename</span><span class="si">}</span><span class="s2">&quot;</span><span class="w"> </span><span class="si">${</span><span class="nv">timestamp</span><span class="p">[@]+</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">timestamp</span><span class="p">[@]</span><span class="si">}</span><span class="s2">&quot;</span><span class="si">}</span><span class="w"> </span>-all-root<span class="w"> </span><span class="si">${</span><span class="nv">TTY_OFF</span><span class="p">+-no-progress</span><span class="si">}</span><span class="w"> </span>-processors<span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">ENROOT_MAX_PROCESSORS</span><span class="si">}</span><span class="s2">&quot;</span><span class="w"> </span><span class="si">${</span><span class="nv">ENROOT_SQUASH_OPTIONS</span><span class="si">}</span><span class="w"> </span><span class="m">1</span>&gt;<span class="p">&amp;</span><span class="m">2</span>
+slurmstepd:<span class="w"> </span>error:<span class="w"> </span>pyxis:<span class="w"> </span>couldn<span class="err">&#39;</span>t<span class="w"> </span>start<span class="w"> </span>container
+slurmstepd:<span class="w"> </span>error:<span class="w"> </span>spank:<span class="w"> </span>required<span class="w"> </span>plugin<span class="w"> </span>spank_pyxis.so:<span class="w"> </span>task_init<span class="o">()</span><span class="w"> </span>failed<span class="w"> </span>with<span class="w"> </span><span class="nv">rc</span><span class="o">=</span>-1
+slurmstepd:<span class="w"> </span>error:<span class="w"> </span>Failed<span class="w"> </span>to<span class="w"> </span>invoke<span class="w"> </span>spank<span class="w"> </span>plugin<span class="w"> </span>stack
+slurmstepd:<span class="w"> </span>error:<span class="w"> </span>Detected<span class="w"> </span><span class="m">1</span><span class="w"> </span>oom_kill<span class="w"> </span>event<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="nv">StepId</span><span class="o">=</span><span class="m">1054</span>.0.<span class="w"> </span>Some<span class="w"> </span>of<span class="w"> </span>the<span class="w"> </span>step<span class="w"> </span>tasks<span class="w"> </span>have<span class="w"> </span>been<span class="w"> </span>OOM<span class="w"> </span>Killed.
+srun:<span class="w"> </span>error:<span class="w"> </span>ana:<span class="w"> </span>task<span class="w"> </span><span class="m">0</span>:<span class="w"> </span>Out<span class="w"> </span>Of<span class="w"> </span>Memory
+
+ilb@login-frida:~$<span class="w"> </span>srun<span class="w"> </span>-p<span class="w"> </span>dev<span class="w"> </span>--mem<span class="o">=</span>32G<span class="w"> </span>--container-image<span class="o">=</span>nvcr.io#nvidia/pytorch:23.08-py3<span class="w"> </span>--pty<span class="w"> </span>bash
+pyxis:<span class="w"> </span>importing<span class="w"> </span>docker<span class="w"> </span>image:<span class="w"> </span>nvcr.io#nvidia/pytorch:23.08-py3
+pyxis:<span class="w"> </span>imported<span class="w"> </span>docker<span class="w"> </span>image:<span class="w"> </span>nvcr.io#nvidia/pytorch:23.08-py3
+
+root@ana:/workspace#<span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="nv">$NVIDIA_PYTORCH_VERSION</span>
+<span class="m">23</span>.08
+
+root@ana:/workspace#<span class="w"> </span><span class="nb">exit</span>
+<span class="nb">exit</span>
+
+ilb@login-frida:~$
+</code></pre></div>
+//-->
+
+<h4 id="private-container-registries">Private container registries</h4>
+<p>Enroot uses credentials configured through <code>$HOME/.config/enroot/.credentials</code>. Because the Pyxis/Enroot bundle pulls containers on the fly during the Slurm job start, the credentials file needs to be accessible in a shared filesystem which all nodes can access at job start. The file format of the credentials file is the following.</p>
+<div class="highlight"><span class="filename">$HOME/.config/enroot/.credentials</span><pre><span></span><code>machine<span class="w"> </span>&lt;hostname&gt;<span class="w"> </span>login<span class="w"> </span>&lt;username&gt;<span class="w"> </span>password<span class="w"> </span>&lt;password&gt;
+</code></pre></div>
+<p>For example, credentials for the NVIDIA NGC registry would look as follows.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># NVIDIA GPU Cloud (both endpoints are required)</span>
+machine<span class="w"> </span>nvcr.io<span class="w"> </span>login<span class="w"> </span><span class="nv">$oauthtoken</span><span class="w"> </span>password<span class="w"> </span>&lt;token&gt;
+machine<span class="w"> </span>authn.nvidia.com<span class="w"> </span>login<span class="w"> </span><span class="nv">$oauthtoken</span><span class="w"> </span>password<span class="w"> </span>&lt;token&gt;
+</code></pre></div>
+<p>For further details consult the <a href="https://github.com/NVIDIA/enroot/blob/fb267cbebceced24556e05c7661fbd9a958f5540/doc/cmd/import.md#description">Enroot documentation</a>, which provides additional examples.</p>
+<h4 id="requesting-gpus">Requesting GPUs</h4>
+<p>All FRIDA compute nodes provide GPUs, but they differ in provider, architecture, and available memory. In Slurm, a request for allocation of GPU resources can be done using either by specifying the <code>--gpus=[type:]{count}</code> or <code>--gres=gpu[:type][:{count}]</code> parameter, as shown in the snippet below. The available GPU types depend on the selected partition, whose available GPU types in turn depend on the nodes that constitute the partition (see section <a href="#partitions">partitions</a>).</p>
+<div class="highlight"><pre><span></span><code>ilb@login-frida:~$<span class="w"> </span>srun<span class="w"> </span>-p<span class="w"> </span>dev<span class="w"> </span>--gres<span class="o">=</span>gpu<span class="w"> </span>nvidia-smi<span class="w"> </span>-L
+GPU<span class="w"> </span><span class="m">0</span>:<span class="w"> </span>NVIDIA<span class="w"> </span>L4<span class="w"> </span><span class="o">(</span>UUID:<span class="w"> </span>GPU-42461b88-e6ff-2a6d-cad6-583f99df26d2<span class="o">)</span>
+
+ilb@login-frida:~$<span class="w"> </span>srun<span class="w"> </span>-p<span class="w"> </span>dev<span class="w"> </span>--gpus<span class="o">=</span>A100_80GB:4<span class="w"> </span>nvidia-smi<span class="w"> </span>-L
+GPU<span class="w"> </span><span class="m">0</span>:<span class="w"> </span>NVIDIA<span class="w"> </span>A100<span class="w"> </span>80GB<span class="w"> </span>PCIe<span class="w"> </span><span class="o">(</span>UUID:<span class="w"> </span>GPU-845e3442-e0ca-a376-a3de-50e4cb7fd421<span class="o">)</span>
+GPU<span class="w"> </span><span class="m">1</span>:<span class="w"> </span>NVIDIA<span class="w"> </span>A100<span class="w"> </span>80GB<span class="w"> </span>PCIe<span class="w"> </span><span class="o">(</span>UUID:<span class="w"> </span>GPU-7f73bd51-df5b-f0ba-2cf2-5dadbfa297e1<span class="o">)</span>
+GPU<span class="w"> </span><span class="m">2</span>:<span class="w"> </span>NVIDIA<span class="w"> </span>A100<span class="w"> </span>80GB<span class="w"> </span>PCIe<span class="w"> </span><span class="o">(</span>UUID:<span class="w"> </span>GPU-d666e6d2-5265-29ae-9a6f-d8772807d34f<span class="o">)</span>
+GPU<span class="w"> </span><span class="m">3</span>:<span class="w"> </span>NVIDIA<span class="w"> </span>A100<span class="w"> </span>80GB<span class="w"> </span>PCIe<span class="w"> </span><span class="o">(</span>UUID:<span class="w"> </span>GPU-fd552b1f-e767-edd6-5cc0-69514f1748d2<span class="o">)</span>
+</code></pre></div>
+<!--
+When the nature of a job is such that it does not require exclusive access to a full GPU, the `dev` partition on FRIDA allows also a partial allocation of GPUs. This can be done via the `--gres=shard[:{count}]` parameter, where the value `{count}` can be interpreted as the amount of requested GPU memory in GB. For example, the following snippet allocates a 15GB slice on an otherwise 80GB GPU.
+
+<div class="highlight"><pre><span></span><code>ilb@login-frida:~$<span class="w"> </span>srun<span class="w"> </span>-p<span class="w"> </span>dev<span class="w"> </span>--gres<span class="o">=</span>shard:15<span class="w"> </span>nvidia-smi<span class="w"> </span>-L
+GPU<span class="w"> </span><span class="m">0</span>:<span class="w"> </span>NVIDIA<span class="w"> </span>A100<span class="w"> </span>80GB<span class="w"> </span>PCIe<span class="w"> </span><span class="o">(</span>UUID:<span class="w"> </span>GPU-845e3442-e0ca-a376-a3de-50e4cb7fd421<span class="o">)</span>
+</code></pre></div>
+
+!!! Warning
+    Partial GPU allocation via `shard` reserves the GPUs in a non-exclusive mode and as such allows for sharing GPUs. However, currently, Slurm has no viable techniques to enforce these limits, and thus jobs, even if they request only a portion of a GPU, are granted access to the full GPU. Allocation with `shard` then needs to be interpreted as _a promise_ that the job will not consume more GPU memory than what it requested. Failure to do so may result in the failure of the user's job as well as the failure of jobs of other users that happen to share the same GPU. Ensuring that the job does not consume more GPU memory than what it requested for, is thus mandatory, and entirely under the responsibility of the user who submitted the job. In case your job is based on Tensorflow or Pytorch there exist [approaches to GPU memory management](https://wiki.ncsa.illinois.edu/display/ISL20/Managing+GPU+memory+when+using+Tensorflow+and+Pytorch) that you can use to ensure the job does not consume more than what it requested. In addition, Pytorch version 1.8 introduced a special function for limiting process GPU memory, see  [`set_per_proces_memory_fraction`](https://github.com/pytorch/pytorch/blob/e44b2b72bd4ccecf9c2f6c18d09c11eff446b5a3/torch/cuda/memory.py#L75-L99). For further details on sharding consult the [Slurm official documentation](https://slurm.schedmd.com/gres.html#Sharding). User accounts that fail to adhere to these guidelines will be subject to suspension.
+-->
+
+<h4 id="code-tunnel">Code tunnel</h4>
+<p>When an interactive session is intended for code development, testing, and/or debugging, many a time it is desirable to work with a suitable IDE. The requirement of resource allocation via Slurm and the lack of any toolsets on bare-metal hosts might seem too much of an added complexity, but in reality, there is a very elegant solution by using Visual Studio Code in combination with the Remote Development Extension (via <code>code_tunnel</code>). Running <code>code_tunnel</code> will allow you to use VSCode to connect directly to the container that is running on the compute node that was assigned to your job. Combined with root remapping this has the added benefit of a user experience that feels like working with your own VM.</p>
+<p>On every run of <code>code_tunnel</code> you will need to register the tunnel with your GitHub or Microsoft account; this interaction requires the <code>srun</code> command to be run with the parameter <code>--pty</code>, and for this reason, a suitable alias command named <code>stunnel</code> was setup. Once registered you will be able to access the compute node (while <code>code_tunnel</code> is running) either in a browser by visiting <a href="https://vscode.dev">https://vscode.dev</a> or with a desktop version of VSCode via the Remote Explorer (part of the <a href="https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack">Remote Development Extension pack</a>). In both cases, the 'Remotes (Tunnels/SSH)' list in the Remote Explorer pane should contain a list of tunnels to FRIDA (named <code>frida-{job-name}</code>) that you have registered and also denote which of these are currently online (with your job running). In the browser, it is also possible to connect directly to a workspace on the node (on which the <code>code_tunnel</code> job is running). Simply visit the URL of the form <code>https://vscode.dev/tunnel/frida-{job-name}[/{path-to-workspace}]</code>. If you wish to close the tunnel before the job times out press <code>Ctrl-C</code> in the terminal where you started the job.</p>
+<div class="highlight"><pre><span></span><code>ilb@login-frida:~$<span class="w"> </span>stunnel<span class="w"> </span>-c32<span class="w"> </span>--mem<span class="o">=</span>48G<span class="w"> </span>--gres<span class="o">=</span>gpu:1<span class="w"> </span>--container-image<span class="o">=</span>nvcr.io#nvidia/pytorch:23.10-py3<span class="w"> </span>--job-name<span class="w"> </span>torch-debug
+<span class="c1"># srun -p dev -c32 --mem=48G --gres=gpu:1 --container-image=nvcr.io#nvidia/pytorch:23.10-py3 --job-name torch-debug --pty code_tunnel</span>
+pyxis:<span class="w"> </span>importing<span class="w"> </span>docker<span class="w"> </span>image:<span class="w"> </span>nvcr.io#nvidia/pytorch:23.10-py3
+pyxis:<span class="w"> </span>imported<span class="w"> </span>docker<span class="w"> </span>image:<span class="w"> </span>nvcr.io#nvidia/pytorch:23.10-py3
+Tue<span class="w"> </span>Nov<span class="w"> </span><span class="m">28</span><span class="w"> </span><span class="m">21</span>:31:40<span class="w"> </span>UTC<span class="w"> </span><span class="m">2023</span>
+*
+*<span class="w"> </span>Visual<span class="w"> </span>Studio<span class="w"> </span>Code<span class="w"> </span>Server
+*
+*<span class="w"> </span>By<span class="w"> </span>using<span class="w"> </span>the<span class="w"> </span>software,<span class="w"> </span>you<span class="w"> </span>agree<span class="w"> </span>to
+*<span class="w"> </span>the<span class="w"> </span>Visual<span class="w"> </span>Studio<span class="w"> </span>Code<span class="w"> </span>Server<span class="w"> </span>License<span class="w"> </span>Terms<span class="w"> </span><span class="o">(</span>https://aka.ms/vscode-server-license<span class="o">)</span><span class="w"> </span>and
+*<span class="w"> </span>the<span class="w"> </span>Microsoft<span class="w"> </span>Privacy<span class="w"> </span>Statement<span class="w"> </span><span class="o">(</span>https://privacy.microsoft.com/en-US/privacystatement<span class="o">)</span>.
+*
+✔<span class="w"> </span>How<span class="w"> </span>would<span class="w"> </span>you<span class="w"> </span>like<span class="w"> </span>to<span class="w"> </span>log<span class="w"> </span><span class="k">in</span><span class="w"> </span>to<span class="w"> </span>Visual<span class="w"> </span>Studio<span class="w"> </span>Code?<span class="w"> </span>·<span class="w"> </span>Github<span class="w"> </span>Account
+To<span class="w"> </span>grant<span class="w"> </span>access<span class="w"> </span>to<span class="w"> </span>the<span class="w"> </span>server,<span class="w"> </span>please<span class="w"> </span>log<span class="w"> </span>into<span class="w"> </span>https://github.com/login/device<span class="w"> </span>and<span class="w"> </span>use<span class="w"> </span>code<span class="w"> </span>17AC-E3AE
+<span class="o">[</span><span class="m">2023</span>-11-28<span class="w"> </span><span class="m">21</span>:31:15<span class="o">]</span><span class="w"> </span>info<span class="w"> </span>Creating<span class="w"> </span>tunnel<span class="w"> </span>with<span class="w"> </span>the<span class="w"> </span>name:<span class="w"> </span>frida-torch-debug
+
+Open<span class="w"> </span>this<span class="w"> </span>link<span class="w"> </span><span class="k">in</span><span class="w"> </span>your<span class="w"> </span>browser<span class="w"> </span>https://vscode.dev/tunnel/frida-torch-debug/workspace
+
+<span class="o">[</span><span class="m">2023</span>-11-28<span class="w"> </span><span class="m">21</span>:31:41<span class="o">]</span><span class="w"> </span>info<span class="w"> </span><span class="o">[</span>tunnels::connections::relay_tunnel_host<span class="o">]</span><span class="w"> </span>Opened<span class="w"> </span>new<span class="w"> </span>client<span class="w"> </span>on<span class="w"> </span>channel<span class="w"> </span><span class="m">2</span>
+<span class="o">[</span><span class="m">2023</span>-11-28<span class="w"> </span><span class="m">21</span>:31:41<span class="o">]</span><span class="w"> </span>info<span class="w"> </span><span class="o">[</span>russh::server<span class="o">]</span><span class="w"> </span>wrote<span class="w"> </span>id
+<span class="o">[</span><span class="m">2023</span>-11-28<span class="w"> </span><span class="m">21</span>:31:41<span class="o">]</span><span class="w"> </span>info<span class="w"> </span><span class="o">[</span>russh::server<span class="o">]</span><span class="w"> </span><span class="nb">read</span><span class="w"> </span>other<span class="w"> </span>id
+<span class="o">[</span><span class="m">2023</span>-11-28<span class="w"> </span><span class="m">21</span>:31:41<span class="o">]</span><span class="w"> </span>info<span class="w"> </span><span class="o">[</span>russh::server<span class="o">]</span><span class="w"> </span>session<span class="w"> </span>is<span class="w"> </span>running
+<span class="o">[</span><span class="m">2023</span>-11-28<span class="w"> </span><span class="m">21</span>:31:43<span class="o">]</span><span class="w"> </span>info<span class="w"> </span><span class="o">[</span>rpc.0<span class="o">]</span><span class="w"> </span>Checking<span class="w"> </span>/local/scratch/root/590/.vscode/cli/ana/servers/Stable-1a5daa3a0231a0fbba4f14db7ec463cf99d7768e/log.txt<span class="w"> </span>and<span class="w"> </span>/local/scratch/root/590/.vscode/cli/ana/servers/Stable-1a5daa3a0231a0fbba4f14db7ec463cf99d7768e/pid.txt<span class="w"> </span><span class="k">for</span><span class="w"> </span>a<span class="w"> </span>running<span class="w"> </span>server...
+<span class="o">[</span><span class="m">2023</span>-11-28<span class="w"> </span><span class="m">21</span>:31:43<span class="o">]</span><span class="w"> </span>info<span class="w"> </span><span class="o">[</span>rpc.0<span class="o">]</span><span class="w"> </span>Downloading<span class="w"> </span>Visual<span class="w"> </span>Studio<span class="w"> </span>Code<span class="w"> </span>server<span class="w"> </span>-&gt;<span class="w"> </span>/tmp/.tmpbbxB9w/vscode-server-linux-x64.tar.gz
+<span class="o">[</span><span class="m">2023</span>-11-28<span class="w"> </span><span class="m">21</span>:31:45<span class="o">]</span><span class="w"> </span>info<span class="w"> </span><span class="o">[</span>rpc.0<span class="o">]</span><span class="w"> </span>Starting<span class="w"> </span>server...
+<span class="o">[</span><span class="m">2023</span>-11-28<span class="w"> </span><span class="m">21</span>:31:45<span class="o">]</span><span class="w"> </span>info<span class="w"> </span><span class="o">[</span>rpc.0<span class="o">]</span><span class="w"> </span>Server<span class="w"> </span>started
+^C<span class="o">[</span><span class="m">2023</span>-11-28<span class="w"> </span><span class="m">21</span>:37:45<span class="o">]</span><span class="w"> </span>info<span class="w"> </span>Shutting<span class="w"> </span>down:<span class="w"> </span>Ctrl-C<span class="w"> </span>received
+<span class="o">[</span><span class="m">2023</span>-11-28<span class="w"> </span><span class="m">21</span>:37:45<span class="o">]</span><span class="w"> </span>info<span class="w"> </span><span class="o">[</span>rpc.0<span class="o">]</span><span class="w"> </span>Disposed<span class="w"> </span>of<span class="w"> </span>connection<span class="w"> </span>to<span class="w"> </span>running<span class="w"> </span>server.
+Tue<span class="w"> </span>Nov<span class="w"> </span><span class="m">28</span><span class="w"> </span><span class="m">21</span>:37:45<span class="w"> </span>UTC<span class="w"> </span><span class="m">2023</span>
+
+ilb@login-frida:~$
+</code></pre></div>
+<h4 id="keeping-interactive-jobs-alive">Keeping interactive jobs alive</h4>
+<p>Interactive sessions are typically run in the foreground, require a terminal, and last for the duration of the SSH session, or until the Slurm reservation times out (whichever comes first). On flaky internet connections, this can become a problem, where a lost connection might lead to a stopped job. One remedy is to use <code>tmux</code> or <code>screen</code> which allows for running interactive jobs in detached mode.</p>
+<h3 id="batch-jobs">Batch jobs</h3>
+<p>Once development, testing, and/or debugging is complete, at least in ML/AI training tasks, the datasets typically become such that jobs last much longer than a normal SSH session. They can also be safely run without any interaction and also without a terminal. In Slurm parlance these types of jobs are termed batch jobs. A batch job is a shell script (typically marked by a <code>.sbatch</code> extension), whose header provides Slurm parameters that specify the resources needed to run the job. For details of all available parameters consult the official <a href="https://slurm.schedmd.com/sbatch.html">Slurm documentation</a>. Below is a very brief deep-dive introduction to Slurm batch jobs.</p>
+<p>Assume a toy MNIST training script based on Pytorch and Lightning, named <code>train.py</code>.
+<div class="highlight"><span class="filename">train.py</span><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">torch</span><span class="w"> </span><span class="kn">import</span> <span class="n">nn</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">torch.nn.functional</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">F</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">torchvision</span><span class="w"> </span><span class="kn">import</span> <span class="n">transforms</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">torchvision.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">MNIST</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">torch.utils.data</span><span class="w"> </span><span class="kn">import</span> <span class="n">DataLoader</span><span class="p">,</span> <span class="n">random_split</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">torchmetrics.functional</span><span class="w"> </span><span class="kn">import</span> <span class="n">accuracy</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">lightning.pytorch</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">L</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">LitMNIST</span><span class="p">(</span><span class="n">L</span><span class="o">.</span><span class="n">LightningModule</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_dir</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">(),</span> <span class="n">hidden_size</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span> <span class="n">learning_rate</span><span class="o">=</span><span class="mf">2e-4</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+
+        <span class="c1"># We hardcode dataset specific stuff here.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data_dir</span> <span class="o">=</span> <span class="n">data_dir</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_classes</span> <span class="o">=</span> <span class="mi">10</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dims</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">28</span><span class="p">)</span>
+        <span class="n">channels</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dims</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">transform</span> <span class="o">=</span> <span class="n">transforms</span><span class="o">.</span><span class="n">Compose</span><span class="p">(</span>
+            <span class="p">[</span>
+                <span class="n">transforms</span><span class="o">.</span><span class="n">ToTensor</span><span class="p">(),</span>
+                <span class="n">transforms</span><span class="o">.</span><span class="n">Normalize</span><span class="p">((</span><span class="mf">0.1307</span><span class="p">,),</span> <span class="p">(</span><span class="mf">0.3081</span><span class="p">,)),</span>
+            <span class="p">]</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">hidden_size</span> <span class="o">=</span> <span class="n">hidden_size</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">learning_rate</span> <span class="o">=</span> <span class="n">learning_rate</span>
+
+        <span class="c1"># Build model</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">Flatten</span><span class="p">(),</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">channels</span> <span class="o">*</span> <span class="n">width</span> <span class="o">*</span> <span class="n">height</span><span class="p">,</span> <span class="n">hidden_size</span><span class="p">),</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">(),</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">Dropout</span><span class="p">(</span><span class="mf">0.1</span><span class="p">),</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">hidden_size</span><span class="p">,</span> <span class="n">hidden_size</span><span class="p">),</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">(),</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">Dropout</span><span class="p">(</span><span class="mf">0.1</span><span class="p">),</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">hidden_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_classes</span><span class="p">),</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">F</span><span class="o">.</span><span class="n">log_softmax</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">training_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">):</span>
+        <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">batch</span>
+        <span class="n">logits</span> <span class="o">=</span> <span class="bp">self</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">loss</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">nll_loss</span><span class="p">(</span><span class="n">logits</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">loss</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">validation_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">,</span> <span class="n">batch_idx</span><span class="p">):</span>
+        <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">batch</span>
+        <span class="n">logits</span> <span class="o">=</span> <span class="bp">self</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">loss</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">nll_loss</span><span class="p">(</span><span class="n">logits</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+        <span class="n">preds</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">logits</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">acc</span> <span class="o">=</span> <span class="n">accuracy</span><span class="p">(</span><span class="n">preds</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">task</span><span class="o">=</span><span class="s2">&quot;multiclass&quot;</span><span class="p">,</span> <span class="n">num_classes</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&quot;val_loss&quot;</span><span class="p">,</span> <span class="n">loss</span><span class="p">,</span> <span class="n">prog_bar</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&quot;val_acc&quot;</span><span class="p">,</span> <span class="n">acc</span><span class="p">,</span> <span class="n">prog_bar</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">configure_optimizers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">optimizer</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">learning_rate</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">optimizer</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">prepare_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># download</span>
+        <span class="n">MNIST</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_dir</span><span class="p">,</span> <span class="n">train</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">download</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">MNIST</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_dir</span><span class="p">,</span> <span class="n">train</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">download</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">setup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stage</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="c1"># Assign train/val datasets for use in dataloaders</span>
+        <span class="k">if</span> <span class="n">stage</span> <span class="o">==</span> <span class="s2">&quot;fit&quot;</span> <span class="ow">or</span> <span class="n">stage</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">mnist_full</span> <span class="o">=</span> <span class="n">MNIST</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_dir</span><span class="p">,</span> <span class="n">train</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">transform</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mnist_train</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">mnist_val</span> <span class="o">=</span> <span class="n">random_split</span><span class="p">(</span><span class="n">mnist_full</span><span class="p">,</span> <span class="p">[</span><span class="mi">55000</span><span class="p">,</span> <span class="mi">5000</span><span class="p">])</span>
+
+        <span class="c1"># Assign test dataset for use in dataloader(s)</span>
+        <span class="k">if</span> <span class="n">stage</span> <span class="o">==</span> <span class="s2">&quot;test&quot;</span> <span class="ow">or</span> <span class="n">stage</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mnist_test</span> <span class="o">=</span> <span class="n">MNIST</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">data_dir</span><span class="p">,</span> <span class="n">train</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">transform</span>
+            <span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">train_dataloader</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">DataLoader</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mnist_train</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">val_dataloader</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">DataLoader</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mnist_val</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">test_dataloader</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">DataLoader</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mnist_test</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+
+
+<span class="c1"># Some prints that might be useful</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;SLURM_NTASKS =&quot;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;SLURM_NTASKS&quot;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;SLURM_TASKS_PER_NODE =&quot;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;SLURM_TASKS_PER_NODE&quot;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;SLURM_GPUS_PER_NODE =&quot;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;SLURM_GPUS_PER_NODE&quot;</span><span class="p">,</span> <span class="s2">&quot;N/A&quot;</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;SLURM_CPUS_PER_NODE =&quot;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;SLURM_CPUS_PER_NODE&quot;</span><span class="p">,</span> <span class="s2">&quot;N/A&quot;</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;SLURM_NNODES =&quot;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;SLURM_NNODES&quot;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;SLURM_NODELIST =&quot;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;SLURM_NODELIST&quot;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s2">&quot;PL_TORCH_DISTRIBUTED_BACKEND =&quot;</span><span class="p">,</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;PL_TORCH_DISTRIBUTED_BACKEND&quot;</span><span class="p">,</span> <span class="s2">&quot;nccl&quot;</span><span class="p">),</span>
+<span class="p">)</span>
+
+
+<span class="c1"># Explicitly specify the process group backend if you choose to</span>
+<span class="n">ddp</span> <span class="o">=</span> <span class="n">L</span><span class="o">.</span><span class="n">strategies</span><span class="o">.</span><span class="n">DDPStrategy</span><span class="p">(</span>
+    <span class="n">process_group_backend</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;PL_TORCH_DISTRIBUTED_BACKEND&quot;</span><span class="p">,</span> <span class="s2">&quot;nccl&quot;</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="c1"># setup checkpointing</span>
+<span class="n">checkpoint_callback</span> <span class="o">=</span> <span class="n">L</span><span class="o">.</span><span class="n">callbacks</span><span class="o">.</span><span class="n">ModelCheckpoint</span><span class="p">(</span>
+    <span class="n">dirpath</span><span class="o">=</span><span class="s2">&quot;./checkpoints/&quot;</span><span class="p">,</span>
+    <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;mnist_</span><span class="si">{epoch:02d}</span><span class="s2">&quot;</span><span class="p">,</span>
+    <span class="n">every_n_epochs</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">save_top_k</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="c1"># resume from checkpoint</span>
+<span class="n">existing_checkpoints</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;./checkpoints/&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">iterdir</span><span class="p">())</span> <span class="k">if</span> <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;./checkpoints/&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">()</span> <span class="k">else</span> <span class="p">[]</span>
+<span class="n">last_checkpoint</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">existing_checkpoints</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">getmtime</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">existing_checkpoints</span><span class="p">)</span><span class="o">&gt;</span><span class="mi">0</span> <span class="k">else</span> <span class="kc">None</span>
+
+<span class="c1"># model</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">LitMNIST</span><span class="p">()</span>
+<span class="c1"># train model</span>
+<span class="n">trainer</span> <span class="o">=</span> <span class="n">L</span><span class="o">.</span><span class="n">Trainer</span><span class="p">(</span>
+    <span class="n">callbacks</span><span class="o">=</span><span class="p">[</span><span class="n">checkpoint_callback</span><span class="p">],</span>
+    <span class="n">max_epochs</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+    <span class="n">accelerator</span><span class="o">=</span><span class="s2">&quot;gpu&quot;</span><span class="p">,</span>
+    <span class="n">devices</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">num_nodes</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;SLURM_NNODES&quot;</span><span class="p">]),</span>
+    <span class="n">strategy</span><span class="o">=</span><span class="n">ddp</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">trainer</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">model</span><span class="p">,</span><span class="n">ckpt_path</span><span class="o">=</span><span class="n">last_checkpoint</span><span class="p">)</span>
+</code></pre></div></p>
+<p>To run this training script on a single node with a single GPU of type NVIDIA A100 40GB SXM4 one needs to prepare the following script (<code>train_1xA100.sbatch</code>). The script will reserve 16 vCPU, 32GB RAM, and 1 NVIDIA A100 40GB SXM4 for 20 minutes. It will also give the job a name, for easier finding when listing the partition queue status. As part of the actual job steps, it will start a <code>pytorch:23.08-py3</code> container, mount the current path, install <code>lightning:2.1.2</code>, and finally run the training, all with one single <code>srun</code> command. Without additional parameters, the <code>srun</code> command will use all of the allocated resources. The standard output of the script will be saved into a file named <code>slurm-{SLURM_JOB_ID}.out</code>.
+<div class="highlight"><span class="filename">train_1xA100.sbatch</span><pre><span></span><code><span class="ch">#!/bin/bash</span>
+<span class="c1">#SBATCH --job-name=mnist-demo</span>
+<span class="c1">#SBATCH --time=20:00</span>
+<span class="c1">#SBATCH --gres=gpu:A100</span>
+<span class="c1">#SBATCH --cpus-per-task=16</span>
+<span class="c1">#SBATCH --mem=32G</span>
+
+srun<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--container-image<span class="w"> </span>nvcr.io#nvidia/pytorch:23.08-py3<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--container-mounts<span class="w"> </span><span class="si">${</span><span class="nv">PWD</span><span class="si">}</span>:<span class="si">${</span><span class="nv">PWD</span><span class="si">}</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--container-workdir<span class="w"> </span><span class="si">${</span><span class="nv">PWD</span><span class="si">}</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>bash<span class="w"> </span>-c<span class="w"> </span><span class="s1">&#39;pip install lightning==2.1.2; python3 train.py&#39;</span>
+</code></pre></div></p>
+<p>The Slurm job is then executed with the following command. It runs in the background without any terminal output, but its progress can be monitored by viewing the corresponding output file.
+<div class="highlight"><pre><span></span><code>ilb@login-frida:~/mnist-demo$<span class="w"> </span>sbatch<span class="w"> </span>-p<span class="w"> </span>frida<span class="w"> </span>train_1x100.sbatch
+Submitted<span class="w"> </span>batch<span class="w"> </span>job<span class="w"> </span><span class="m">600</span>
+
+ilb@login-frida:~/mnist-demo$<span class="w"> </span>squeue
+<span class="w">             </span>JOBID<span class="w"> </span>PARTITION<span class="w">     </span>NAME<span class="w">     </span>USER<span class="w"> </span>ST<span class="w">       </span>TIME<span class="w">  </span>NODES<span class="w"> </span>NODELIST<span class="o">(</span>REASON<span class="o">)</span>
+<span class="w">               </span><span class="m">600</span><span class="w">     </span>frida<span class="w"> </span>mnist-de<span class="w">      </span>ilb<span class="w">  </span>R<span class="w">       </span><span class="m">0</span>:35<span class="w">      </span><span class="m">1</span><span class="w"> </span>axa
+
+ilb@login-frida:~/mnist-demo-1$<span class="w"> </span>tail<span class="w"> </span>-f<span class="w"> </span>slurm-600.out
+pyxis:<span class="w"> </span>importing<span class="w"> </span>docker<span class="w"> </span>image:<span class="w"> </span>nvcr.io#nvidia/pytorch:23.08-py3
+pyxis:<span class="w"> </span>imported<span class="w"> </span>docker<span class="w"> </span>image:<span class="w"> </span>nvcr.io#nvidia/pytorch:23.08-py3
+Looking<span class="w"> </span><span class="k">in</span><span class="w"> </span>indexes:<span class="w"> </span>https://pypi.org/simple,<span class="w"> </span>https://pypi.ngc.nvidia.com
+Collecting<span class="w"> </span><span class="nv">lightning</span><span class="o">==</span><span class="m">2</span>.1.2
+<span class="w">  </span>Obtaining<span class="w"> </span>dependency<span class="w"> </span>information<span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="nv">lightning</span><span class="o">==</span><span class="m">2</span>.1.2<span class="w"> </span>from<span class="w"> </span>https://files.pythonhosted.org/packages/9e/8a/9642fdbdac8de47d68464ca3be32baca3f70a432aa374705d6b91da732eb/lightning-2.1.2-py3-none-any.whl.metadata
+<span class="w">  </span>Downloading<span class="w"> </span>lightning-2.1.2-py3-none-any.whl.metadata<span class="w"> </span><span class="o">(</span><span class="m">61</span><span class="w"> </span>kB<span class="o">)</span>
+<span class="w">     </span>━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━<span class="w"> </span><span class="m">61</span>.8/61.8<span class="w"> </span>kB<span class="w"> </span><span class="m">2</span>.8<span class="w"> </span>MB/s<span class="w"> </span>eta<span class="w"> </span><span class="m">0</span>:00:00
+...
+</code></pre></div></p>
+<p>To run the same training script on more GPUs one needs to change the <code>SBATCH</code> line with <code>--gres</code> and add a line that defines the number of parallel tasks Slurm should start (<code>--tasks</code>). For example, to run on 2 GPUs of type NVIDIA H100 80GB HBM3 and this time save the standard output in a file named <code>{SLURM_JOB_NAME}_{SLURM_JOB_ID}.out</code>, one needs to prepare the following batch script.
+<div class="highlight"><span class="filename">train_2xH100.sbatch</span><pre><span></span><code><span class="ch">#!/bin/bash</span>
+<span class="c1">#SBATCH --job-name=mnist-demo</span>
+<span class="c1">#SBATCH --partition=frida</span>
+<span class="c1">#SBATCH --time=20:00</span>
+<span class="c1">#SBATCH --gres=gpu:H100:2</span>
+<span class="c1">#SBATCH --tasks=2</span>
+<span class="c1">#SBATCH --cpus-per-task=16</span>
+<span class="c1">#SBATCH --mem=32G</span>
+<span class="c1">#SBATCH --output=%x_%j.out</span>
+
+srun<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--container-image<span class="w"> </span>nvcr.io#nvidia/pytorch:23.08-py3<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--container-mounts<span class="w"> </span><span class="si">${</span><span class="nv">PWD</span><span class="si">}</span>:<span class="si">${</span><span class="nv">PWD</span><span class="si">}</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--container-workdir<span class="w"> </span><span class="si">${</span><span class="nv">PWD</span><span class="si">}</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>bash<span class="w"> </span>-c<span class="w"> </span><span class="s1">&#39;pip install lightning==2.1.2; python3 train.py&#39;</span>
+</code></pre></div></p>
+<p>Since the script also preselects the partition on which to run it is not necesary to provide it when executing the <code>sbatch</code> command.
+<div class="highlight"><pre><span></span><code>ilb@login-frida:~/mnist-demo$<span class="w"> </span>sbatch<span class="w"> </span>train_2xH100.sbatch
+Submitted<span class="w"> </span>batch<span class="w"> </span>job<span class="w"> </span><span class="m">601</span>
+
+ilb@login-frida:~/mnist-demo$
+</code></pre></div></p>
+<p>A more advanced script that allows for a custom organization of experiment results, autoarchival of ran scripts, can be run single-node single-GPU or multi-node multi-GPU, modifies the required container on the fly, and is capable of auto-re-queueing itself and continuation, can be seen in the following listing. The process of submitting the job remains the same as before.
+<div class="highlight"><span class="filename">train_2x2.sbatch</span><pre><span></span><code><span class="ch">#!/bin/bash</span>
+<span class="c1">#SBATCH --job-name=mnist-demo # provide a job name</span>
+<span class="c1">#SBATCH --account=lpt # povide the account which determines the resource limits</span>
+<span class="c1">#SBATCH --partition=frida # provide the partition from where the resources should be allocated</span>
+<span class="c1">#SBATCH --time=20:00 # provide the time you require the resources for</span>
+<span class="c1">#SBATCH --nodes=2 # provide the number of nodes you are requesting</span>
+<span class="c1">#SBATCH --ntasks-per-node=2 # provide the number of tasks to run on a node; slurm runs this many replicas of the subsequent commands</span>
+<span class="c1">#SBATCH --gpus-per-node=2 # provide the number of GPUs that is required per node; avoid using --gpus-per-tasks as there are issues with allocation as well as inter-gpu communication - see https://github.com/NVIDIA/pyxis/issues/73</span>
+<span class="c1">#SBATCH --cpus-per-task=4 # provide the number of CPUs that is required per task; be mindful that different nodes have different numbers of available CPUs</span>
+<span class="c1">#SBATCH --mem-per-cpu=4G # provide the required memory per CPU that is required per task; be mindful that different nodes have different amounts of memory</span>
+<span class="c1">#SBATCH --output=/dev/null # we do not care for the log of this setup script, we redirect the log of the execution srun</span>
+<span class="c1">#SBATCH --signal=B:USR2@90 # instruct Slurm to send a notification 90 seconds prior to running out of time</span>
+<span class="c1"># SBATCH --signal=B:TERM@60 # this is to enable the graceful shutdown of the job, see https://slurm.schedmd.com/sbatch.html#lbAH and lightning auto-resubmit, see https://lightning.ai/docs/pytorch/stable/cloudsy/cluster_advanced.html#enable-auto-wall-time-resubmissions</span>
+
+<span class="c1"># get the name of this script</span>
+<span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>-n<span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">SLURM_JOB_ID</span><span class="k">:-</span><span class="si">}</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">]</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">  </span><span class="nv">SBATCH</span><span class="o">=</span><span class="k">$(</span>scontrol<span class="w"> </span>show<span class="w"> </span>job<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$SLURM_JOB_ID</span><span class="s2">&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span>-F<span class="o">=</span><span class="w"> </span><span class="s1">&#39;/Command=/{print $2}&#39;</span><span class="k">)</span>
+<span class="k">else</span>
+<span class="w">  </span><span class="nv">SBATCH</span><span class="o">=</span><span class="k">$(</span>realpath<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$0</span><span class="s2">&quot;</span><span class="k">)</span>
+<span class="k">fi</span>
+
+<span class="c1"># allow passing a version, for autorequeue</span>
+<span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="nv">$#</span><span class="w"> </span>-gt<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="o">]</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="o">[[</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$0</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">==</span><span class="w"> </span>*<span class="s2">&quot;help&quot;</span><span class="w"> </span><span class="o">]]</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>-z<span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">SLURM_JOB_ID</span><span class="k">:-</span><span class="si">}</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">]</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="o">[[</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$1</span><span class="s2">&quot;</span><span class="w"> </span>!<span class="o">=</span><span class="w"> </span><span class="s2">&quot;--version=&quot;</span>*<span class="w"> </span><span class="o">]]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">  </span><span class="nb">echo</span><span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;\nUsage: sbatch </span><span class="si">${</span><span class="nv">SBATCH</span><span class="p">##*</span><span class="nv">$PWD</span><span class="p">/</span><span class="si">}</span><span class="s2"> [--version=&lt;version&gt;] \n&quot;</span>
+<span class="w">  </span><span class="nb">exit</span><span class="w"> </span><span class="m">1</span>
+<span class="k">fi</span>
+
+<span class="c1"># convert the --key=value arguments to variables</span>
+<span class="k">for</span><span class="w"> </span>argument<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$@</span><span class="s2">&quot;</span>
+<span class="k">do</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="o">[[</span><span class="w"> </span><span class="nv">$argument</span><span class="w"> </span><span class="o">==</span><span class="w"> </span>*<span class="s2">&quot;=&quot;</span>*<span class="w"> </span><span class="o">]]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">    </span><span class="nv">key</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span><span class="w"> </span><span class="nv">$argument</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>cut<span class="w"> </span>-f1<span class="w"> </span>-d<span class="o">=</span><span class="k">)</span>
+<span class="w">    </span><span class="nv">value</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span><span class="w"> </span><span class="nv">$argument</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>cut<span class="w"> </span>-f2<span class="w"> </span>-d<span class="o">=</span><span class="k">)</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="o">[[</span><span class="w"> </span><span class="nv">$key</span><span class="w"> </span><span class="o">==</span><span class="w"> </span>*<span class="s2">&quot;--&quot;</span>*<span class="w"> </span><span class="o">]]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">        </span><span class="nv">v</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">key</span><span class="p">/--/</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="w">        </span><span class="nb">declare</span><span class="w"> </span><span class="si">${</span><span class="nv">v</span><span class="p">,,</span><span class="si">}</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">value</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="w">   </span><span class="k">fi</span>
+<span class="w">  </span><span class="k">fi</span>
+<span class="k">done</span>
+
+<span class="c1"># setup signal handler for autorequeue</span>
+<span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">version</span><span class="si">}</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">  </span>sig_handler<span class="o">()</span><span class="w"> </span><span class="o">{</span>
+<span class="w">    </span><span class="nb">echo</span><span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;\n\n</span><span class="k">$(</span>date<span class="k">)</span><span class="s2">: Signal received, requeuing...\n\n&quot;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span><span class="si">${</span><span class="nv">EXPERIMENT_DIR</span><span class="si">}</span>/<span class="si">${</span><span class="nv">EXPERIMENT_NAME</span><span class="si">}</span>/<span class="si">${</span><span class="nv">version</span><span class="si">}</span>/<span class="si">${</span><span class="nv">RUN_NAME</span><span class="si">}</span>.1.txt
+<span class="w">    </span>scontrol<span class="w"> </span>requeue<span class="w"> </span><span class="si">${</span><span class="nv">SLURM_JOB_ID</span><span class="si">}</span>
+<span class="w">  </span><span class="o">}</span>
+<span class="w">  </span><span class="nb">trap</span><span class="w"> </span><span class="s1">&#39;sig_handler&#39;</span><span class="w"> </span>SIGUSR2
+<span class="k">fi</span>
+
+<span class="c1"># time of running script</span>
+<span class="nv">DATETIME</span><span class="o">=</span><span class="sb">`</span>date<span class="w"> </span><span class="s2">&quot;+%Y%m%d-%H%M&quot;</span><span class="sb">`</span>
+<span class="nv">version</span><span class="o">=</span><span class="si">${</span><span class="nv">version</span><span class="k">:-</span><span class="nv">$DATETIME</span><span class="si">}</span><span class="w"> </span><span class="c1"># if version is not set, use DATETIME as default</span>
+
+<span class="c1"># work dir</span>
+<span class="nv">WORK_DIR</span><span class="o">=</span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/mnist
+
+<span class="c1"># experiment name</span>
+<span class="nv">EXPERIMENT_NAME</span><span class="o">=</span>demo
+
+<span class="c1"># experiment dir</span>
+<span class="nv">EXPERIMENT_DIR</span><span class="o">=</span><span class="si">${</span><span class="nv">WORK_DIR</span><span class="si">}</span>/exp
+mkdir<span class="w"> </span>-p<span class="w"> </span><span class="si">${</span><span class="nv">EXPERIMENT_DIR</span><span class="si">}</span>/<span class="si">${</span><span class="nv">EXPERIMENT_NAME</span><span class="si">}</span>/<span class="si">${</span><span class="nv">version</span><span class="si">}</span>
+
+<span class="c1"># set run name</span>
+<span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">version</span><span class="si">}</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">DATETIME</span><span class="si">}</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">  </span><span class="nv">RUN_NAME</span><span class="o">=</span><span class="si">${</span><span class="nv">version</span><span class="si">}</span>
+<span class="k">else</span>
+<span class="w">  </span><span class="nv">RUN_NAME</span><span class="o">=</span><span class="si">${</span><span class="nv">version</span><span class="si">}</span>_R<span class="si">${</span><span class="nv">DATETIME</span><span class="si">}</span>
+<span class="k">fi</span>
+
+<span class="c1"># archive this script</span>
+cp<span class="w"> </span>-rp<span class="w"> </span><span class="si">${</span><span class="nv">SBATCH</span><span class="si">}</span><span class="w"> </span><span class="si">${</span><span class="nv">EXPERIMENT_DIR</span><span class="si">}</span>/<span class="si">${</span><span class="nv">EXPERIMENT_NAME</span><span class="si">}</span>/<span class="si">${</span><span class="nv">version</span><span class="si">}</span>/<span class="si">${</span><span class="nv">RUN_NAME</span><span class="si">}</span>.sbatch
+
+<span class="c1"># prepare execution script name</span>
+<span class="nv">SCRIPT</span><span class="o">=</span><span class="si">${</span><span class="nv">EXPERIMENT_DIR</span><span class="si">}</span>/<span class="si">${</span><span class="nv">EXPERIMENT_NAME</span><span class="si">}</span>/<span class="si">${</span><span class="nv">version</span><span class="si">}</span>/<span class="si">${</span><span class="nv">RUN_NAME</span><span class="si">}</span>.sh
+touch<span class="w"> </span><span class="nv">$SCRIPT</span>
+chmod<span class="w"> </span>a+x<span class="w"> </span><span class="nv">$SCRIPT</span>
+
+<span class="nv">IS_DISTRIBUTED</span><span class="o">=</span><span class="k">$(</span><span class="o">[</span><span class="w"> </span><span class="m">1</span><span class="w"> </span>-lt<span class="w"> </span><span class="nv">$SLURM_JOB_NUM_NODES</span><span class="w"> </span><span class="o">]</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot; distributed over </span><span class="nv">$SLURM_JOB_NUM_NODES</span><span class="s2"> nodes&quot;</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot; on 1 node&quot;</span><span class="k">)</span>
+
+<span class="c1"># prepare the execution script content</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;&quot;&quot;#!/bin/bash</span>
+
+<span class="s2"># using `basename </span><span class="nv">$SBATCH</span><span class="s2">` -&gt; </span><span class="nv">$RUN_NAME</span><span class="s2">.sbatch, running </span><span class="nv">$SLURM_NPROCS</span><span class="s2"> tasks</span><span class="nv">$IS_DISTRIBUTED</span>
+
+<span class="s2"># prepare sub-script for debug outputs</span>
+<span class="s2">echo -e \&quot;\&quot;\&quot;</span>
+<span class="s2"># starting at \$(date)</span>
+<span class="s2"># running process \$SLURM_PROCID on \$SLURMD_NODENAME</span>
+<span class="s2">\$(nvidia-smi | grep Version | sed -e &#39;s/ *| *//g&#39; -e \&quot;s/   */\n# \${SLURMD_NODENAME}.\${SLURM_PROCID}&gt;   /g\&quot; -e \&quot;s/^/# \${SLURMD_NODENAME}.\${SLURM_PROCID}&gt;   /g\&quot;)</span>
+<span class="s2">\$(nvidia-smi -L | sed -e \&quot;s/^/# \${SLURMD_NODENAME}.\${SLURM_PROCID}&gt;   /g\&quot;)</span>
+<span class="s2">\$(python -c &#39;import torch; print(f\&quot;torch: {torch.__version__}\&quot;)&#39; | sed -e \&quot;s/^/# \${SLURMD_NODENAME}.\${SLURM_PROCID}&gt;   /g\&quot;)</span>
+<span class="s2">\$(python -c &#39;import torch, torch.utils.collect_env; torch.utils.collect_env.main()&#39; | sed \&quot;s/^/# \${SLURMD_NODENAME}.\${SLURM_PROCID}&gt;   /g\&quot;)</span>
+<span class="s2">\$(env | grep -i Slurm | sort | sed \&quot;s/^/# \${SLURMD_NODENAME}.\${SLURM_PROCID}&gt;   /g\&quot;)</span>
+<span class="s2">\$(cat /etc/nccl.conf | sed \&quot;s/^/# \${SLURMD_NODENAME}.\${SLURM_PROCID}&gt;   /g\&quot;)</span>
+<span class="s2">\&quot;\&quot;\&quot;</span>
+
+<span class="s2"># set unbuffered python for realtime container logging</span>
+<span class="s2">export PYTHONFAULTHANDLER=1</span>
+<span class="s2">export NCCL_DEBUG=INFO</span>
+
+<span class="s2"># train</span>
+<span class="s2">python /train/train.py</span>
+
+<span class="s2">echo -e \&quot;\&quot;\&quot;</span>
+<span class="s2"># finished at \$(date)</span>
+<span class="s2">\&quot;\&quot;\&quot;</span>
+<span class="s2">&quot;&quot;&quot;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span><span class="nv">$SCRIPT</span>
+
+<span class="c1"># install lightning into container, ensure it is run only once per node</span>
+srun<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--ntasks<span class="o">=</span><span class="si">${</span><span class="nv">SLURM_JOB_NUM_NODES</span><span class="si">}</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--ntasks-per-node<span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--container-image<span class="w"> </span>nvcr.io#nvidia/pytorch:23.08-py3<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--container-name<span class="w"> </span><span class="si">${</span><span class="nv">SLURM_JOB_NAME</span><span class="si">}</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--output<span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">EXPERIMENT_DIR</span><span class="si">}</span><span class="s2">/</span><span class="si">${</span><span class="nv">EXPERIMENT_NAME</span><span class="si">}</span><span class="s2">/</span><span class="si">${</span><span class="nv">version</span><span class="si">}</span><span class="s2">/</span><span class="si">${</span><span class="nv">RUN_NAME</span><span class="si">}</span><span class="s2">.%s.txt&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>pip<span class="w"> </span>install<span class="w"> </span><span class="nv">lightning</span><span class="o">==</span><span class="m">2</span>.1.2<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span><span class="o">||</span><span class="w"> </span><span class="nb">exit</span><span class="w"> </span><span class="m">1</span>
+
+<span class="c1"># run training script, run in background to receive signal notification prior to timout</span>
+srun<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--container-name<span class="w"> </span><span class="si">${</span><span class="nv">SLURM_JOB_NAME</span><span class="si">}</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--container-mounts<span class="w"> </span><span class="si">${</span><span class="nv">EXPERIMENT_DIR</span><span class="si">}</span>/<span class="si">${</span><span class="nv">EXPERIMENT_NAME</span><span class="si">}</span>/<span class="si">${</span><span class="nv">version</span><span class="si">}</span>:/exp,<span class="si">${</span><span class="nv">WORK_DIR</span><span class="si">}</span>:/train<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--output<span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">EXPERIMENT_DIR</span><span class="si">}</span><span class="s2">/</span><span class="si">${</span><span class="nv">EXPERIMENT_NAME</span><span class="si">}</span><span class="s2">/</span><span class="si">${</span><span class="nv">version</span><span class="si">}</span><span class="s2">/</span><span class="si">${</span><span class="nv">RUN_NAME</span><span class="si">}</span><span class="s2">.%s.txt&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--container-workdir<span class="w"> </span>/exp<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>/exp/<span class="si">${</span><span class="nv">RUN_NAME</span><span class="si">}</span>.sh<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span><span class="p">&amp;</span>
+<span class="nv">PID</span><span class="o">=</span><span class="nv">$!</span>
+<span class="nb">wait</span><span class="w"> </span><span class="nv">$PID</span><span class="p">;</span>
+</code></pre></div></p>
+<p>This script can then be run and monitored with the standard commands.
+<div class="highlight"><pre><span></span><code>ilb@login-frida:~/mnist-demo$<span class="w"> </span>sbatch<span class="w"> </span>train_2x2.sbatch<span class="w"> </span>--version<span class="o">=</span>v1
+Submitted<span class="w"> </span>batch<span class="w"> </span>job<span class="w"> </span><span class="m">602</span>
+
+ilb@login-frida:~/mnist-demo$<span class="w"> </span>tail<span class="w"> </span>-f<span class="w"> </span>exp/demo/v1/v1_20231213-2237.1.txt
+...
+</code></pre></div></p>
+<!--
+_TODO: notes ... no requeue support from within container (scontrol not available). send emails on start, error, ..._
+
+#### Auto requeue
+
+`sbatch signal`
+`pytorch signal`
+
+### Open a shell into a job running inside a container
+
+<div class="highlight"><pre><span></span><code>srun --container-name xxx --jobid
+</code></pre></div>
+-->
+<!--
+### Useful Slurm commands
+
+Show the current status of resources:
+<div class="highlight"><pre><span></span><code>ilb@login-frida:~$<span class="w"> </span>slurm
+PARTITION<span class="w"> </span>NODELIST<span class="w">      </span>NODES<span class="w"> </span>CPUS<span class="o">(</span>A/I/O/T<span class="o">)</span><span class="w">     </span>GRES<span class="w">                                                   </span>GRES_USED
+frida<span class="w">     </span>ana<span class="w">           </span><span class="m">1</span><span class="w">     </span><span class="m">0</span>/112/0/112<span class="w">       </span>gpu:A100_80GB:8<span class="o">(</span>S:0-1<span class="o">)</span>,shard:A100_80GB:640<span class="o">(</span>S:0-1<span class="o">)</span><span class="w">      </span>gpu:A100_80GB:0<span class="o">(</span>IDX:N/A<span class="o">)</span>,shard:A100_80GB:0<span class="o">(</span><span class="m">0</span>/80,0/80,0/80,0/80,0/80,0/80,0/80,0/80<span class="o">)</span>
+frida<span class="w">     </span>axa<span class="w">           </span><span class="m">1</span><span class="w">     </span><span class="m">0</span>/256/0/256<span class="w">       </span>gpu:A100:8<span class="o">(</span>S:0-1<span class="o">)</span><span class="w">                                      </span>gpu:A100:0<span class="o">(</span>IDX:N/A<span class="o">)</span>,shard:0
+frida<span class="w">     </span>ixh<span class="w">           </span><span class="m">1</span><span class="w">     </span><span class="m">0</span>/224/0/224<span class="w">       </span>gpu:H100:8<span class="o">(</span>S:0-1<span class="o">)</span><span class="w">                                      </span>gpu:H100:0<span class="o">(</span>IDX:N/A<span class="o">)</span>,shard:0
+dev*<span class="w">      </span>ana<span class="w">           </span><span class="m">1</span><span class="w">     </span><span class="m">0</span>/112/0/112<span class="w">       </span>gpu:A100_80GB:8<span class="o">(</span>S:0-1<span class="o">)</span>,shard:A100_80GB:640<span class="o">(</span>S:0-1<span class="o">)</span><span class="w">      </span>gpu:A100_80GB:0<span class="o">(</span>IDX:N/A<span class="o">)</span>,shard:A100_80GB:0<span class="o">(</span><span class="m">0</span>/80,0/80,0/80,0/80,0/80,0/80,0/80,0/80<span class="o">)</span>
+</code></pre></div>
+
+Show the user/account associated limits:
+`slimits`
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>sacctmgr<span class="w"> </span>show<span class="w"> </span>association<span class="w"> </span><span class="nv">format</span><span class="o">=</span>account%20,user%30,partition,priority,GrpTRESMins%30,qos<span class="w"> </span><span class="nv">user</span><span class="o">=</span><span class="nv">$USER</span>
+<span class="w">   </span>Account<span class="w">       </span>User<span class="w">  </span>Partition<span class="w">   </span>Priority<span class="w">                    </span>GrpTRESMins<span class="w">                  </span>QOS
+----------<span class="w"> </span>----------<span class="w"> </span>----------<span class="w"> </span>----------<span class="w"> </span>------------------------------<span class="w"> </span>--------------------
+<span class="w">       </span>lpt<span class="w">        </span>ilb<span class="w">                                                                    </span>normal
+</code></pre></div>
+
+Show the available QoS:
+`sqos`
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>sacctmgr<span class="w"> </span>show<span class="w"> </span>qos<span class="w">  </span><span class="nv">format</span><span class="o">=</span><span class="s2">&quot;name%20,preempt,priority,GrpTRES,MaxTresPerJob,MaxJobsPerUser,MaxWall,flags&quot;</span>
+<span class="w">                </span>Name<span class="w">    </span>Preempt<span class="w">   </span>Priority<span class="w">       </span>GrpTRES<span class="w">       </span>MaxTRES<span class="w"> </span>MaxJobsPU<span class="w">     </span>MaxWall<span class="w">                </span>Flags
+--------------------<span class="w"> </span>----------<span class="w"> </span>----------<span class="w"> </span>-------------<span class="w"> </span>-------------<span class="w"> </span>---------<span class="w"> </span>-----------<span class="w"> </span>--------------------
+<span class="w">              </span>normal<span class="w">                     </span><span class="m">0</span>
+</code></pre></div>
+
+Show the current status of queues:
+`squeue`
+
+
+Show current priority
+`sprio`
+
+
+`sattach`
+```srun --pty --overlap --jobid 485 --nodelist=ixh enroot```
+```enroot list -f```
+```enroot exec PID bash```
+https://ask.cyberinfrastructure.org/t/how-to-attach-to-a-running-job-to-run-top-on-compute-node/912/3
+-->
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      &copy; 2023-25 <a href="https://fri.uni-lj.si"  target="_blank" rel="noopener">UL FRI</a>
+
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.expand", "navigation.sections", "toc.integrate", "search.suggest", "search.highlight", "content.tabs.link", "content.code.annotate", "content.code.copy"], "search": "../../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.50899def.min.js"></script>
+      
+    
+  </body>
+</html>
