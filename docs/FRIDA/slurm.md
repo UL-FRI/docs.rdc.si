@@ -4,7 +4,7 @@ Reservation and management of FRIDA compute resources is based on Slurm ([Simple
 
 ## Nodes
 
-FRIDA currently consists of one login node and several compute nodes with characteristics listed in the table below. The total compute currently consists of 1456 vCPUs with 8576GB of system RAM, and 40 GPUs with 3392GB GPU RAM. Although the login node has Python 3.10 and venv pre-installed, these are provided only to aid in quick scripting, and the login node is not intended for any intensive processing. Refrain from installing user space additions like conda and others. All computationally intensive tasks must be submitted as Slurm jobs via the corresponding Slurm commands. User accounts that fail to adhere to these guidelines will be subject to suspension.
+FRIDA currently consists of one login node and several compute nodes with characteristics listed in the table below. The total compute currently consists of 1712 vCPUs with more than 10TB of system RAM, and 48 GPUs with 3712GB GPU RAM. Although the login node has Python 3.10 and venv pre-installed, these are provided only to aid in quick scripting, and the login node is not intended for any intensive processing. Refrain from installing user space additions like conda and others. All computationally intensive tasks must be submitted as Slurm jobs via the corresponding Slurm commands. User accounts that fail to adhere to these guidelines will be subject to suspension.
 
 | NODE       | ROLE    | vCPU | MEM   | nGPU | GPU type                |
 |------------|--------:|-----:|------:|-----:|------------------------:|
