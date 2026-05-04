@@ -72,3 +72,6 @@ markdown_extensions:
 
 copyright: |
   &copy; 2023-25 <a href="https://fri.uni-lj.si"  target="_blank" rel="noopener">UL FRI</a>
+
+extra_javascript:
+  - https://api.dashboard.instatus.com/widget?host=status.rdc.si&code=8fc42ceb&locale=en
