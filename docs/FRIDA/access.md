@@ -105,7 +105,6 @@ Visual Studio Code's Remote SSH extension (part of the [Remote Development Exten
         UserKnownHostsFile "/Users/{username}/.tsh/known_hosts"
         IdentityFile "/Users/{username}/.tsh/keys/rdc.si/{username}"
         CertificateFile "/Users/{username}/.tsh/keys/rdc.si/{username}-ssh/rdc.si-cert.pub"
-        HostKeyAlgorithms rsa-sha2-512-cert-v01@openssh.com,rsa-sha2-256-cert-v01@openssh.com,ssh-rsa-cert-v01@openssh.com
         # copy from '# Flags for all rdc.si hosts except the proxy'
         Port 3022
         ProxyCommand "/usr/local/bin/tsh" proxy ssh --cluster=rdc.si --proxy=rdc.si:443 %r@%h:%p
@@ -128,7 +127,6 @@ Visual Studio Code's Remote SSH extension (part of the [Remote Development Exten
         UserKnownHostsFile "/home/{username}/.tsh/known_hosts"
         IdentityFile "/home/{username}/.tsh/keys/rdc.si/{username}"
         CertificateFile "/home/{username}/.tsh/keys/rdc.si/{username}-ssh/rdc.si-cert.pub"
-        HostKeyAlgorithms rsa-sha2-512-cert-v01@openssh.com,rsa-sha2-256-cert-v01@openssh.com,ssh-rsa-cert-v01@openssh.com
         # copy from '# Flags for all rdc.si hosts except the proxy'
         Port 3022
         ProxyCommand "/usr/local/bin/tsh" proxy ssh --cluster=rdc.si --proxy=rdc.si:443 %r@%h:%p
@@ -143,7 +141,7 @@ Visual Studio Code's Remote SSH extension (part of the [Remote Development Exten
 === "Win"
 
     Make sure that `tsh.exe` is on your PATH.
-    
+
     ```bash
     # FRIDA login host for VSCode Remote SSH
     Host login-frida
@@ -153,7 +151,6 @@ Visual Studio Code's Remote SSH extension (part of the [Remote Development Exten
         UserKnownHostsFile "C:\Users\{username}\.tsh\known_hosts"
         IdentityFile "C:\Users\{username}\.tsh\keys\rdc.si\{username}"
         CertificateFile "C:\Users\{username}\.tsh/keys\rdc.si\{username}-ssh\rdc.si-cert.pub"
-        HostKeyAlgorithms rsa-sha2-512-cert-v01@openssh.com,rsa-sha2-256-cert-v01@openssh.com,ssh-rsa-cert-v01@openssh.com
         # copy from '# Flags for all rdc.si hosts except the proxy'
         Port 3022
         ProxyCommand tsh proxy ssh --cluster=rdc.si --proxy=rdc.si:443 %r@%h:%p
