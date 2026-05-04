@@ -4,7 +4,7 @@ Reservation and management of FRIDA compute resources is based on Slurm ([Simple
 
 ## Nodes
 
-FRIDA currently consists of one login node and several compute nodes with characteristics listed in the table below. The total compute currently consists of 1456 vCPUs with 8576GB of system RAM, and 40 GPUs with 3392GB GPU RAM. Although the login node has Python 3.10 and venv pre-installed, these are provided only to aid in quick scripting, and the login node is not intended for any intensive processing. Refrain from installing user space additions like conda and others. All computationally intensive tasks must be submitted as Slurm jobs via the corresponding Slurm commands. User accounts that fail to adhere to these guidelines will be subject to suspension.
+FRIDA currently consists of one login node and several compute nodes with characteristics listed in the table below. The total compute currently consists of 2800 vCPUs with 19072GB of system RAM, and 80 GPUs with 12928GB GPU RAM. Although the login node has Python 3.10 and venv pre-installed, these are provided only to aid in quick scripting, and the login node is not intended for any intensive processing. Refrain from installing user space additions like conda and others. All computationally intensive tasks must be submitted as Slurm jobs via the corresponding Slurm commands. User accounts that fail to adhere to these guidelines will be subject to suspension.
 
 | NODE       | ROLE    | vCPU | MEM   | nGPU | GPU type                |
 |------------|--------:|-----:|------:|-----:|------------------------:|
@@ -12,29 +12,28 @@ FRIDA currently consists of one login node and several compute nodes with charac
 | aga        | compute |  256 | 512GB |    4 | NVIDIA A100 40GB SXM4   |
 | apl        | compute |  112 |   1TB |    8 | NVIDIA L4 24GB PCIe     |
 | ana        | compute |  112 |   1TB |    8 | NVIDIA A100 80GB PCIe   |
+| axa        | compute |  256 |   2TB |    8 | NVIDIA A100 40GB SXM4   |
 | ixh        | compute |  224 |   2TB |    8 | NVIDIA H100 80GB HBM3   |
-| ixb        | compute |  224 |   2TB |    8 | NVIDIA B200 180GB       |
+| ixb1       | compute |  224 |   2TB |    8 | NVIDIA B200 180GB       |
+| ixb[5-8]   | compute |  256 |   2TB |    8 | NVIDIA B300 288GB       |
 | gh[1-2]    | compute |   72 | 576GB |    1 | NVIDIA GH200 480GB      |
 | api        | compute |  384 | 768GB |    2 | AMD MI210 64GB PCIe     |
 
-<!--
-| axa        | compute |  256 |   2TB |    8 | NVIDIA A100 40GB SXM4   |
--->
+The compute node naming scheme follows a two/three letter acronym that is based on the node architecture and suffixed by a number, if multiple such nodes exist. For example node name `ana` stands for **A**MD CPU, **N**VLink interconnect, and **A**mpere GPU, `api` stands for **A**MD CPU, **P**CIe interconnect, and AMD **I**nstinct MIxxx GPU, `aga` stands for **A**MD CPU, **g**ang NVLink (gen 3) interconnect (i.e. no NVSwitch), **A**mpere GPU, `ixh` stands for **I**ntel CPU, S**X**M5 - NVLink + NVSwitch (gen 4) interconnect, and **H**opper GPU, **A**mpere GPU, `ixb` stands for **I**ntel CPU, S**X**M6 - NVLink + NVSwitch (gen 5) interconnect, and **B**lackwell GPU, and `gh` stands for **G**race**H**opper superchip (i.e. Grace CPU and Hopper GPU tightly bound via a 900GB/s NVLink-C2C interconnect, allowing for cache and memory coherency). More details about the nodes can be obtaind by executing the command `scontrol show node <node_name>`; note that each node is also assigned a series of features which can be used in conjuction with parameter `-C/--constraint <key>:<value>` to target a specific node. Same class nodes are tighlty coupled with multiple network interfaces, e.g. nodes `ixb[5-8]` share a common compute fabric (links `nven1-0/1` to `nven8-0/1`) for an 8x 800GbE node-to-node interconnect.
 
-The compute node naming scheme follows a two/three letter acronym that is based on the node architecture and suffixed by a number, if multiple such nodes exist. For example node name `ana` stands for **A**MD CPU, **N**VLink interconnect, and **A**mpere GPU, `api` stands for **A**MD CPU, **P**CIe interconnect, and AMD **I**nstinct MIxxx GPU, `aga` stands for **A**MD CPU, **g**ang NVLink (gen 3) interconnect (i.e. no NVSwitch), **A**mpere GPU, `ixh` stands for **I**ntel CPU, S**X**M5 - NVLink + NVSwitch (gen 4) interconnect, and **H**opper GPU, **A**mpere GPU, `ixb` stands for **I**ntel CPU, S**X**M6 - NVLink + NVSwitch (gen 5) interconnect, and **B**lackwell GPU, and `gh` stands for **G**race**H**opper superchip (i.e. Grace CPU and Hopper GPU tightly bound via a 900GB/s NVLink-C2C interconnect, allowing for cache and memory coherency). More details about the nodes can be obtaind by executing the command `scontrol show node <node_name>`; note that each node is also assigned a series of features which can be used in conjuction with parameter `-C/--constraint <key>:<value>` to target a specific node.
-
-| NODE     | CPU_BRD | CPU_GEN        | CPU_SKU         | CPU_L3 | CPU_MEM | GPU_BRD | GPU_GEN      | GPU_SKU        | GPU_MEM | GPU_CC |
-|----------|--------:|---------------:|----------------:|-------:|--------:|--------:|-------------:|---------------:|--------:|-------:|
-| aga      | AMD     | ZEN3           | EPYC_7763       | 256MB  | 512GB   | NVIDIA  | AMPERE       | A100_SXM4_40GB | 40GB    | 8.0    |
-| apl      | AMD     | ZEN3           | EPYC_7453       | 64MB   | 1TB     | NVIDIA  | ADA_LOVELACE | L4_24GB_PCIE   | 24GB    | 8.9    |
-| ana      | AMD     | ZEN3           | EPYC_7453       | 64MB   | 1TB     | NVIDIA  | AMPERE       | A100_80GB_PCIE | 80GB    | 8.0    |
-| ixh      | INTEL   | GOLDEN_COVE    | PLATINUM_8480CL | 105MB  | 2TB     | NVIDIA  | HOPPER       | H100_80GB_HBM3 | 80GB    | 9.0    |
-| ixb      | INTEL   | EMERALD_RAPIDS | PLATINUM_8570   | 200MB  | 2TB     | NVIDIA  | BLACKWELL    | B200_180GB     | 180GB   | 10.0   |
-| gh[1-2]  | ARM     | NEO2           | GRACE           | 234MB  | 576GB   | NVIDIA  | HOPPER       | GH200_480GB    | 96GB    | 9.0    |
-| api      | AMD     | ZEN4           | EPYC_9684X      | 1152MB | 768GB   | AMD     | CDNA2        | MI210          | 64GB    | -      |
+| NODE     | CPU_BRD | CPU_GEN        | CPU_SKU         | CPU_L3 | CPU_MEM | GPU_BRD | GPU_GEN          | GPU_SKU        | GPU_MEM | GPU_CC |
+|----------|--------:|---------------:|----------------:|-------:|--------:|--------:|-----------------:|---------------:|--------:|-------:|
+| aga      | AMD     | ZEN3           | EPYC_7763       | 256MB  | 512GB   | NVIDIA  | AMPERE           | A100_SXM4_40GB | 40GB    | 8.0    |
+| apl      | AMD     | ZEN3           | EPYC_7453       | 64MB   | 1TB     | NVIDIA  | ADA_LOVELACE     | L4_24GB_PCIE   | 24GB    | 8.9    |
+| ana      | AMD     | ZEN3           | EPYC_7453       | 64MB   | 1TB     | NVIDIA  | AMPERE           | A100_80GB_PCIE | 80GB    | 8.0    |
+| axa      | AMD     | ZEN2           | EPYC_7742       | 256MB  | 2TB     | NVIDIA  | AMPERE           | A100_SXM4_40GB | 40GB    | 8.0    |
+| ixh      | INTEL   | GOLDEN_COVE    | PLATINUM_8480CL | 105MB  | 2TB     | NVIDIA  | HOPPER           | H100_80GB_HBM3 | 80GB    | 9.0    |
+| ixb1     | INTEL   | EMERALD_RAPIDS | PLATINUM_8570   | 300MB  | 2TB     | NVIDIA  | BLACKWELL        | B200_180GB     | 180GB   | 10.0   |
+| ixb[5-8] | INTEL   | GRANITE_RAPIDS | XEON_6776P      | 200MB  | 2TB     | NVIDIA  | BLACKWELL_ULTRA  | B300_288GB     | 288GB   | 10.3   |
+| gh[1-2]  | ARM     | NEO2           | GRACE           | 234MB  | 576GB   | NVIDIA  | HOPPER           | GH200_480GB    | 96GB    | 9.0    |
+| api      | AMD     | ZEN4           | EPYC_9684X      | 1152MB | 768GB   | AMD     | CDNA2            | MI210          | 64GB    | -      |
 
 <!--
-| axa      | AMD     | ZEN2        | EPYC_7742       | 256MB  | 2TB     | NVIDIA  | AMPERE       | A100_SXM4_40GB | 40GB    | 8.0    |
 -->
 
 ## Partitions
@@ -45,8 +44,6 @@ Within Slurm subsets of compute nodes are organized into partitions. On FRIDA th
 |-----------|--------------:|-----------------:|-------------:|-------------:|---------------------------------------------------------:|
 | frida     | general       |             all* |           4h |           7d | gpu, gpu:L4, gpu:A100, gpu:A100_80GB, gpu:H100, gpu:B200 |
 | dev       | general       |      aga,ana,apl |           2h |          12h | gpu, gpu:L4, gpu:A100, gpu:A100_80GB                     |
-| cjvt      | private       |              axa |           4h |           4d | gpu, gpu:A100                                            |
-| psuiis    | private       |              ana |           4h |           4d | gpu, gpu:A100_80GB                                       |
 | nxt       | experimental  |          gh[1-2] |           2h |           2d | gpu, gpu:GH200                                           |
 | amd       | experimental  |              api |           2h |           2d | gpu, gpu:MI210                                           |
 
@@ -79,7 +76,7 @@ As a further tool in affecting job submission, Slurm allows users the ability to
 
 ## Shared storage
 
-All FRIDA nodes have access to a limited amount of shared data storage. For performance reasons, it is served by a raid0 backend. Note that FRIDA does not provide automatic backups, these are entirely in the domain of the end user. Also, as of current settings, FRIDA does not enforce shared storage quotas, but this may change in future upgrades. Access permissions on the user folder are set to user only. Depending on the groups a user is a member of, they may have access to multiple workspace folders. These folders have the group special ([SGID](https://www.redhat.com/sysadmin/suid-sgid-sticky-bit)) bit set, so files created within them will automatically have the correct group ownership. All group members will have read and execute rights. Note, however, that group write access is masked, so users who wish to make their files writable by other group members should change permissions by using the `chmod g+w` command. All other security measures dictated by the nature of your data are the responsibility of the end users.
+All FRIDA nodes have access to a shared data storage. This is a high performant AI optimized storage based on the WekaIO backend, which is tiered to a lower peforming, but larger capacity Ceph storage. Note that FRIDA does not provide automatic backups, these are entirely in the domain of the end user. Also, as of current settings, FRIDA does not enforce shared storage quotas, but this may change in future upgrades. Access permissions on the user folder are set to user only. Depending on the groups a user is a member of, they may have access to multiple workspace folders. These folders have the group special ([SGID](https://www.redhat.com/sysadmin/suid-sgid-sticky-bit)) bit set, so files created within them will automatically have the correct group ownership. All group members will have read and execute rights. Note, however, that group write access is masked, so users who wish to make their files writable by other group members should change permissions by using the `chmod g+w` command. All other security measures dictated by the nature of your data are the responsibility of the end users.
 
 In addition to access to shared storage, compute nodes provide also an even smaller amount of local storage. The amount varies per node and may change with FRIDA's future updates. Local storage is intended as scratch space, the corresponding path is created on a per-job basis at job start and purged as soon as the job ends.
 
@@ -88,6 +85,9 @@ In addition to access to shared storage, compute nodes provide also an even smal
 | shared    | weka    | no      | user    | `/shared/home/$USER`                      | `$HOME`    |            - |
 | shared    | weka    | no      | group   | `/shared/workspace/$SLURM_JOB_ACCOUNT`    | `$WORK`    |            - |
 | scratch   | raid0   | no      | job     | `/local/scratch/$USER/$SLURM_JOB_ID`      | `$SCRATCH` |            - |
+
+!!! tip
+    Tiering is automatic and based on file chunk access and use. In other words it may affect performance during the initial stages of a run, especially if the data has not been used for a long period of time and needs to be refetched from the slower tier. Users can take advantage of commands `weka fs tier location`, `weka fs tier fetch`, `weka fs tier release` to determine residency (write-cache/read-cache vs object store), prefetch their data (into read-cache) or release it to the slower tier (object store). Note, however that these commands work only on files, not on folders. For further details on data lifecycle consult the [Weka documentation](https://docs.weka.io/weka-filesystems-and-object-stores/tiering).
 
 ## Usage
 
@@ -110,6 +110,52 @@ Some useful Slurm commands with their typical use case, notes and corresponding 
 
 <!-- | `slimits` | view limits imposed on current user | this is a custom, FRIDA alias built on top of the more general `sacctmgr` Slurm command | see Slurm docs on [`sacctmgr`](https://slurm.schedmd.com/sacctmgr.html) |
 | `sqos` | view the current status of resources | this is a custom, FRIDA alias built on top of the more general `sacctmgr` Slurm command | see Slurm docs on [`sacctmgr`](https://slurm.schedmd.com/sacctmgr.html) | --->
+
+### Cluster information
+
+On every login you will get welcomed with a dump of most important information for you, the documentation and cluster status URLs, active maintenance reservations, status of your last five jobs and storage related information. You can get this information at any time by using the command `frida`. The command can be used to provide details on nodes and usage rates (per account, per user, per user by account), see the commands help for aditional details.
+
+```bash
+ilb@login-frida:~$ frida --help
+
+ Usage: frida [OPTIONS] COMMAND [ARGS]...
+
+ Print FRIDA system information.
+
+╭─ Options ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ --user                      TEXT  Display data for a specific user. [default: root]                                                                                                                                      │
+│ --header-only                     Display only header and exit.                                                                                                                                                          │
+│ --version                         Show version and exit.                                                                                                                                                                 │
+│ --install-completion              Install completion for the current shell.                                                                                                                                              │
+│ --show-completion                 Show completion for the current shell, to copy it or customize the installation.                                                                                                       │
+│ --help                            Show this message and exit.                                                                                                                                                            │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭─ Commands ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ billing      Get the billing information for the account.                                                                                                                                                                │
+│ gpu-hours    Get the GPU hours distribution.                                                                                                                                                                             │
+│ node-hours   Get the node hours distribution.                                                                                                                                                                            │
+│ node-info    Fetch and display node information.                                                                                                                                                                         │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+
+ilb@login-frida:~$ frida node-info
+
+Node Information
+
+ Node         GPUs  Gres                CPUs            MEM       MEM/CPU      CPU/GPU      MEM/GPU
+ apl             8  L4                    96       1007 GiB        10 GiB           12      125 GiB
+ aga             4  A100                 240        503 GiB         2 GiB           60      125 GiB
+ axa             8  A100                 240       2003 GiB         8 GiB           30      250 GiB
+ ana             8  A100_80GB             96       1007 GiB        10 GiB           12      125 GiB
+ ixh             8  H100                 208       2015 GiB         9 GiB           26      251 GiB
+ ixb1            8  B200                 208       2015 GiB         9 GiB           26      251 GiB
+ ixb5            8  B300                 240       2015 GiB         8 GiB           30      251 GiB
+ ixb6            8  B300                 240       2015 GiB         8 GiB           30      251 GiB
+ ixb7            8  B300                 240       2015 GiB         8 GiB           30      251 GiB
+ ixb8            8  B300                 240       2015 GiB         8 GiB           30      251 GiB
+ gh1             1  GH200                 64        565 GiB         8 GiB           64      565 GiB
+ gh2             1  GH200                 64        565 GiB         8 GiB           64      565 GiB
+ api             2  MI210                368        755 GiB         2 GiB          184      377 GiB
+```
 
 ### Interactive sessions
 

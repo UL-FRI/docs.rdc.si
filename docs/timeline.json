@@ -1,5 +1,25 @@
 [
   {
+    "title": "Delivery of upgrade components, on-site integration & preflight testing",
+    "icon": ":material-train-car-container:",
+    "sub_title": "2026-H1"
+  },
+  {
+    "title": "Contract for FRIDA upgrade signed",
+    "icon": ":octicons-rocket-16:",
+    "sub_title": "2025-M12"
+  },
+  {
+    "title": "Tenders for FRIDA upgrade open",
+    "icon": ":material-train-car-container:",
+    "sub_title": "2024-H2"
+  },
+  {
+    "title": "FRIDA compute relocated to CDC",
+    "icon": ":octicons-rocket-16:",
+    "sub_title": "2025-M11"
+  },
+  {
     "title": "Delivery of new modular CDC, on-site integration & preflight testing",
     "icon": ":material-train-car-container:",
     "sub_title": "2025-Q3"
