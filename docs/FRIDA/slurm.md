@@ -43,7 +43,7 @@ Within Slurm subsets of compute nodes are organized into partitions. On FRIDA th
 | PARTITION | TYPE          |            nodes | default time |     max time |                                               available gres types |
 |-----------|--------------:|-----------------:|-------------:|-------------:|-------------------------------------------------------------------:|
 | frida     | general       |             all* |           4h |           7d | gpu, gpu:L4, gpu:A100, gpu:A100_80GB, gpu:H100, gpu:B200, gpu:B300 |
-| dev       | general       |      aga,ana,apl |           2h |          12h | gpu, gpu:L4, gpu:A100, gpu:A100_80GB                               |
+| dev       | general       |  apl,aga,axa,ana |           2h |          12h | gpu, gpu:L4, gpu:A100, gpu:A100_80GB                               |
 | nxt       | experimental  |          gh[1-2] |           2h |           2d | gpu, gpu:GH200                                                     |
 | amd       | experimental  |              api |           2h |           2d | gpu, gpu:MI210                                                     |
 
