@@ -40,12 +40,12 @@ The compute node naming scheme follows a two/three letter acronym that is based 
 
 Within Slurm subsets of compute nodes are organized into partitions. On FRIDA there are two types of partitions, general and private (available to selected research labs or groups based on their co-funding of FRIDA). Interactive jobs can be run only on partition `dev`. Production runs are not permitted in interactive jobs, `dev` partition is thus intended to be used for code development, testing, and debugging only.
 
-| PARTITION | TYPE          |            nodes | default time |     max time |                                     available gres types |
-|-----------|--------------:|-----------------:|-------------:|-------------:|---------------------------------------------------------:|
-| frida     | general       |             all* |           4h |           7d | gpu, gpu:L4, gpu:A100, gpu:A100_80GB, gpu:H100, gpu:B200 |
-| dev       | general       |      aga,ana,apl |           2h |          12h | gpu, gpu:L4, gpu:A100, gpu:A100_80GB                     |
-| nxt       | experimental  |          gh[1-2] |           2h |           2d | gpu, gpu:GH200                                           |
-| amd       | experimental  |              api |           2h |           2d | gpu, gpu:MI210                                           |
+| PARTITION | TYPE          |            nodes | default time |     max time |                                               available gres types |
+|-----------|--------------:|-----------------:|-------------:|-------------:|-------------------------------------------------------------------:|
+| frida     | general       |             all* |           4h |           7d | gpu, gpu:L4, gpu:A100, gpu:A100_80GB, gpu:H100, gpu:B200, gpu:B300 |
+| dev       | general       |      aga,ana,apl |           2h |          12h | gpu, gpu:L4, gpu:A100, gpu:A100_80GB                               |
+| nxt       | experimental  |          gh[1-2] |           2h |           2d | gpu, gpu:GH200                                                     |
+| amd       | experimental  |              api |           2h |           2d | gpu, gpu:MI210                                                     |
 
 !!! note
     To avoid issues related to differences in CPU and/or GPU architecture, partition `frida` includes all nodes, but those that are part of partitions `nxt` and `amd`.
