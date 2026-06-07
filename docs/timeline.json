@@ -1,5 +1,10 @@
 [
   {
+    "title": "FRIDA goes live",
+    "icon": ":octicons-rocket-16:",
+    "sub_title": "2026-M6"
+  },
+  {
     "title": "Delivery of upgrade components, on-site integration & preflight testing",
     "icon": ":material-train-car-container:",
     "sub_title": "2026-H1"

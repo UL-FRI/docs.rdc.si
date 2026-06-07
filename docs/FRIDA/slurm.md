@@ -4,7 +4,7 @@ Reservation and management of FRIDA compute resources is based on Slurm ([Simple
 
 ## Nodes
 
-FRIDA currently consists of one login node and several compute nodes with characteristics listed in the table below. The total compute currently consists of 2800 vCPUs with 19072GB of system RAM, and 80 GPUs with 12928GB GPU RAM. Although the login node has Python 3.10 and venv pre-installed, these are provided only to aid in quick scripting, and the login node is not intended for any intensive processing. Refrain from installing user space additions like conda and others. All computationally intensive tasks must be submitted as Slurm jobs via the corresponding Slurm commands. User accounts that fail to adhere to these guidelines will be subject to suspension.
+FRIDA currently consists of one login node and several compute nodes with characteristics listed in the table below. The total compute currently consists of 3472 vCPUs with 25126GB of system RAM, and 104 GPUs with 17248GB GPU RAM. Although the login node has Python 3.10 and venv pre-installed, these are provided only to aid in quick scripting, and the login node is not intended for any intensive processing. Refrain from installing user space additions like conda and others. All computationally intensive tasks must be submitted as Slurm jobs via the corresponding Slurm commands. User accounts that fail to adhere to these guidelines will be subject to suspension.
 
 | NODE       | ROLE    | vCPU | MEM   | nGPU | GPU type                |
 |------------|--------:|-----:|------:|-----:|------------------------:|
@@ -14,7 +14,7 @@ FRIDA currently consists of one login node and several compute nodes with charac
 | ana        | compute |  112 |   1TB |    8 | NVIDIA A100 80GB PCIe   |
 | axa        | compute |  256 |   2TB |    8 | NVIDIA A100 40GB SXM4   |
 | ixh        | compute |  224 |   2TB |    8 | NVIDIA H100 80GB HBM3   |
-| ixb1       | compute |  224 |   2TB |    8 | NVIDIA B200 180GB       |
+| ixb[1-4]   | compute |  224 |   2TB |    8 | NVIDIA B200 180GB       |
 | ixb[5-8]   | compute |  256 |   2TB |    8 | NVIDIA B300 288GB       |
 | gh[1-2]    | compute |   72 | 576GB |    1 | NVIDIA GH200 480GB      |
 | api        | compute |  384 | 768GB |    2 | AMD MI210 64GB PCIe     |
@@ -28,7 +28,7 @@ The compute node naming scheme follows a two/three letter acronym that is based 
 | ana      | AMD     | ZEN3           | EPYC_7453       | 64MB   | 1TB     | NVIDIA  | AMPERE           | A100_80GB_PCIE | 80GB    | 8.0    |
 | axa      | AMD     | ZEN2           | EPYC_7742       | 256MB  | 2TB     | NVIDIA  | AMPERE           | A100_SXM4_40GB | 40GB    | 8.0    |
 | ixh      | INTEL   | GOLDEN_COVE    | PLATINUM_8480CL | 105MB  | 2TB     | NVIDIA  | HOPPER           | H100_80GB_HBM3 | 80GB    | 9.0    |
-| ixb1     | INTEL   | EMERALD_RAPIDS | PLATINUM_8570   | 300MB  | 2TB     | NVIDIA  | BLACKWELL        | B200_180GB     | 180GB   | 10.0   |
+| ixb[1-4] | INTEL   | EMERALD_RAPIDS | PLATINUM_8570   | 300MB  | 2TB     | NVIDIA  | BLACKWELL        | B200_180GB     | 180GB   | 10.0   |
 | ixb[5-8] | INTEL   | GRANITE_RAPIDS | XEON_6776P      | 200MB  | 2TB     | NVIDIA  | BLACKWELL_ULTRA  | B300_288GB     | 288GB   | 10.3   |
 | gh[1-2]  | ARM     | NEO2           | GRACE           | 234MB  | 576GB   | NVIDIA  | HOPPER           | GH200_480GB    | 96GB    | 9.0    |
 | api      | AMD     | ZEN4           | EPYC_9684X      | 1152MB | 768GB   | AMD     | CDNA2            | MI210          | 64GB    | -      |
