@@ -147,13 +147,9 @@ Node Information
  axa             8  A100                 240       2003 GiB         8 GiB           30      250 GiB
  ana             8  A100_80GB             96       1007 GiB        10 GiB           12      125 GiB
  ixh             8  H100                 208       2015 GiB         9 GiB           26      251 GiB
- ixb1            8  B200                 208       2015 GiB         9 GiB           26      251 GiB
- ixb5            8  B300                 240       2015 GiB         8 GiB           30      251 GiB
- ixb6            8  B300                 240       2015 GiB         8 GiB           30      251 GiB
- ixb7            8  B300                 240       2015 GiB         8 GiB           30      251 GiB
- ixb8            8  B300                 240       2015 GiB         8 GiB           30      251 GiB
- gh1             1  GH200                 64        565 GiB         8 GiB           64      565 GiB
- gh2             1  GH200                 64        565 GiB         8 GiB           64      565 GiB
+ ixb[1-4]        8  B200                 208       2015 GiB         9 GiB           26      251 GiB
+ ixb[5-8]        8  B300                 240       2015 GiB         8 GiB           30      251 GiB
+ gh[1-2]         1  GH200                 64        565 GiB         8 GiB           64      565 GiB
  api             2  MI210                368        755 GiB         2 GiB          184      377 GiB
 ```
 
